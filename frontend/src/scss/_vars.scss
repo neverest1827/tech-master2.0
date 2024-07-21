@@ -1,15 +1,53 @@
-//Colors
-$black: #000;
-$white: #fff;
-$hover: #b5b9b4;
+//------------------------------------------------------Colors----------------------------------------------------------
+//Dark-theme
+$dark-primary-100:#2C3A4F;
+$dark-primary-200:#56647b;
+$dark-primary-300:#b4c2dc;
+$dark-accent-100:#FF4D4D;
+$dark-accent-200:#ffecda;
+$dark-text-100:#FFFFFF;
+$dark-text-200:#e0e0e0;
+$dark-bg-100:#1A1F2B;
+$dark-bg-200:#292e3b;
+$dark-bg-300:#414654;
 
-//Fonts-example
-%ts-900 {
-  font-family: TildaSans-Black, sans-serif;
-  font-weight: 900;
+//------------------------------------------------------Fonts-----------------------------------------------------------
+%roboto-700 {
+  font-family: Roboto-Bold, sans-serif;
+  font-weight: 700;
+}
+%roboto-500 {
+  font-family: Roboto-Medium, sans-serif;
+  font-weight: 500;
+}
+%roboto-400 {
+  font-family: Roboto-Regular, sans-serif;
+  font-weight: 400;
 }
 
+//------------------------------------------------------Btn-------------------------------------------------------------
+%btn {
 
+}
+
+%btn-link{
+  display: block;
+  border: 1px solid $dark-text-200;
+  padding: 8px 20px;
+  text-decoration: none;
+  color: $dark-text-100;
+}
+
+%red-arrow{
+  padding-right: 20px;
+  position: relative;
+
+  &::after{
+    position: absolute;
+    content: url("./../img/icons/arrow.svg");
+    right: 0;
+  }
+}
 
 
 

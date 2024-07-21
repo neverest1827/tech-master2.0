@@ -9,7 +9,7 @@
     "build": "gulp build --build",
     "zip": "gulp deployZip --build",
     "deploy": "gulp deployFTP --build",
-    "svgSprive": "gulp svgSprive"
+    "svg-sprite": "gulp svgSprive"
   },
   "author": "Vitalii Fetisov",
   "license": "ISC",
@@ -45,7 +45,6 @@
     "webpack-stream": "^7.0.0"
   },
   "dependencies": {
-    "browser-sync": "^3.0.2",
-    "cs": "file:.."
+    "browser-sync": "^3.0.2"
   }
 }
