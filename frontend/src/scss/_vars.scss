@@ -4,8 +4,10 @@ $dark-primary-100:#2C3A4F;
 $dark-primary-200:#56647b;
 $dark-primary-300:#b4c2dc;
 $dark-accent-100:#FF4D4D;
+$dark-accent-100-hover: #d74646;
 $dark-accent-200:#ffecda;
 $dark-text-100:#FFFFFF;
+$dark-text-100-hover: #c0c0c0;
 $dark-text-200:#e0e0e0;
 $dark-bg-100:#1A1F2B;
 $dark-bg-200:#292e3b;
@@ -46,6 +48,28 @@ $dark-bg-300:#414654;
     position: absolute;
     content: url("./../img/icons/arrow.svg");
     right: 0;
+  }
+}
+
+%white-link{
+  text-decoration: none;
+  color: $dark-text-100;
+  transition: color .3s;
+
+  &:hover {
+    color: $dark-text-100-hover;
+    transition: color .3s;
+  }
+}
+
+%red-link{
+  text-decoration: none;
+  color: $dark-accent-100;
+  transition: color .3s;
+
+  &:hover {
+    color: $dark-accent-100-hover;
+    transition: color .3s;
   }
 }
 

@@ -1,5 +1,9 @@
 .header {
   background-color: $dark-bg-200;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 10;
 
   &__inner {
     height: 74px;
@@ -53,7 +57,8 @@
   }
 
   &__info-link {
-    color: $dark-accent-100;
+    @extend %red-link;
+    text-decoration: underline;
   }
 }
 
@@ -65,8 +70,7 @@
   }
 
   &__list-link {
-    text-decoration: none;
-    color: $dark-text-100;
+    @extend %white-link;
   }
 
   &__dropdown-btn {
@@ -76,6 +80,12 @@
     color: $dark-accent-100;
     cursor: pointer;
     position: relative;
+    transition: color .3s;
+
+    &:hover {
+      color: $dark-accent-100-hover;
+      transition: color .3s;
+    }
 
     &:after {
       position: absolute;
@@ -93,9 +103,15 @@
 }
 
 .dropdown {
-  display: none;
+  top: 74px;
+  right: 0;
+  left: 0;
+  position: absolute;
   background: linear-gradient(to right, $dark-primary-100 50%, $dark-bg-200 50%);
-  position: relative;
+  overflow: hidden;
+  height: 0;
+  opacity: .5;
+  transition: height .5s, opacity .8s;
 
   &::before,
   &::after {
@@ -118,11 +134,9 @@
   }
 
   &.dropdown--visible {
-    top: 74px;
-    right: 0;
-    left: 0;
-    position: absolute;
-    display: block;
+    height: 350px;
+    opacity: 1;
+    transition: height .5s, opacity .8s;
   }
 
   &__inner {
@@ -130,7 +144,7 @@
     justify-content: space-between;
     background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
     position: relative;
-    max-height: 363px;
+    max-height: 350px;
     height: 100%;
 
     &::before {
@@ -191,8 +205,11 @@
     align-items: center;
     gap: 5px;
     @extend %roboto-500;
-    text-decoration: none;
-    color: $dark-text-100;
+    @extend %white-link;
+
+    &:hover > svg {
+      color: $dark-text-200;
+    }
   }
 
   &__blog {
@@ -218,8 +235,7 @@
   &__blog-link {
     width: 135px;
     @extend %roboto-400;
-    color: $dark-text-100;
-    text-decoration: none;
+    @extend %white-link;
     @extend %red-arrow;
   }
 }
@@ -230,6 +246,10 @@
 
 .red-arrow {
   @extend %red-arrow;
+}
+
+.red-link {
+  @extend %red-link;
 }
 
 svg {
