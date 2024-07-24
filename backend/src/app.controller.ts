@@ -7,7 +7,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(@Res() res: Response): void {
+  getIndexPage(@Res() res: Response): void {
     return res.render('index.ejs');
   }
 }

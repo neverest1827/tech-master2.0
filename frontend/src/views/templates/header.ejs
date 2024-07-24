@@ -18,13 +18,13 @@
                         <li class="nav__list-item">
                             <a class="nav__list-link" href="/contacts">Контакты</a>
                         </li>
-                        <li class="nav__list-item">
-                            <button class="nav__dropdown-btn nav__dropdown-btn--active" type="button">Больше</button>
-                            <div class="nav__dropdown-content dropdown dropdown--visible">
+                        <li class="nav__list-item hamburger-menu">
+                            <button class="nav__dropdown-btn" type="button">Больше</button>
+                            <div class="nav__dropdown-content dropdown">
                                 <div class="container">
                                     <div class="dropdown__inner">
                                         <div class="dropdown__lists">
-                                            <ul class="dropdown__list dropdown__menu">
+                                            <ul class="dropdown__list dropdown__main-list dropdown__main-list--visible" data-self="main">
                                                 <li class="dropdown__list-item">
                                                     <a class="dropdown__list-link" href="">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="dropdown__list-item">
-                                                    <a class="dropdown__list-link services red-arrow" href="">
+                                                    <a class="dropdown__list-link services red-arrow" data-target="services" href="">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                              xmlns:xlink="http://www.w3.org/1999/xlink"
                                                              aria-hidden="true" role="img" class="iconify iconify--ic"
@@ -106,7 +106,7 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                            <ul class="dropdown__list dropdown__services-list dropdown__services-list--visible" data-self="services">
+                                            <ul class="dropdown__list dropdown__services-list" data-self="services">
                                                 <li class="dropdown__list-item">
                                                     <a class="dropdown__list-link red-arrow" data-target="pc" href="">
                                                         Ремонт компьютеров

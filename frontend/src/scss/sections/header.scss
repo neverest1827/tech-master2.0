@@ -8,6 +8,7 @@
   &__inner {
     height: 74px;
     display: flex;
+    gap: 10px;
     justify-content: space-between;
     align-items: center;
   }
@@ -144,8 +145,7 @@
     justify-content: space-between;
     background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
     position: relative;
-    max-height: 350px;
-    height: 100%;
+    height: 350px;
 
     &::before {
       content: "";
@@ -170,7 +170,7 @@
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     border-left: 1px solid $dark-accent-100;
     overflow-y: auto;
 
@@ -180,12 +180,17 @@
     }
   }
 
+  &__main-list {
+    width: 200px;
+    display: none;
+  }
+
   &__services-list,
   &__pc-list,
   &__laptop-list,
   &__laptop_models-list,
   &__monitor-list,
-  &__monoblock-list{
+  &__monoblock-list {
     width: 450px;
     display: none;
   }
@@ -195,14 +200,15 @@
   &__laptop-list--visible,
   &__laptop_models-list--visible,
   &__monitor-list--visible,
-  &__monoblock-list--visible{
+  &__monoblock-list--visible,
+  &__main-list--visible {
     display: flex;
   }
 
   &__list-link {
-    height: 25px;
     display: flex;
     align-items: center;
+    padding: 5px 0;
     gap: 5px;
     @extend %roboto-500;
     @extend %white-link;
@@ -216,7 +222,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 32px 96px 32px 32px;
+    padding: 32px 60px 32px 32px;
     background-color: $dark-bg-200;
   }
 
@@ -277,4 +283,161 @@ svg {
 ::-webkit-scrollbar-track {
   background: $dark-primary-100; /* Цвет фона области полосы прокрутки */
   border-radius: 5px; /* Закругленные края области полосы прокрутки */
+}
+
+@media (max-width: 1230px) {
+  .header {
+  }
+
+  .dropdown {
+    &__lists > &__list {
+      padding: 0 25px;
+    }
+
+    &__list {
+      width: 300px;
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+
+    &__main-list {
+      width: 150px;
+    }
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .header {
+    &__nav {
+      order: 1;
+    }
+
+    &__logo {
+      order: 2;
+    }
+
+    &__article {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+
+      &:first-child {
+        display: flex;
+        align-items: flex-start;
+      }
+    }
+
+  }
+
+  .dropdown {
+    &__lists > &__list {
+      padding-left: 0;
+    }
+
+    &__list {
+      width: 350px;
+      border-left: none;
+    }
+
+    .dropdown__blog{
+      padding: 32px 96px 32px 32px;
+    }
+  }
+
+  .nav {
+    &__list-item {
+      display: none;
+    }
+
+    &__dropdown-btn{
+      padding-right: 0;
+
+      & .burger-menu__top,
+      & .burger-menu__middle,
+      & .burger-menu__down {
+        transition: all .5s;
+      }
+
+      & .burger-menu__middle{
+        width: 18px;
+      }
+
+      &--active .burger-menu__top {
+        transform: translate(0px, 9px) rotate(45deg);
+        background-color: $dark-accent-100;
+      }
+
+      &--active .burger-menu__middle {
+        width: 0;
+      }
+
+      &--active .burger-menu__down {
+        transform: translate(0px, -9px) rotate(-45deg);
+        background-color: $dark-accent-100;
+      }
+
+      &:after {
+        display: none;
+      }
+    }
+  }
+
+  .hamburger-menu {
+    display: flex;
+    align-items: center;
+  }
+
+  .burger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 28px;
+
+    & > div {
+      width: 100%;
+      height: 2px;
+      background-color: $dark-text-100;
+      transition: all 0.3s;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    &__btn:first-child {
+      display: none;
+    }
+  }
+
+  .dropdown {
+    background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
+    .dropdown__blog{
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    &__inner{
+      gap: 10px;
+    }
+
+    &__wrapper {
+      gap: 10px;
+    }
+
+    &__btn {
+      padding: 5px 8px;
+    }
+  }
+
+  .dropdown__list {
+    width: 320px;
+  }
 }
