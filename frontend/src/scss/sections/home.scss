@@ -1,0 +1,78 @@
+.home{
+  background-color: $dark-bg-100;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  &__info-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__info{
+    color: $dark-text-100;
+    max-width: 570px;
+    width: 100%;
+  }
+
+  &__info-title{
+    @extend %roboto-700;
+    font-size: 56px;
+    margin-bottom: 24px;
+  }
+
+  &__info-text{
+    font-size: 18px;
+    color: $dark-text-200;
+    margin-bottom: 5px ;
+  }
+
+  &__info-links{
+    margin-top: 24px;
+    display: flex;
+    gap: 16px;
+  }
+
+  &__info-link{
+    @extend %btn-link;
+  }
+
+  &__carousel-box{
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  &__carousel {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s;
+  }
+
+  &__carousel-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 168px 0;
+    width: 320px;
+    color: $dark-text-100;
+    font-size: 60px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+  }
+}
+
+#home__carousel-left > div {
+  background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
+}
+#home__carousel-right > div {
+  background: linear-gradient(to left, $dark-primary-100, $dark-primary-200);
+  transform: translate(0, -2764px);
+}
+
+
