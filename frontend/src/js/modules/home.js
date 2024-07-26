@@ -1,39 +1,14 @@
-
-
-// Настройки наблюдателя
-const observerOptions = {
-    root: null, // Используем viewport как корень
-    rootMargin: '0px',
-    threshold: 0.5 // Секция должна быть на 50% видна, чтобы запустить код
-};
-
-// Функция обратного вызова для наблюдателя
-const observerCallback = async (entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            startCarousel('home__carousel-left', entry, false, 9, 2.5, 16, 5000)
-            startCarousel('home__carousel-right', entry, true, 9, 2.5, 16, 5000)
-        } else {
-            stopAnimation();
-        }
-    });
-};
-
-// Создаём наблюдателя
-export const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-async function startCarousel(elementId, entry, revers, countItems, countVisibleItems, gap, duration) {
+export function startCarousel(elementId, revers, countItems, countVisibleItems, gap, duration) {
     const track = document.getElementById(elementId);
-    const items = track.children
+    const items = track.children;
     const itemHeight = Math.floor(window.innerHeight / countVisibleItems);
-    const step = itemHeight + gap
+    const step = itemHeight + gap;
 
     for (let i = 0; i < items.length; i++) {
-        const item = items[i]
-        if (revers) item.style.transform = `translateY(-${(itemHeight + gap) * countItems - (itemHeight + gap) * countVisibleItems}px)`
+        const item = items[i];
+        if (revers) item.style.transform = `translateY(-${(itemHeight + gap) * countItems - (itemHeight + gap) * countVisibleItems}px)`;
         item.style.height = `${itemHeight}px`;
     }
-    let index = 0;
 
     function moveTrack() {
         if (revers) {
@@ -61,9 +36,16 @@ async function startCarousel(elementId, entry, revers, countItems, countVisibleI
         }
     }
 
-    if (entry.isIntersecting) {
-        setInterval(moveTrack, duration);
-    }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setInterval(moveTrack, duration);
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    observer.observe(track);
 }
 
 
