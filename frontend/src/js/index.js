@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         addDropdownServiceList(serviceList)
         deactivateServiceLink()
-        startCarousel('home__carousel-left', false, 9, 2.5, 16, 5000)
-        startCarousel('home__carousel-right', true, 9, 2.5, 16, 5000)
+        startCarousel('home__carousel-left', false, 9, 2.5, 16, 4000)
+        startCarousel('home__carousel-right', true, 9, 2.5, 16, 4000)
     }
 
     addMenuListener();

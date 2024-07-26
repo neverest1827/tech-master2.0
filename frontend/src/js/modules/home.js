@@ -19,7 +19,7 @@ export function startCarousel(elementId, revers, countItems, countVisibleItems, 
                 track.insertBefore(track.lastElementChild, track.firstElementChild);
                 track.style.transform = 'translateY(0)';
                 setTimeout(() => {
-                    track.style.transition = 'transform 0.5s ease';
+                    track.style.transition = 'transform 1.5s ease';
                 });
             }, { once: true });
         } else {
@@ -30,7 +30,7 @@ export function startCarousel(elementId, revers, countItems, countVisibleItems, 
                 track.appendChild(track.firstElementChild);
                 track.style.transform = 'translateY(0)';
                 setTimeout(() => {
-                    track.style.transition = 'transform 0.5s ease';
+                    track.style.transition = 'transform 1.5s ease';
                 });
             }, { once: true });
         }
