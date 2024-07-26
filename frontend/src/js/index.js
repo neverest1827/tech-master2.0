@@ -5,7 +5,7 @@ import {
     deactivateServiceLink, addDropdownServiceList, createHamburgerMenu
 } from "./modules/header.js";
 import {addModalListener} from "./modules/modal.js";
-import {observer, startCarousel, startCarousels} from "./modules/home.js";
+import {startCarousel} from "./modules/home.js";
 import {animateNumbers} from "./modules/trust.js";
 
 const deviceWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         addDropdownServiceList(serviceList)
         deactivateServiceLink()
-        observer.observe( document.querySelector('.header') )
+        startCarousel('home__carousel-left', false, 9, 2.5, 16, 5000)
+        startCarousel('home__carousel-right', true, 9, 2.5, 16, 5000)
     }
 
     addMenuListener();
