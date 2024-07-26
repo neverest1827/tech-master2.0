@@ -1,0 +1,51 @@
+.trust {
+  padding: 50px 0;
+  background-color: $dark-bg-200;
+
+  &__inner{
+    color: $dark-text-100;
+  }
+
+  &__top {
+    display: flex;
+    gap: 80px;
+    margin-bottom: 50px;
+  }
+
+  &__title{
+    @extend %roboto-700;
+    font-size: 40px;
+    width: 370px;
+  }
+
+  &__text {
+    @extend %roboto-400;
+    font-size: 18px;
+    color: $dark-text-200;
+    width: 100%;
+  }
+
+  &__info{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__info-item{
+    border-left: 2px solid $dark-accent-100;
+    padding-left: 32px;
+    max-width: 280px;
+    width: 100%;
+  }
+
+  &__info-value{
+    @extend %roboto-700;
+    font-size: 80px;
+  }
+
+  &__info-title{
+    @extend %roboto-700;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+}

@@ -6,6 +6,7 @@ import {
 } from "./modules/header.js";
 import {addModalListener} from "./modules/modal.js";
 import {observer, startCarousel, startCarousels} from "./modules/home.js";
+import {animateNumbers} from "./modules/trust.js";
 
 const deviceWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 document.addEventListener("DOMContentLoaded", () => {
@@ -18,7 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
         deactivateServiceLink()
         observer.observe( document.querySelector('.header') )
     }
+
     addMenuListener();
     addNavLinkListeners();
     addModalListener();
+    animateNumbers();
 })
