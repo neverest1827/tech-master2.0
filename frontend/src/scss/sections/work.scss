@@ -1,0 +1,51 @@
+.work {
+  padding: 100px 0;
+  background-color: $dark-bg-200;
+
+  &__title {
+    @extend %roboto-700;
+    font-size: 40px;
+    color: $dark-text-100;
+    margin-bottom: 50px;
+  }
+
+  &__list{
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+  &__list-item {
+    max-width: 280px;
+    width: 100%;
+  }
+
+  &__list-img{
+    height: 100px;
+    width: 150px;
+    margin-bottom: 20px;
+  }
+
+  &__list-title{
+    @extend %roboto-700;
+    font-size: 20px;
+    color: $dark-text-100;
+    margin-bottom: 20px;
+  }
+
+  &__list-description{
+    color: $dark-text-200;
+    margin-bottom: 20px;
+  }
+
+  &__list-link{
+    color: $dark-text-100;
+  }
+
+  &__list-btn{
+    @extend %roboto-700;
+    @extend %btn-link;
+    display: inline-block;
+    border-color: $dark-accent-100;
+  }
+}
