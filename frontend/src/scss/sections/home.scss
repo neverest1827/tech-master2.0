@@ -44,7 +44,7 @@
 
   &__carousel-box{
     display: flex;
-    justify-content: space-between;
+    width: 656px;
     gap: 16px;
   }
 
@@ -58,12 +58,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 168px 0;
-    width: 320px;
     color: $dark-text-100;
     font-size: 60px;
+    width: 320px;
     box-sizing: border-box;
     margin-bottom: 16px;
+    flex-shrink: 0;
   }
 }
 
@@ -72,7 +72,6 @@
 }
 #home__carousel-right > div {
   background: linear-gradient(to left, $dark-primary-100, $dark-primary-200);
-  transform: translate(0, -2764px);
 }
 
 

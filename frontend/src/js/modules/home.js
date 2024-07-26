@@ -11,8 +11,8 @@ const observerOptions = {
 const observerCallback = async (entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            startCarousel('home__carousel-left', entry, false)
-            startCarousel('home__carousel-right', entry, true)
+            startCarousel('home__carousel-left', entry, false, 9, 2.5, 16, 5000)
+            startCarousel('home__carousel-right', entry, true, 9, 2.5, 16, 5000)
         } else {
             stopAnimation();
         }
@@ -22,15 +22,22 @@ const observerCallback = async (entries, observer) => {
 // Создаём наблюдателя
 export const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-async function startCarousel(elementId, entry, revers) {
+async function startCarousel(elementId, entry, revers, countItems, countVisibleItems, gap, duration) {
     const track = document.getElementById(elementId);
     const items = track.children
-    const itemHeight = items[0].getBoundingClientRect().height + 16;
+    const itemHeight = Math.floor(window.innerHeight / countVisibleItems);
+    const step = itemHeight + gap
+
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i]
+        if (revers) item.style.transform = `translateY(-${(itemHeight + gap) * countItems - (itemHeight + gap) * countVisibleItems}px)`
+        item.style.height = `${itemHeight}px`;
+    }
     let index = 0;
 
     function moveTrack() {
         if (revers) {
-            track.style.transform = `translateY(${itemHeight}px)`;
+            track.style.transform = `translateY(${step}px)`;
 
             track.addEventListener('transitionend', () => {
                 track.style.transition = 'none';
@@ -41,7 +48,7 @@ async function startCarousel(elementId, entry, revers) {
                 });
             }, { once: true });
         } else {
-            track.style.transform = `translateY(-${itemHeight}px)`;
+            track.style.transform = `translateY(-${step}px)`;
 
             track.addEventListener('transitionend', () => {
                 track.style.transition = 'none';
@@ -55,7 +62,7 @@ async function startCarousel(elementId, entry, revers) {
     }
 
     if (entry.isIntersecting) {
-        setInterval(moveTrack, 2000);
+        setInterval(moveTrack, duration);
     }
 }
 
