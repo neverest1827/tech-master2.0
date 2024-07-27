@@ -11,7 +11,7 @@ export function animateWorkSection() {
             if (entry.isIntersecting) {
                 setTimeout(() => {
                     entry.target.classList.add('work__list-item--visible');
-                }, index * 1000); // задержка появления каждого элемента
+                }, index * 500); // задержка появления каждого элемента
                 observer.unobserve(entry.target); // Остановить наблюдение за элементом после его появления
             }
         });

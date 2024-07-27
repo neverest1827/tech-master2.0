@@ -1,0 +1,67 @@
+<section class="reviews">
+    <div class="container">
+        <div class="reviews__inner">
+            <h2 class="reviews__title">
+                Отзывы
+            </h2>
+            <p class="reviews__text">
+                Ваше мнение важно для нас
+            </p>
+        </div>
+        <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <% for (let i = 0; i < reviews.length; i += 2) { %>
+                    <div class="swiper-slide">
+                        <div class="review__wrapper">
+                            <div class="review__card">
+                                <div class="review__header">
+                                    <span class="review__name"><%= reviews[i].name %></span>
+                                    <span class="review__date"><%= reviews[i].date %></span>
+                                </div>
+                                <div class="review__stars">
+                                    <% for (let j = 0; j < reviews[i].stars; j++) { %>
+                                        <span class="review__star">&#9733;</span>
+                                    <% } %>
+                                    <% for (let j = reviews[i].stars; j < 5; j++) { %>
+                                        <span class="review__star review__stars-empty">&#9734;</span>
+                                    <% } %>
+                                </div>
+                                <div class="review__text">
+                                    "<%= reviews[i].text %>"
+                                </div>
+                                <a class="review__link" href="#" >Читать весь отзыв</a>
+                            </div>
+                            <% if (i + 1 < reviews.length) { %>
+                                <div class="review__card">
+                                    <div class="review__header">
+                                        <span class="review__name"><%= reviews[i + 1].name %></span>
+                                        <span class="review__date"><%= reviews[i + 1].date %></span>
+                                    </div>
+                                    <div class="review__stars">
+                                        <% for (let j = 0; j < reviews[i + 1].stars; j++) { %>
+                                            <span class="review__star">&#9733;</span>
+                                        <% } %>
+                                        <% for (let j = reviews[i + 1].stars; j < 5; j++) { %>
+                                            <span class="review__star review__star-empty">&#9734;</span>
+                                        <% } %>
+                                    </div>
+                                    <div class="review__text">
+                                        "<%= reviews[i + 1].text %>"
+                                    </div>
+                                    <a class="review__link" href="#" >Читать весь отзыв</a>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="reviews__links-box">
+            <a class="reviews__link reviews__link-btn" href="">Оставить отзыв</a>
+            <a class="reviews__link reviews__link-arrow" href="">Все отзывы</a>
+        </div>
+    </div>
+</section>

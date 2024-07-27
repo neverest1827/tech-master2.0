@@ -1,0 +1,110 @@
+.reviews {
+  background-color: $dark-bg-200;
+  padding: 100px 0;
+
+  &__title {
+    text-align: center;
+    @extend %roboto-700;
+    font-size: 48px;
+    color: $dark-text-100;
+    margin-bottom: 24px;
+  }
+
+  &__text {
+    text-align: center;
+    font-size: 18px;
+    color: $dark-text-200;
+    margin-bottom: 40px;
+  }
+
+  &__links-box{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__link{
+    display: inline-block;
+    color: $dark-text-100;
+    @extend %roboto-500;
+    @extend %white-link;
+  }
+
+  &__link-btn {
+    border-color: $dark-accent-100;
+    @extend %btn-link;
+  }
+
+  &__link-arrow{
+    text-decoration: none;
+    @extend %red-arrow;
+  }
+}
+
+.swiper {
+  width: 100%;
+  margin-bottom: 50px;
+
+  &-wrapper {
+    padding-bottom: 40px;
+  }
+
+  &-slide {
+    & .review__card{
+      border: 1px solid $dark-primary-200;
+      padding: 32px;
+      height: 180px;
+
+      &:first-child {
+        margin-bottom: 30px;
+      }
+    }
+
+    &:nth-child(even) .review__card {
+      height: 200px;
+    }
+  }
+
+  &-pagination{
+    & > .swiper-pagination-bullet {
+      background-color: $dark-accent-100;
+    }
+  }
+}
+
+.review {
+
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    color: $dark-text-100;
+  }
+
+  &__name{
+    @extend %roboto-500;
+  }
+
+  &__stars {
+    margin-bottom: 20px;
+  }
+
+  &__text {
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    color: $dark-text-200;
+    margin-bottom: 5px;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: $dark-accent-100;
+    @extend %red-arrow;
+    @extend %red-link;
+    @extend %roboto-700;
+  }
+}

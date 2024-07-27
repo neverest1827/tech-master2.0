@@ -8,6 +8,7 @@ import {addModalListener} from "./modules/modal.js";
 import {startCarousel} from "./modules/home.js";
 import {animateNumbers} from "./modules/trust.js";
 import {animateWorkSection} from "./modules/work.js";
+import {innitSwiper, swip} from "./modules/swiper.js";
 
 const deviceWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 document.addEventListener("DOMContentLoaded", () => {
@@ -27,4 +28,5 @@ document.addEventListener("DOMContentLoaded", () => {
     addModalListener();
     animateNumbers();
     animateWorkSection();
+    const swiper = innitSwiper('.swiper')
 })
