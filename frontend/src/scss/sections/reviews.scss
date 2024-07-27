@@ -90,6 +90,15 @@
     margin-bottom: 20px;
   }
 
+  &__star{
+    width: 20px;
+    height: 20px;
+  }
+
+  &__star-empty > path{
+    fill: $dark-accent-200;
+  }
+
   &__text {
     display: -webkit-box;
     text-overflow: ellipsis;
