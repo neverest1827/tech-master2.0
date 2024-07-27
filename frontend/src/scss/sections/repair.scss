@@ -59,6 +59,10 @@
     gap: 20px;
   }
 
+  &__info-item{
+    border: 1px solid $dark-primary-300;
+  }
+
   &__info-pc,
   &__info-laptop{
     grid-column: span 2;

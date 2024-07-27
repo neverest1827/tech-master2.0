@@ -33,10 +33,10 @@
     padding: 32px;
     max-width: 587px;
     border: 1px solid $dark-primary-300;
-    background: linear-gradient(to left, $dark-primary-100, $dark-primary-200);
+    background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
 
     &:nth-child(even){
-      background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
+      background: linear-gradient(to left, $dark-primary-100, $dark-primary-200);
     }
   }
 

@@ -12,12 +12,19 @@
   &__list{
     display: flex;
     justify-content: space-between;
-
   }
 
   &__list-item {
     max-width: 280px;
     width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .5s ease-out, transform .5s ease-out;
+
+    &--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   &__list-img{
