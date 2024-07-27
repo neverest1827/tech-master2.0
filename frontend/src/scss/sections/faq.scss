@@ -1,0 +1,74 @@
+.faq {
+  padding: 100px 0;
+  background-color: $dark-bg-200;
+
+  &__title{
+    @extend %roboto-700;
+    font-size: 48px;
+    color: $dark-text-100;
+    margin-bottom: 24px;
+  }
+
+  &__text{
+    color: $dark-text-200;
+    margin-bottom: 20px;
+  }
+
+  &__list {
+    margin-bottom: 50px;
+  }
+
+  &__list-item{
+    border-top: 1px solid $dark-primary-200;
+
+    &:last-child {
+      border-bottom: 1px solid $dark-primary-200;;
+    }
+  }
+
+  &__list-title{
+    @extend %roboto-700;
+    padding: 20px 0;
+    font-size: 18px;
+    cursor: pointer;
+    color: $dark-text-100;
+
+    &::after {
+      transform: rotate(90deg) scale(1, 1);
+      transition: all 0.3s;
+    }
+
+    &--active::after{
+      transform: rotate(90deg) scale(-1, 1);
+    }
+  }
+
+  &__list-answer{
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    color: $dark-text-200;
+    padding-bottom: 0;
+    transition: all .3s;
+
+    &--visible {
+      max-height: 200px;
+      opacity: 1;
+      padding-bottom: 20px;
+      transition: all .5s;
+    }
+  }
+
+  &__subtitle{
+    font-size: 32px;
+    color: $dark-text-100;
+    margin-bottom: 16px;
+  }
+
+  &__link-btn{
+    display: inline-block;
+    @extend %white-link;
+    @extend %btn-link;
+    border-color: $dark-accent-100;
+  }
+}
