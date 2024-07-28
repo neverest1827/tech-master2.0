@@ -1,3 +1,83 @@
 .footer {
+  padding: 50px 0;
+  background-color: $dark-bg-100;
 
+  &__top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $dark-primary-200;
+  }
+
+  &__nav-list {
+    display: flex;
+    gap: 32px;
+  }
+
+  &__item-link{
+    @extend %white-link;
+    @extend %roboto-700;
+    color: $dark-text-100;
+  }
+
+  &__social-list{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__social-link {
+    & path {
+      fill: $dark-accent-100;
+      transition: all .3s;
+    }
+
+    &:hover path {
+      fill: $dark-accent-100-hover;
+    }
+
+    & g > path {
+      fill: transparent;
+      stroke: $dark-accent-100;
+      transition: all .3s;
+    }
+
+    &:hover g > path {
+      fill: transparent;
+      stroke: $dark-accent-100-hover;
+    }
+  }
+
+  &__social-item:nth-child(even) svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  &__social-link > svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  &__bottom {
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding-top: 20px;
+  }
+
+  &__text{
+    display: inline-block;
+    color: $dark-text-100;
+  }
+
+  &__link{
+    color: $dark-text-200;
+    transition: color .3s;
+
+    &:hover {
+      color: $dark-text-100;
+    }
+  }
 }
