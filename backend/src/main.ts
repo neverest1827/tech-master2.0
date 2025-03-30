@@ -16,17 +16,15 @@ async function bootstrap() {
   if (process.env.NODE_ENV === 'dev') {
     console.log('Dev mode: Проксируем статику из Vite');
 
-    // Проксируем запросы на Vite Dev Server
-    app.use('/static', createProxyMiddleware({
+    app.use('/public', createProxyMiddleware({
       target: 'http://localhost:5173',
       changeOrigin: true,
-      pathRewrite: { '^/static': '' }, // Убираем /static из пути
+      pathRewrite: { '^/public': '' },
     }));
   } else {
     console.log('Production mode: раздаем статику из билда');
 
-    // В продакшене отдаем статику из билда Vite
-    app.use('/static', express.static(join(__dirname, 'static')));
+    app.use('/public', express.static(join(__dirname, 'public')));
   }
 
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
