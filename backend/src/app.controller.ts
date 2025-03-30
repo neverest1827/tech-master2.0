@@ -6,12 +6,11 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Render('index') // Рендерим index.ejs
-  root() {
+  @Render('index')
+  getIndexPage() {
     return {
       title: 'Главная страница',
-      username: 'Гость',
-      env: process.env.NODE_ENV // Передаем переменную окружения
+      env: process.env.NODE_ENV
     };
   }
 }
