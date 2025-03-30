@@ -1,6 +1,5 @@
 //Импорты стилей
 import './styles/main.scss'
 
-//Импорты изображений
-
 //Импорты скриптов
+import './scripts/index.ts'
