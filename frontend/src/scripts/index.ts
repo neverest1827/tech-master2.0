@@ -6,6 +6,7 @@ import {
     addDropdownServiceList,
     createBurgerMenu
 } from "./header";
+import {startCarousel} from "./home";
 
 (() => {
     // Определяем, является ли ширина экрана 1024px или меньше
@@ -21,6 +22,8 @@ import {
         } else {
             addDropdownServiceList(serviceList);
             deactivateServiceLink();
+            startCarousel('home__carousel-left', false, 9, 2.5, 16, 4000)
+            startCarousel('home__carousel-right', true, 9, 2.5, 16, 4000)
         }
 
         // Добавляем слушатели событий
