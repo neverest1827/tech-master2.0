@@ -1,0 +1,258 @@
+@use "../vars" as *;
+
+.repair{
+  background-color: $dark-bg-100;
+  padding: 100px 0;
+
+  &__title{
+    text-align: center;
+    margin: 0 auto 50px;
+    @extend %roboto-700;
+    font-size: 48px;
+    color: $dark-text-100;
+    max-width: 750px;
+  }
+
+  &__info-wrapper{
+    padding: 24px;
+  }
+
+  &__info-pc &__info-wrapper,
+  &__info-laptop &__info-wrapper {
+    color: $dark-text-100;
+    padding: 48px;
+  }
+
+  &__info-title {
+    @extend %roboto-500;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: $dark-text-100;
+  }
+
+  &__info-text {
+    @extend %roboto-400;
+    font-size: 16px;
+    color: $dark-text-200;
+    margin-bottom: 15px;
+  }
+
+  &__info-link{
+    display: inline-block;
+    @extend %roboto-500;
+    @extend %red-arrow;
+    @extend %white-link;
+    text-decoration: none;
+    color: $dark-text-100;
+  }
+
+  &__info-box{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 20px;
+  }
+
+  &__info-pc {
+    grid-area: 3 / 2 / 6 / 3;
+  }
+
+  &__info-laptop{
+    grid-area: 1 / 1 / 4 / 2;
+  }
+
+  &__info-monoblock{
+    grid-area: 1 / 2 / 3 / 3;
+  }
+
+  &__info-monitor{
+    grid-area: 4 / 1 / 6 / 2;
+  }
+
+  &__info-item{
+    border: 1px solid $dark-primary-300;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__info-pc &__info-title,
+  &__info-laptop &__info-title {
+    font-size: 48px;
+  }
+
+  &__info-laptop {
+    background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
+    flex-direction: column;
+
+    & .repair__info-img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__info-monoblock{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to left, $dark-primary-100, $dark-primary-200);
+
+    & .repair__info-img {
+      width: 60%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__info-pc{
+    flex-direction: column;
+    background: linear-gradient(to left, $dark-primary-100, $dark-primary-200);
+
+    & .repair__info-img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__info-monitor{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
+
+    & .repair__info-img {
+      width: 60%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .repair{
+    &__info-box{
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(4, 1fr);
+    }
+
+    &__info-pc {
+      grid-area: 3 / 1 / 4 / 2;
+    }
+
+    &__info-laptop{
+      grid-area: 1 / 1 / 2 / 2;
+    }
+
+    &__info-monoblock{
+      grid-area: 2 / 1 / 3 / 2;
+    }
+
+    &__info-monitor{
+      grid-area: 4 / 1 / 5 / 2;
+    }
+
+    &__info-laptop {
+      flex-direction: row;
+
+      & .repair__info-img {
+        width: 50%;
+        object-fit: cover;
+      }
+    }
+
+    &__info-pc{
+      flex-direction: row;
+
+      & .repair__info-img {
+        width: 50%;
+      }
+    }
+
+    &__info-monoblock .repair__info-img {
+      width: 50%;
+    }
+
+    &__info-monitor .repair__info-img {
+      width: 50%;
+    }
+
+    &__info-wrapper {
+      width: 50%;
+      height: 100%;
+      padding: 48px;
+    }
+
+    &__info-title {
+      font-size: 48px;
+    }
+  }
+}
+
+@media (max-width: 849px) {
+  .repair{
+    padding: 70px 0;
+
+    &__title {
+      font-size: 42px;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .repair{
+    padding: 50px 0;
+
+    &__title {
+      font-size: 36px;
+      margin-bottom: 20px;
+      max-width: 500px;
+    }
+
+    &__info-box .repair__info-wrapper {
+      padding: 20px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .repair{
+    &__info-box .repair__info-title {
+      font-size: 36px;
+    }
+  }
+}
+
+@media (max-width: 479px) {
+  .repair{
+    &__title {
+      font-size: 32px;
+    }
+
+    &__info-box .repair__info-laptop,
+    &__info-box .repair__info-pc,
+    &__info-box .repair__info-monoblock,
+    &__info-box .repair__info-monitor {
+      flex-direction: column;
+      justify-content: start;
+    }
+
+    &__info-box .repair__info-wrapper {
+      width: 100%;
+      height: fit-content;
+    }
+
+    &__info-box .repair__info-img {
+      width: 100%;
+      height: 250px;
+    }
+
+    &__info-laptop > .repair__info-img,
+    &__info-pc > .repair__info-img,{
+      order: -1;
+    }
+
+    &__info-box .repair__info-title {
+      font-size: 32px;
+    }
+  }
+}
