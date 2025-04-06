@@ -1,0 +1,33 @@
+<section class="faq">
+    <div class="container">
+        <div class="faq__inner">
+            <h2 class="faq__title">
+                FAQs
+            </h2>
+            <p class="faq__text">
+                Ни один ваш вопрос не останется без ответа
+            </p>
+            <ul class="faq__list">
+                <% questions.forEach(question => { %>
+                <li class="faq__list-item">
+                    <h5 class="faq__list-title red-arrow">
+                        <%= question.title %>
+                    </h5>
+                    <p class="faq__list-answer">
+                        <%= question.answer %>
+                    </p>
+                </li>
+                <% }) %>
+            </ul>
+            <h4 class="faq__subtitle">
+                У вас остались вопросы?
+            </h4>
+            <p class="faq__text">
+                Давайте это исправим. Свяжетесь с нами.
+            </p>
+            <a class="faq__link-btn" href="">
+                Контакты
+            </a>
+        </div>
+    </div>
+</section>
