@@ -14,5 +14,8 @@
     "typescript": "~5.7.2",
     "vite": "^6.2.0",
     "vite-plugin-static-copy": "^2.3.0"
+  },
+  "dependencies": {
+    "swiper": "^11.2.6"
   }
 }

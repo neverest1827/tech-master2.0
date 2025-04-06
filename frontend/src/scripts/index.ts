@@ -9,6 +9,7 @@ import {
 import { startCarousel } from "./home";
 import { animateNumbers } from "./trust";
 import { animateWorkSection } from "./work.ts";
+import { innitSwiper } from "./reviews";
 
 (() => {
     // Определяем, является ли ширина экрана 1024px или меньше
@@ -33,5 +34,6 @@ import { animateWorkSection } from "./work.ts";
         addNavLinkListeners();
         animateNumbers();
         animateWorkSection()
+        innitSwiper('.swiper');
     });
 })();
