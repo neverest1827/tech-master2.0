@@ -28,6 +28,16 @@
 
   &__btn {
     @extend %btn-link;
+    transition: all .3s;
+
+    &:hover {
+      color: $dark-text-100-hover;
+    }
+
+    &:hover.red {
+      color: $dark-text-100;
+      background-color: $dark-accent-100-hover;
+    }
   }
 
   &__article {
@@ -190,9 +200,30 @@
   &__services-list,
   &__pc-list,
   &__laptop-list,
-  &__laptop_models-list,
   &__monitor-list,
-  &__monoblock-list {
+  &__components-list,
+  &__os-list,
+  &__drivers-list,
+  &__programs-list,
+  &__antivirus-list,
+  &__data-list,
+  &__monoblock-list,
+  &__laptop-models-list,
+  &__replacement-components-pc-list,
+  &__repair-components-pc-list,
+  &__cleaning-pc-list,
+  &__upgrading-pc-list,
+  &__cleaning-laptop-list,
+  &__replacement-components-laptop-list,
+  &__repair-components-laptop-list,
+  &__cleaning-monoblock-list,
+  &__replacement-components-monoblock-list,
+  &__repair-components-monoblock-list,
+  &__replacement-components-monitor-list,
+  &__monitor-models-list,
+  &__install-os-list,
+  &__install-windows-list,
+  &__storage-media-list {
     width: 450px;
     display: none;
   }
@@ -200,10 +231,31 @@
   &__services-list--visible,
   &__pc-list--visible,
   &__laptop-list--visible,
-  &__laptop_models-list--visible,
+  &__laptop-models-list--visible,
   &__monitor-list--visible,
   &__monoblock-list--visible,
-  &__main-list--visible {
+  &__components-list--visible,
+  &__os-list--visible,
+  &__drivers-list--visible,
+  &__programs-list--visible,
+  &__antivirus-list--visible,
+  &__data-list--visible,
+  &__main-list--visible,
+  &__replacement-components-pc-list--visible,
+  &__repair-components-pc-list--visible,
+  &__cleaning-pc-list--visible,
+  &__upgrading-pc-list--visible,
+  &__cleaning-laptop-list--visible,
+  &__replacement-components-laptop-list--visible,
+  &__repair-components-laptop-list--visible,
+  &__cleaning-monoblock-list--visible,
+  &__replacement-components-monoblock-list--visible,
+  &__repair-components-monoblock-list--visible,
+  &__install-os-list--visible,
+  &__install-windows-list--visible,
+  &__monitor-models-list--visible,
+  &__replacement-components-monitor-list--visible,
+  &__storage-media-list--visible {
     display: flex;
   }
 
