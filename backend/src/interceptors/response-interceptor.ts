@@ -10,9 +10,15 @@ interface ApiResponse<T> {
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler): Observable<ApiResponse<T>> {
+        const request = context.switchToHttp().getRequest();
+
+        // Проверяем, если это запрос на рендеринг (например, метод GET с типом 'text/html')
+        if (request.headers['accept'] && request.headers['accept'].includes('text/html')) {
+            return next.handle();
+        }
+
         return next.handle().pipe(
             map((data) => {
-                // Если данные пустые, можно вернуть просто success: true
                 return {
                     success: true,
                     data: data || null,
