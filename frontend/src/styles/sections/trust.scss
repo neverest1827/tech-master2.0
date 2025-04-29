@@ -17,7 +17,7 @@
   &__title{
     @extend %roboto-700;
     font-size: 40px;
-    width: 370px;
+    white-space: nowrap;
   }
 
   &__text {
@@ -53,7 +53,7 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1199px) {
   .trust {
     &__info-item {
       max-width: 50%;
@@ -83,7 +83,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .trust {
     padding: 50px 0 30px;
 
@@ -100,17 +100,13 @@
     }
 
     &__text {
-      font-size: 16px;
+      display: none;
     }
   }
 }
 
 @media (max-width: 600px) {
   .trust {
-    &__text {
-      display: none;
-    }
-
     &__info-item {
       padding-left: 15px;
       max-width: 250px;
@@ -140,11 +136,7 @@
     &__title {
       font-size: 32px;
     }
-  }
-}
 
-@media (max-width: 440px) {
-  .trust {
     &__info-item {
       max-width: 250px;
       padding-left: 20px;
