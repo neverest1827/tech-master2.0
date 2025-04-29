@@ -18,7 +18,7 @@ package-lock.json
 /backend/dist
 /backend/node_modules
 /backend/build
-/backend/static/
+/backend/public/
 /backend/package-lock.json
 /backend/.prettierrc
 /backend/.eslintcache

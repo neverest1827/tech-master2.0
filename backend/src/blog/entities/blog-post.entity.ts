@@ -24,10 +24,10 @@ export class BlogPost {
     description: string;
 
     @Column({ nullable: true })
-    previewImage: string;
+    previewImageURL: string;
 
     @Column({ nullable: true })
-    ogImage: string;
+    ogImageURL: string;
 
     @Column({ nullable: true })
     metaTitle: string;

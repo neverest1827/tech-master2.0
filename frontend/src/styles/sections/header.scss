@@ -1,0 +1,506 @@
+@use "../vars" as *;
+
+.header {
+  background-color: $dark-bg-200;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  &__inner {
+    height: 74px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__btn {
+    @extend %btn-link;
+    transition: all .3s;
+
+    &:hover {
+      color: $dark-text-100-hover;
+    }
+
+    &:hover.red {
+      color: $dark-text-100;
+      background-color: $dark-accent-100-hover;
+    }
+  }
+}
+
+.nav {
+  &__list {
+    @extend %roboto-700;
+    display: flex;
+    gap: 25px;
+  }
+
+  &__list-link {
+    @extend %white-link;
+  }
+
+  &__dropdown-btn {
+    padding: 0 20px 0 0;
+    border: none;
+    background-color: transparent;
+    color: $dark-accent-100;
+    cursor: pointer;
+    position: relative;
+    transition: color .3s;
+
+    &:hover {
+      color: $dark-accent-100-hover;
+      transition: color .3s;
+    }
+
+    &:after {
+      position: absolute;
+      right: 0;
+      content: url(/public/img/icons/arrow.svg);
+      transform: rotate(90deg) scale(1, 1);
+      transition: all .3s;
+    }
+  }
+
+  &__dropdown-btn--active:after {
+    transform: rotate(90deg) scale(-1, 1);
+    transition: all .3s;
+  }
+}
+
+.dropdown {
+  top: 74px;
+  right: 0;
+  left: 0;
+  position: absolute;
+  background: linear-gradient(to right, $dark-primary-100 50%, $dark-bg-200 50%);
+  overflow: hidden;
+  height: 0;
+  opacity: .5;
+  transition: height .5s, opacity .8s;
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+    right: 0;
+    left: 0;
+  }
+
+  &::before {
+    height: 2px;
+    top: 0;
+    background: linear-gradient(to right, $dark-primary-100 50%, $dark-primary-200 50%);
+  }
+
+  &::after {
+    height: 2px;
+    bottom: 0;
+    background-color: $dark-bg-200;
+  }
+
+  &.dropdown--visible {
+    height: 350px;
+    opacity: 1;
+    transition: height .5s, opacity .8s;
+  }
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
+    position: relative;
+    height: 350px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
+    }
+  }
+
+  &__lists {
+    padding: 30px 0;
+    display: flex;
+  }
+
+  &__lists > &__list {
+    padding: 0 50px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-left: 1px solid $dark-accent-100;
+    overflow-y: auto;
+
+    &:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+
+  &__main-list {
+    width: 200px;
+    display: none;
+  }
+
+  &__services-list,
+  &__pc-list,
+  &__laptop-list,
+  &__monitor-list,
+  &__components-list,
+  &__os-list,
+  &__drivers-list,
+  &__programs-list,
+  &__antivirus-list,
+  &__data-list,
+  &__monoblock-list,
+  &__laptop-models-list,
+  &__replacement-components-pc-list,
+  &__repair-components-pc-list,
+  &__cleaning-pc-list,
+  &__upgrading-pc-list,
+  &__cleaning-laptop-list,
+  &__replacement-components-laptop-list,
+  &__repair-components-laptop-list,
+  &__cleaning-monoblock-list,
+  &__replacement-components-monoblock-list,
+  &__repair-components-monoblock-list,
+  &__replacement-components-monitor-list,
+  &__monitor-models-list,
+  &__install-os-list,
+  &__install-windows-list,
+  &__storage-media-list {
+    width: 450px;
+    display: none;
+  }
+
+  &__services-list--visible,
+  &__pc-list--visible,
+  &__laptop-list--visible,
+  &__laptop-models-list--visible,
+  &__monitor-list--visible,
+  &__monoblock-list--visible,
+  &__components-list--visible,
+  &__os-list--visible,
+  &__drivers-list--visible,
+  &__programs-list--visible,
+  &__antivirus-list--visible,
+  &__data-list--visible,
+  &__main-list--visible,
+  &__replacement-components-pc-list--visible,
+  &__repair-components-pc-list--visible,
+  &__cleaning-pc-list--visible,
+  &__upgrading-pc-list--visible,
+  &__cleaning-laptop-list--visible,
+  &__replacement-components-laptop-list--visible,
+  &__repair-components-laptop-list--visible,
+  &__cleaning-monoblock-list--visible,
+  &__replacement-components-monoblock-list--visible,
+  &__repair-components-monoblock-list--visible,
+  &__install-os-list--visible,
+  &__install-windows-list--visible,
+  &__monitor-models-list--visible,
+  &__replacement-components-monitor-list--visible,
+  &__storage-media-list--visible {
+    display: flex;
+  }
+
+  &__list-link {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    gap: 5px;
+    @extend %roboto-500;
+    @extend %white-link;
+
+    &:hover > svg {
+      color: $dark-text-200;
+    }
+  }
+
+  &__blog {
+    display: flex;
+    max-width: 526px;
+    width: 100%;
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px 60px 32px 32px;
+    background-color: $dark-bg-200;
+  }
+
+  &__blog-title {
+    color: $dark-text-100;
+    font-size: 16px;
+    @extend %roboto-500;
+  }
+
+  &__blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__blog-link {
+    width: 135px;
+    @extend %roboto-400;
+    @extend %white-link;
+    @extend %red-arrow;
+  }
+
+  &__article {
+    display: flex;
+    gap: 24px;
+  }
+
+  &__article-item {
+    color: $dark-text-100;
+  }
+
+  &__article-img {
+    width: 160px;
+    height: 105px;
+    border: 1px solid $dark-accent-200;
+  }
+
+  &__article-description {
+    width: 250px;
+    @extend %roboto-400;
+    font-size: 14px;
+    color: $dark-text-200;
+    margin-bottom: 5px;
+  }
+
+  &__article-title {
+    @extend %roboto-500;
+    @extend %white-link;
+    color: $dark-text-100;
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+
+  &__article-link {
+    font-size: 14px;
+    @extend %red-link;
+  }
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.red {
+  background-color: $dark-accent-100;
+}
+
+.red-arrow {
+  @extend %red-arrow;
+}
+
+.red-link {
+  @extend %red-link;
+}
+
+svg {
+  color: $dark-text-100;
+  width: 25px;
+  height: 25px;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $dark-primary-300;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: $dark-primary-200;
+}
+
+/* Стили для области полосы прокрутки */
+::-webkit-scrollbar-track {
+  background: $dark-primary-100; /* Цвет фона области полосы прокрутки */
+  border-radius: 5px; /* Закругленные края области полосы прокрутки */
+}
+
+@media (max-width: 1230px) {
+  .header {
+  }
+
+  .dropdown {
+    &__lists > &__list {
+      padding: 0 25px;
+    }
+
+    &__list {
+      width: 300px;
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+
+    &__main-list {
+      width: 150px;
+    }
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .header {
+    &__nav {
+      order: 1;
+    }
+
+    &__logo {
+      order: 2;
+    }
+  }
+
+  .dropdown {
+    &__lists > &__list {
+      padding-left: 0;
+    }
+
+    &__list {
+      width: 350px;
+      border-left: none;
+    }
+
+    &__blog{
+      max-width: 50%;
+      padding: 32px 96px 32px 32px;
+    }
+
+    &__article {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+
+      &:first-child {
+        display: flex;
+        align-items: flex-start;
+      }
+    }
+  }
+
+  .nav {
+    &__list-item {
+      display: none;
+    }
+
+    &__dropdown-btn{
+      padding-right: 0;
+
+      & .burger-menu__top,
+      & .burger-menu__middle,
+      & .burger-menu__down {
+        transition: all .5s;
+      }
+
+      & .burger-menu__middle{
+        width: 18px;
+      }
+
+      &--active .burger-menu__top {
+        transform: translate(0px, 9px) rotate(45deg);
+        background-color: $dark-accent-100;
+      }
+
+      &--active .burger-menu__middle {
+        width: 0;
+      }
+
+      &--active .burger-menu__down {
+        transform: translate(0px, -9px) rotate(-45deg);
+        background-color: $dark-accent-100;
+      }
+
+      &:after {
+        display: none;
+      }
+    }
+  }
+
+  .hamburger-menu {
+    display: flex;
+    align-items: center;
+  }
+
+  .burger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 28px;
+
+    & > div {
+      width: 100%;
+      height: 2px;
+      background-color: $dark-text-100;
+      transition: all 0.3s;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    &__btn:first-child {
+      display: none;
+    }
+  }
+
+  .dropdown {
+    background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
+    .dropdown__blog{
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    &__inner{
+      gap: 10px;
+    }
+
+    &__wrapper {
+      gap: 10px;
+    }
+
+    &__btn {
+      padding: 5px 8px;
+    }
+  }
+
+  .dropdown__list {
+    width: 320px;
+  }
+}
