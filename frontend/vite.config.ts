@@ -3,7 +3,7 @@ import * as path from 'path';
 
 export default defineConfig({
     build: {
-        outDir: path.resolve(__dirname, '../backend/src/static'), // Кладем билд в backend
+        outDir: path.resolve(__dirname, '../backend/src/public'), // Кладем билд в backend
         emptyOutDir: true,
     }
 });
