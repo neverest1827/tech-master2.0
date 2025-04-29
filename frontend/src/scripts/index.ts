@@ -6,7 +6,8 @@ import {
     addDropdownServiceList,
     createBurgerMenu
 } from "./header";
-import {startCarousel} from "./home";
+import { startCarousel } from "./home";
+import { animateNumbers } from "./trust";
 
 (() => {
     // Определяем, является ли ширина экрана 1024px или меньше
@@ -29,5 +30,6 @@ import {startCarousel} from "./home";
         // Добавляем слушатели событий
         addMenuListener();
         addNavLinkListeners();
+        animateNumbers();
     });
 })();

@@ -1,0 +1,147 @@
+@use "../vars" as *;
+
+.trust {
+  padding: 100px 0 80px;
+  background-color: $dark-bg-200;
+
+  &__inner{
+    color: $dark-text-100;
+  }
+
+  &__top {
+    display: flex;
+    gap: 80px;
+    margin-bottom: 50px;
+  }
+
+  &__title{
+    @extend %roboto-700;
+    font-size: 40px;
+    white-space: nowrap;
+  }
+
+  &__text {
+    @extend %roboto-400;
+    font-size: 18px;
+    color: $dark-text-200;
+    width: 100%;
+  }
+
+  &__info{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__info-item{
+    border-left: 2px solid $dark-accent-100;
+    padding-left: 32px;
+    max-width: 280px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  &__info-value{
+    @extend %roboto-700;
+    font-size: 80px;
+  }
+
+  &__info-title{
+    @extend %roboto-700;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .trust {
+    &__info-item {
+      max-width: 50%;
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .trust {
+    padding: 70px 0 50px;
+
+    &__top {
+      margin-bottom: 30px;
+    }
+
+    &__info-item {
+      max-width: 350px;
+    }
+
+    &__info-value {
+      font-size: 60px;
+    }
+
+    &__text {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .trust {
+    padding: 50px 0 30px;
+
+    &__info-item {
+      max-width: 280px;
+    }
+
+    &__info-value {
+      font-size: 48px;
+    }
+
+    &__info-title {
+      font-size: 16px;
+    }
+
+    &__text {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .trust {
+    &__info-item {
+      padding-left: 15px;
+      max-width: 250px;
+    }
+
+    &__info-value {
+      margin-bottom: 5px;
+    }
+  }
+}
+
+@media (max-width: 530px) {
+  .trust {
+
+    &__info-item {
+      max-width: 200px;
+    }
+
+    &__info-value {
+      font-size: 42px;
+    }
+  }
+}
+
+@media (max-width: 440px) {
+  .trust {
+    &__title {
+      font-size: 32px;
+    }
+
+    &__info-item {
+      max-width: 250px;
+      padding-left: 20px;
+    }
+  }
+}
+
+
