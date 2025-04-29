@@ -39,40 +39,6 @@
       background-color: $dark-accent-100-hover;
     }
   }
-
-  &__article {
-    display: flex;
-    gap: 24px;
-  }
-
-  &__article-img {
-    width: 160px;
-    height: 105px;
-    border: 1px solid $dark-accent-200;
-  }
-
-  &__article-info {
-    width: 250px;
-    @extend %roboto-400;
-    font-size: 14px;
-  }
-
-  &__info-title {
-    @extend %roboto-500;
-    color: $dark-text-100;
-    font-size: 16px;
-    margin-bottom: 4px;
-  }
-
-  &__info-description {
-    color: $dark-text-200;
-    margin-bottom: 8px;
-  }
-
-  &__info-link {
-    @extend %red-link;
-    text-decoration: underline;
-  }
 }
 
 .nav {
@@ -274,6 +240,8 @@
 
   &__blog {
     display: flex;
+    max-width: 526px;
+    width: 100%;
     flex-direction: column;
     gap: 16px;
     padding: 32px 60px 32px 32px;
@@ -282,7 +250,7 @@
 
   &__blog-title {
     color: $dark-text-100;
-    font-size: 14px;
+    font-size: 16px;
     @extend %roboto-500;
   }
 
@@ -298,6 +266,47 @@
     @extend %white-link;
     @extend %red-arrow;
   }
+
+  &__article {
+    display: flex;
+    gap: 24px;
+  }
+
+  &__article-item {
+    color: $dark-text-100;
+  }
+
+  &__article-img {
+    width: 160px;
+    height: 105px;
+    border: 1px solid $dark-accent-200;
+  }
+
+  &__article-description {
+    width: 250px;
+    @extend %roboto-400;
+    font-size: 14px;
+    color: $dark-text-200;
+    margin-bottom: 5px;
+  }
+
+  &__article-title {
+    @extend %roboto-500;
+    @extend %white-link;
+    color: $dark-text-100;
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+
+  &__article-link {
+    font-size: 14px;
+    @extend %red-link;
+  }
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .red {
@@ -372,19 +381,6 @@ svg {
     &__logo {
       order: 2;
     }
-
-    &__article {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-
-      &:first-child {
-        display: flex;
-        align-items: flex-start;
-      }
-    }
-
   }
 
   .dropdown {
@@ -397,8 +393,21 @@ svg {
       border-left: none;
     }
 
-    .dropdown__blog{
+    &__blog{
+      max-width: 50%;
       padding: 32px 96px 32px 32px;
+    }
+
+    &__article {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+
+      &:first-child {
+        display: flex;
+        align-items: flex-start;
+      }
     }
   }
 
