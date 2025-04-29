@@ -1168,57 +1168,53 @@
                                             </ul>
                                         </div>
                                         <div class="dropdown__blog">
-                                            <h3 class="dropdown__blog-title">Новые статьи</h3>
-                                            <ul class="dropdown__blog-list">
-                                                <!--TODO переделать в шаблон для генерации с бд -->
-                                                <li class="dropdown__blog-item header__article">
-                                                    <img class="header__article-img" src="" alt="img">
-                                                    <ul class="header__article-info header__info-list">
-                                                        <li class="header__info-item">
-                                                            <a class="header__info-title-link" href="">
-                                                                <h4 class="header__info-title">
-                                                                    Lorem ipsum dolor sit amet.
-                                                                </h4>
+                                            <% if (blogPosts.length) { %>
+                                            <% const MAX_TITLE_LENGTH = 25%>
+                                            <% const MAX_DESCRIPTION_LENGTH = 100%>
+                                                <h3 class="dropdown__blog-title">Новые статьи</h3>
+                                                <ul class="dropdown__blog-list">
+                                                    <% blogPosts.forEach(blog => { %>
+                                                        <li class="dropdown__blog-item dropdown__article">
+                                                            <a class="dropdown__img-link" href="<%= `/blog/${blog.slug}` %>">
+                                                                <img
+                                                                        class="dropdown__article-img"
+                                                                        src="<%= blog.previewImageURL || '/public/img/no-image.jpg' %>"
+                                                                        alt="Превью статьи"
+                                                                        loading="lazy"
+                                                                >
                                                             </a>
+                                                            <ul class="dropdown__article-list">
+                                                                <li class="dropdown__article-item">
+                                                                    <a class="dropdown__article-link" href="<%= `/blog/${blog.slug}` %>">
+                                                                        <h4
+                                                                                class="dropdown__article-title"
+                                                                                title="<%= blog.title %>"
+                                                                        >
+                                                                            <%= blog.title.length > MAX_TITLE_LENGTH ? blog.title.substring(0, 25).trim() + '…' : blog.title %>
+                                                                        </h4>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="dropdown__article-item">
+                                                                    <p class="dropdown__article-description">
+                                                                        <%= blog.description.length > MAX_DESCRIPTION_LENGTH
+                                                                                ? blog.description.substring(0, 100).trim() + '…'
+                                                                                : blog.description
+                                                                        %>
+                                                                    </p>
+                                                                </li>
+                                                                <li class="dropdown__article-item">
+                                                                    <a class="dropdown__article-link underline" href="<%= `/blog/${blog.slug}` %>">
+                                                                        Смотреть
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
                                                         </li>
-                                                        <li class="header__info-item">
-                                                            <p class="header__info-description">
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, veniam.
-                                                            </p>
-                                                        </li>
-                                                        <li class="header__info-item">
-                                                            <a class="header__info-link" href="">
-                                                                Смотреть
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown__blog-item header__article">
-                                                    <img class="header__article-img" src="" alt="img">
-                                                    <ul class="header__article-info header__info-list">
-                                                        <li class="header__info-item">
-                                                            <a href="" class="header__info-title-link">
-                                                                <h4 class="header__info-title">
-                                                                    Lorem ipsum dolor sit amet.
-                                                                </h4>
-                                                            </a>
-                                                        </li>
-                                                        <li class="header__info-item">
-                                                            <p class="header__info-description">
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, nisi.
-                                                            </p>
-                                                        </li>
-                                                        <li class="header__info-item">
-                                                            <a class="header__info-link" href="">
-                                                                Смотреть
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                            <a class="dropdown__blog-link" href="">
-                                                Больше статей
-                                            </a>
+                                                    <% }); %>
+                                                </ul>
+                                                <a class="dropdown__blog-link" href="/blog">
+                                                    Больше статей
+                                                </a>
+                                            <% } %>
                                         </div>
                                     </div>
                                 </div>
