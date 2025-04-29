@@ -8,6 +8,7 @@ import {
 } from "./header";
 import { startCarousel } from "./home";
 import { animateNumbers } from "./trust";
+import { animateWorkSection } from "./work.ts";
 
 (() => {
     // Определяем, является ли ширина экрана 1024px или меньше
@@ -31,5 +32,6 @@ import { animateNumbers } from "./trust";
         addMenuListener();
         addNavLinkListeners();
         animateNumbers();
+        animateWorkSection()
     });
 })();
