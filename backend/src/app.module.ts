@@ -9,6 +9,7 @@ import {APP_FILTER, APP_INTERCEPTOR} from "@nestjs/core";
 import {AllExceptionsFilter} from "./filters/all-filter";
 import { LoggerModule } from './logger/logger.module';
 import {ResponseInterceptor} from "./interceptors/response-interceptor";
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import {ResponseInterceptor} from "./interceptors/response-interceptor";
     TypeOrmModule.forRoot(AppDataSource.options),
     BlogModule,
     LoggerModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [
