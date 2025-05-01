@@ -12,5 +12,10 @@
     <%- include('templates/reviews'); -%>
 </main>
 <%- include('templates/footer'); -%>
+<% if (env === 'dev') { %>
+    <script type="module" src="http://localhost:5173/src/<%= `${scriptName}.ts` %>"></script>
+<% } else { %>
+    <script type="module" src="/static/assets/<%= `${sctiptName}.js` %>.js"></script>
+<% } %>
 </body>
 </html>
