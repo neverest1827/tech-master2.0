@@ -27,6 +27,7 @@
   }
 
   &__link{
+    font-weight: 700;
     display: inline-block;
     color: $dark-text-100;
     @extend %roboto-500;
@@ -143,5 +144,19 @@
     &__title {
       font-size: 32px;
     }
+  }
+
+  .swiper {
+    &-slide {
+      & .review__card {
+        padding: 15px;
+      }
+    }
+  }
+}
+
+@media (max-width: 370px) {
+  .reviews__link {
+    font-size: 14px;
   }
 }
