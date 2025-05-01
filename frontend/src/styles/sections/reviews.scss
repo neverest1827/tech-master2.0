@@ -1,0 +1,162 @@
+@use "../vars" as *;
+
+.reviews {
+  background-color: $dark-bg-200;
+  padding: 100px 0;
+
+  &__title {
+    text-align: center;
+    @extend %roboto-700;
+    font-size: 48px;
+    color: $dark-text-100;
+    margin-bottom: 20px;
+  }
+
+  &__text {
+    text-align: center;
+    font-size: 18px;
+    color: $dark-text-200;
+    margin-bottom: 40px;
+  }
+
+  &__links-box{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__link{
+    font-weight: 700;
+    display: inline-block;
+    color: $dark-text-100;
+    @extend %roboto-500;
+    @extend %white-link;
+  }
+
+  &__link-btn {
+    border-color: $dark-accent-100;
+    @extend %btn-link;
+  }
+
+  &__link-arrow{
+    text-decoration: none;
+    @extend %red-arrow;
+  }
+}
+
+.swiper {
+  width: 100%;
+  margin-bottom: 30px;
+
+  &-wrapper {
+    padding-bottom: 50px;
+  }
+
+  &-slide {
+    & .review__card{
+      border: 1px solid $dark-primary-200;
+      padding: 32px;
+      height: 180px;
+
+      &:first-child {
+        margin-bottom: 30px;
+      }
+    }
+
+    &:nth-child(even) .review__card {
+      height: 200px;
+    }
+  }
+
+  &-pagination{
+    & > .swiper-pagination-bullet {
+      background-color: $dark-accent-100;
+    }
+  }
+}
+
+.review {
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    color: $dark-text-100;
+  }
+
+  &__name{
+    @extend %roboto-500;
+  }
+
+  &__stars {
+    margin-bottom: 20px;
+  }
+
+  &__star-empty > path{
+    fill: $dark-accent-200;
+  }
+
+  &__text {
+    color: $dark-text-200;
+    margin-bottom: 20px;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: $dark-accent-100;
+    @extend %red-arrow;
+    @extend %red-link;
+    @extend %roboto-700;
+  }
+}
+
+@media (max-width: 1200px) {
+  .swiper {
+    &-wrapper {
+      padding-bottom: 50px;
+    }
+
+    &-slide {
+      &:nth-child(even) .review__card {
+        height: 180px;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .reviews {
+    padding: 50px 0;
+
+    &__title {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    &__text {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+@media (max-width: 479px) {
+  .reviews {
+    &__title {
+      font-size: 32px;
+    }
+  }
+
+  .swiper {
+    &-slide {
+      & .review__card {
+        padding: 15px;
+      }
+    }
+  }
+}
+
+@media (max-width: 370px) {
+  .reviews__link {
+    font-size: 14px;
+  }
+}

@@ -4,12 +4,15 @@
 <body>
 <%- include('templates/header'); -%>
 <main>
-    <%- include('templates/home'); -%>
-    <%- include('templates/trust'); -%>
-    <%- include('templates/repair'); -%>
-    <%- include('templates/work'); -%>
-    <%- include('templates/advantages'); -%>
-    <%- include('templates/reviews'); -%>
+    <section class="reviews">
+        <div class="container">
+            <div class="reviews__inner">
+                <h1 class="reviews__title title">Отзывы</h1>
+                <ul class="reviews__list"></ul>
+                <div class="reviews__pagination"></div>
+            </div>
+        </div>
+    </section>
 </main>
 <%- include('templates/footer'); -%>
 <% if (env === 'dev') { %>

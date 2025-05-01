@@ -1,15 +1,12 @@
 import {
-    addNavLinkListeners,
-    addMenuListener,
     addBackLinkToServiceList,
-    deactivateServiceLink,
     addDropdownServiceList,
-    createBurgerMenu
-} from "./header";
-import { startCarousel } from "./home";
-import { animateNumbers } from "./trust";
-import { animateWorkSection } from "./work.ts";
-import { innitSwiper } from "./reviews";
+    addMenuListener,
+    addNavLinkListeners,
+    createBurgerMenu,
+    deactivateServiceLink
+} from "./header.ts";
+import {paginateListener, renderReviews} from "./reviews-client.ts";
 
 (() => {
     // Определяем, является ли ширина экрана 1024px или меньше
@@ -18,22 +15,19 @@ import { innitSwiper } from "./reviews";
     // Получаем элемент списка услуг (предполагаем, что он всегда есть)
     const serviceList: HTMLElement = document.querySelector('.dropdown__services-list')!;
 
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
         if (isMobile) {
             addBackLinkToServiceList(serviceList);
             createBurgerMenu();
         } else {
             addDropdownServiceList(serviceList);
             deactivateServiceLink();
-            startCarousel('home__carousel-left', false, 9, 2.5, 16, 4000)
-            startCarousel('home__carousel-right', true, 9, 2.5, 16, 4000)
         }
 
         // Добавляем слушатели событий
         addMenuListener();
         addNavLinkListeners();
-        animateNumbers();
-        animateWorkSection()
-        innitSwiper('.swiper');
+        await renderReviews(1);
+        paginateListener()
     });
 })();

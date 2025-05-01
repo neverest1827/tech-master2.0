@@ -1,0 +1,129 @@
+@use "reset";
+@use "global";
+@use "vars" as *;
+
+@use "sections/header";
+@use "sections/footer";
+
+.reviews {
+  background-color: $dark-bg-100;
+  padding: 120px 0 100px;
+  min-height: 100vh;
+
+  &__title {
+    text-align: center;
+    @extend %roboto-700;
+    font-size: 48px;
+    color: $dark-text-100;
+    margin-bottom: 50px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  &__pagination-btn {
+    background-color: $dark-bg-100;
+    color: $dark-text-100;
+    border: 1px solid $dark-primary-100;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $dark-bg-200;
+      border-color: $dark-primary-200;
+    }
+
+    &.reviews__pagination-btn--active {
+      background-color: $dark-accent-100;
+      color: $dark-text-100;
+      border-color: $dark-accent-100;
+    }
+  }
+
+  &__dots {
+    display: flex;
+    align-items: end;
+    font-size: 18px;
+    color: $dark-text-100;
+  }
+}
+
+.review {
+  &__item {
+    border: 1px solid $dark-primary-200;
+    padding: 20px;
+    font-size: 18px;
+    color: $dark-text-200;
+  }
+
+  &__item-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__item-stars {
+    display: flex;
+    height: 21px;
+    gap: 3px;
+  }
+
+  &__star {
+    width: 18px;
+    height: 18px;
+  }
+
+  &__star-empty > path{
+    fill: $dark-accent-200;
+  }
+
+  &__item-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    color: $dark-text-100;
+  }
+
+  &__item-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .reviews {
+    padding: 120px 0 50px;
+
+    &__title {
+      font-size: 36px;
+      margin-bottom: 35px;
+    }
+  }
+}
+
+@media (max-width: 479px) {
+  .review {
+    &__item {
+      padding: 15px;
+      font-size: 16px;
+    }
+
+    &__item-wrapper {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}
+
