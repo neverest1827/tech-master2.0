@@ -8,13 +8,13 @@
                 Ни один ваш вопрос не останется без ответа
             </p>
             <ul class="faq__list">
-                <% questions.forEach(question => { %>
+                <% faqs.forEach(faq => { %>
                 <li class="faq__list-item">
                     <h5 class="faq__list-title red-arrow">
-                        <%= question.title %>
+                        <%= faq.question %>
                     </h5>
                     <p class="faq__list-answer">
-                        <%= question.answer %>
+                        <%= faq.answer %>
                     </p>
                 </li>
                 <% }) %>
