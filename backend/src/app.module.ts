@@ -10,6 +10,7 @@ import {AllExceptionsFilter} from "./filters/all-filter";
 import { LoggerModule } from './logger/logger.module';
 import {ResponseInterceptor} from "./interceptors/response-interceptor";
 import { ReviewModule } from './review/review.module';
+import { FaqModule } from './faq/faq.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ReviewModule } from './review/review.module';
     BlogModule,
     LoggerModule,
     ReviewModule,
+    FaqModule,
   ],
   controllers: [AppController],
   providers: [
