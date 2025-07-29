@@ -3,8 +3,10 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
+let swiperInstance: Swiper;
+
 export function innitSwiper(element: string) {
-    return new Swiper(element, {
+    swiperInstance = new Swiper(element, {
         modules: [Pagination, Autoplay],
         slidesPerView: 3,
         spaceBetween: 30,
@@ -28,4 +30,14 @@ export function innitSwiper(element: string) {
             }
         }
     })
+
+    return swiperInstance;
+}
+
+export function stopSwiper() {
+    swiperInstance?.autoplay?.stop();
+}
+
+export function startSwiper() {
+    swiperInstance?.autoplay?.start();
 }
