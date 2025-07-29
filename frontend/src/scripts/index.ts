@@ -12,6 +12,7 @@ import { animateWorkSection } from "./work.ts";
 import { innitSwiper } from "./reviews";
 import {addBonusBtnListener} from "./bonus";
 import {toggleFAQ} from "./faq.ts";
+import {addModalListeners } from "./modal.ts";
 
 (() => {
     // Определяем, является ли ширина экрана 1024px или меньше
@@ -31,12 +32,14 @@ import {toggleFAQ} from "./faq.ts";
             startCarousel('home__carousel-right', true, 9, 2.5, 16, 4000)
         }
 
+        innitSwiper('.swiper');
+
         // Добавляем слушатели событий
         addMenuListener();
         addNavLinkListeners();
+        addModalListeners();
         animateNumbers();
         animateWorkSection()
-        innitSwiper('.swiper');
         addBonusBtnListener();
         toggleFAQ();
     });
