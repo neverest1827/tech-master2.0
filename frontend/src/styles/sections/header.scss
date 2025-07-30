@@ -45,6 +45,7 @@
   &__list {
     @extend %roboto-700;
     display: flex;
+    align-items: center;
     gap: 25px;
   }
 
@@ -53,7 +54,7 @@
   }
 
   &__dropdown-btn {
-    padding: 0 20px 0 0;
+    padding: 5px 20px 5px 5px;
     border: none;
     background-color: transparent;
     color: $dark-accent-100;
@@ -68,7 +69,7 @@
 
     &:after {
       position: absolute;
-      right: 0;
+      right: 5px;
       content: url(/public/img/icons/arrow.svg);
       transform: rotate(90deg) scale(1, 1);
       transition: all .3s;
