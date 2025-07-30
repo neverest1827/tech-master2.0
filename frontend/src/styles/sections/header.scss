@@ -345,7 +345,6 @@ svg {
 /* Стили для области полосы прокрутки */
 ::-webkit-scrollbar-track {
   background: $dark-primary-100; /* Цвет фона области полосы прокрутки */
-  border-radius: 5px; /* Закругленные края области полосы прокрутки */
 }
 
 @media (max-width: 1230px) {
