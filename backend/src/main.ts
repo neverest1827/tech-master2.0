@@ -5,6 +5,7 @@ import {NestExpressApplication} from "@nestjs/platform-express";
 import * as express from 'express';
 import { join } from 'path';
 import {LoggerService} from "./logger/logger.service";
+import {ValidationPipe} from "@nestjs/common";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(
@@ -26,6 +27,14 @@ async function bootstrap() {
 
     app.use('/public', express.static(join(__dirname, 'public')));
   }
+
+  app.useGlobalPipes(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+  );
 
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('ejs');

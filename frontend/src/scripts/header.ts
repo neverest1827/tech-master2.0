@@ -1,3 +1,5 @@
+import {handleModal} from "./modal.ts";
+
 /**
  * Функция добавляет обработчики событий для всех ссылок с атрибутом data-target.
  * При клике на ссылку происходит изменение списка навигации.
@@ -69,8 +71,16 @@ export function addMenuListener(){
 
     menuBtn.addEventListener("click", (event: Event) => {
         event.preventDefault();
+
+        const form = document.querySelector('.modal__form--visible');
+        if (form) form.classList.remove('modal__form--visible');
+
+        const reviewCard = document.querySelector('.modal__review-card--visible');
+        if (reviewCard) reviewCard.classList.remove('modal__review-card--visible');
+
         toggleMenu(menuBtn, navBar);
-        toggleModal();
+
+        handleModal();
     });
 }
 
@@ -80,31 +90,22 @@ export function addMenuListener(){
  * @param menuBtn - Кнопка меню
  * @param navBar - Элемент навигации
  */
-function toggleMenu(menuBtn: HTMLButtonElement, navBar: HTMLDivElement): void {
+export function toggleMenu(menuBtn: HTMLElement, navBar: HTMLElement): void {
     menuBtn.classList.toggle("nav__dropdown-btn--active");
     navBar.classList.toggle("dropdown--visible");
 }
 
-/**
- * Переключает видимость модального окна.
- * Добавляет или удаляет класс для отображения модального окна.
- */
-function toggleModal(): void {
-    const modal = getElement<HTMLDivElement>('.modal');
-    if (modal) modal.classList.toggle('modal--visible');
-}
-
-/**
- * Вспомогательная функция для безопасного получения элемента по селектору.
- * Если элемент не найден, выводит ошибку в консоль.
- * @param selector - Селектор для поиска элемента
- * @returns - Найденный элемент или null, если элемент не найден
- */
-function getElement<T extends Element>(selector: string): T | null {
-    const element = document.querySelector<T>(selector);
-    if (!element) console.error(`Element not found: ${selector}`);
-    return element;
-}
+// /**
+//  * Вспомогательная функция для безопасного получения элемента по селектору.
+//  * Если элемент не найден, выводит ошибку в консоль.
+//  * @param selector - Селектор для поиска элемента
+//  * @returns - Найденный элемент или null, если элемент не найден
+//  */
+// function getElement<T extends Element>(selector: string): T | null {
+//     const element = document.querySelector<T>(selector);
+//     if (!element) console.error(`Element not found: ${selector}`);
+//     return element;
+// }
 
 /**
  * Функция добавляет класс для отображения списка услуг в меню.

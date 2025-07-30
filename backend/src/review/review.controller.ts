@@ -9,13 +9,15 @@ import {
   Render,
   ParseIntPipe,
   Query,
-  DefaultValuePipe
+  DefaultValuePipe,
+  UseInterceptors
 } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import {BlogPost} from "../blog/entities/blog-post.entity";
 import {BlogService} from "../blog/blog.service";
+import {AnyFilesInterceptor} from "@nestjs/platform-express";
 
 @Controller('otzyvy')
 export class ReviewController {
@@ -24,7 +26,8 @@ export class ReviewController {
       private readonly blogService: BlogService,
   ) {}
 
-  @Post()
+  @Post('/otpravit-otzyv')
+  @UseInterceptors(AnyFilesInterceptor())
   create(@Body() createReviewDto: CreateReviewDto) {
     return this.reviewService.create(createReviewDto);
   }

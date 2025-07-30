@@ -1,0 +1,75 @@
+<section class="modal">
+    <div class="modal__overlay"></div>
+    <div class="modal__inner">
+        <form class="modal__form" data-self="send-request" action="/otpravit-zayavku">
+            <h4 class="title modal__form-title">
+                Отправить заявку
+            </h4>
+            <label class="modal__form-label">
+                <input class="modal__form-input" name="name" type="text" placeholder="Имя">
+            </label>
+            <label class="modal__form-label">
+                <input class="modal__form-input" name="tel" type="tel" placeholder="Номер телефона" required>
+            </label>
+            <label class="modal__form-label">
+                <textarea class="modal__form-textarea" name="text" placeholder="Опишите проблему"></textarea>
+            </label>
+            <label class="modal__form-label">
+                <input class="modal__form-checkbox" type="checkbox" required>
+                <span class="modal__form-text">
+                    Я согласен(а) с вашей
+                    <a class="modal__form-link" href="/politika-konfidentsialnosti" target="_blank">
+                        Политикой конфиденциальности
+                    </a>
+                </span>
+            </label>
+            <div class="modal__form-btns">
+                <button class="modal__btn modal__btn-submit" type="submit">Отправить заявку</button>
+                <button class="modal__btn modal__btn-cancel" type="button">Отмена</button>
+            </div>
+        </form>
+        <form class="modal__form" data-self="send-review" action="/otzyvy/otpravit-otzyv">
+            <h4 class="title modal__form-title">
+               Новый отзыв
+            </h4>
+            <label class="modal__form-label">
+                <input class="modal__form-input" name="name" type="text" placeholder="Ваше имя">
+            </label>
+            <label class="modal__form-label modal__rating-box">Оцените качество услуг:
+                <div class="modal__form-rating" data-selected="5">
+                    <% for (let i = 1; i <= 5; i++) { %>
+                        <svg class="modal__form-star" data-star="<%= i %>" viewBox="0 0 20 20" width="20px"
+                             height="20px" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.07088 1.42436C9.41462 0.607896 10.5854 0.607897 10.9291 1.42436L12.9579 6.24325C13.1029 6.58745 13.4306 6.82262 13.8067 6.85241L19.0727 7.26949C19.9649 7.34016 20.3267 8.44014 19.6469 9.01541L15.6348 12.4107C15.3482 12.6532 15.223 13.0338 15.3106 13.3963L16.5363 18.473C16.744 19.3331 15.7969 20.013 15.033 19.5521L10.5245 16.8316C10.2025 16.6372 9.7975 16.6372 9.47548 16.8316L4.96699 19.5521C4.20311 20.013 3.25596 19.3331 3.46363 18.473L4.68942 13.3963C4.77698 13.0338 4.65182 12.6532 4.36526 12.4107L0.353062 9.01541C-0.326718 8.44014 0.0350679 7.34016 0.927291 7.26949L6.19336 6.85241C6.5695 6.82262 6.89716 6.58745 7.04207 6.24325L9.07088 1.42436Z"
+                                  fill="#FF4D4D"/>
+                        </svg>
+                    <% } %>
+                </div>
+                <input type="hidden" name="stars" value="5">
+            </label>
+            <label class="modal__form-label">
+                <textarea class="modal__form-textarea" name="text" placeholder="Ваш отзыв"></textarea>
+            </label>
+            <div class="modal__form-btns">
+                <button class="modal__btn modal__btn-submit" type="submit">Отправить отзыв</button>
+                <button class="modal__btn modal__btn-cancel" type="button">Отмена</button>
+            </div>
+        </form>
+        <div class="modal__review-card" data-self="read-full-review">
+            <div class="review__card">
+                <div class="review__header">
+                    <span class="review__name"></span>
+                    <span class="review__date"></span>
+                </div>
+                <div class="review__stars"></div>
+                <div class="review__text"></div>
+            </div>
+            <div class="modal__review-wrapper">
+                <button class="modal__btn modal__btn-cancel" type="button">Закрыть</button>
+            </div>
+        </div>
+        <div class="modal__status">
+
+        </div>
+    </div>
+</section>

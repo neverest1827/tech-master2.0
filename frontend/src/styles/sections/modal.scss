@@ -1,0 +1,276 @@
+@use "../vars" as *;
+
+.modal {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+
+  &--visible {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    z-index: 9;
+    pointer-events: auto;
+  }
+
+  &__overlay{
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+  }
+
+  &--visible .modal__overlay::before {
+    opacity: 1;
+  }
+
+  &__inner {
+    margin: 0 auto;
+    width: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+  }
+
+  &__form,
+  &__review-card {
+    display: none;
+    max-width: 700px;
+    width: 100%;
+    background-color: $dark-bg-200;
+    padding: 30px 50px;
+    border-radius: 15px;
+    border: 1px solid $dark-primary-300;
+  }
+
+  &__form--visible,
+  &__review-card--visible {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__form-title {
+    color: $dark-text-100;
+    margin-bottom: 10px;
+  }
+
+  &__form-label {
+    color: $dark-text-100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__form-input {
+    width: 100%;
+    padding: 10px;
+  }
+
+  &__form-textarea {
+    width: 100%;
+    resize: none;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__form-btns {
+    display: flex;
+    gap: 15px;
+  }
+
+  &__review-wrapper{
+    display: flex;
+    justify-content: end;
+  }
+
+  &__btn {
+    @extend %btn-link;
+    background-color: transparent;
+    border-color: $dark-accent-100;
+    cursor: pointer;
+  }
+
+  &__btn-submit {
+    @extend %white-link;
+  }
+
+  &__btn-cancel {
+    background-color: $dark-accent-100;
+    transition: all .3s;
+
+    &:hover{
+      background-color: $dark-accent-100-hover;
+    }
+  }
+
+  .modal__form-rating {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &__form-star {
+    pointer-events: none;
+  }
+
+  &__form-star path {
+    transition: fill .3s ease;
+  }
+
+  &__form-star--empty path {
+    fill: #ddd;
+  }
+
+  &__form-checkbox {
+    align-self: flex-start;
+    flex-shrink: 0;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  &__form-checkbox:checked {
+    background-color: #e53935;
+    border-color: #e53935;
+  }
+
+  &__form-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 4px;
+    height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  &__form-link {
+    color: $dark-text-100-hover;
+    transition: color .3s;
+
+    &:hover {
+      color: $dark-accent-100;
+    }
+  }
+
+  &__rating-box {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 1200px) {
+  .modal {
+    &__form,
+    &__review-card {
+
+    }
+
+    &__form-title {
+      font-size: 42px;
+      margin-bottom: 0;
+    }
+
+    &__form-textarea {
+      height: 100px;
+    }
+  }
+
+}
+
+@media (max-width: 767px) {
+  .modal {
+    &__form,
+    &__review-card {
+      padding: 20px 25px;
+      max-width: 450px;
+    }
+
+    &__form-title {
+      font-size: 32px;
+      margin-bottom: 0;
+    }
+
+    &__form-textarea {
+      height: 100px;
+    }
+  }
+}
+
+@media (max-width: 479px) {
+  .modal {
+    &__form,
+    &__review-card {
+      max-width: 300px;
+      padding: 20px 10px;
+    }
+
+    &__form-title {
+      font-size: 24px;
+    }
+
+    &__form-input,
+    &__form-textarea {
+      padding: 5px;
+    }
+
+    &__form-textarea {
+      height: 80px;
+    }
+
+    &__form-btns {
+      justify-content: center;
+    }
+
+    &__btn {
+      padding: 5px 10px;
+    }
+  }
+}
+
+.swal2-popup {
+  border-radius: 15px;
+  background-color: $dark-bg-200;
+  border: 1px solid $dark-primary-300;
+  color: $dark-text-100;
+}
+
+.swal2-confirm {
+  background-color: $dark-accent-100;
+  color: $dark-text-100;
+  font-weight: 700;
+
+  &:hover {
+    background-color: $dark-accent-100-hover;
+  }
+}
+
+div:where(.swal2-container).swal2-backdrop-show, div:where(.swal2-container).swal2-noanimation {
+  background: transparent !important;
+  backdrop-filter: blur(6px);
+}
+
+div:where(.swal2-icon).swal2-success [class^=swal2-success-line] {
+  background-color: #69f817 !important;
+}
