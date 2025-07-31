@@ -41,3 +41,23 @@ export function stopSwiper() {
 export function startSwiper() {
     swiperInstance?.autoplay?.start();
 }
+
+export function observeSwiperVisibility(swiperSelector: string) {
+    const swiperEl = document.querySelector(swiperSelector);
+
+    if (!swiperEl || !swiperInstance) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startSwiper();
+            } else {
+                stopSwiper();
+            }
+        });
+    }, {
+        threshold: 0.1 // элемент хотя бы на 10% в зоне видимости
+    });
+
+    observer.observe(swiperEl);
+}
