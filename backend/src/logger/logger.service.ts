@@ -69,8 +69,12 @@ export class LoggerService implements NestLoggerService {
         this.logger.info(message);
     }
 
-    error(message: string, trace?: string) {
-        this.logger.error(message, trace ? { trace } : undefined);
+    error(error: string | Error, trace?: string) {
+        if (error instanceof Error) {
+            this.logger.error(error.message, { stack: error.stack });
+        } else {
+            this.logger.error(error, trace ? { stack: trace } : undefined);
+        }
     }
 
     warn(message: string) {
