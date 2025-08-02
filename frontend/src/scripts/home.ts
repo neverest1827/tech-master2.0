@@ -87,13 +87,23 @@ function moveTrack(track: HTMLElement, step: number, reverse: boolean) {
  * @param startAnimation - Функция, запускающая анимацию карусели.
  */
 function setupObserver(track: HTMLElement, duration: number, startAnimation: () => void) {
+    let intervalId: ReturnType<typeof setInterval> | null = null;
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                setInterval(startAnimation, duration);
-                observer.unobserve(entry.target);
+                if (!intervalId) {
+                    intervalId = setInterval(startAnimation, duration);
+                }
+            } else {
+                if (intervalId) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                }
             }
         });
+    }, {
+        threshold: 0.1
     });
 
     observer.observe(track);

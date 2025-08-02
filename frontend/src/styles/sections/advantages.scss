@@ -20,6 +20,7 @@
 
   &__link{
     @extend %btn-link;
+    @extend %white-link;
     @extend %roboto-500;
     display: inline-block;
     border-color: $dark-accent-100;

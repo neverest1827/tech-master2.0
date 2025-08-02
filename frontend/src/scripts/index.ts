@@ -9,7 +9,7 @@ import {
 import { startCarousel } from "./home";
 import { animateNumbers } from "./trust";
 import { animateWorkSection } from "./work.ts";
-import { innitSwiper } from "./reviews";
+import {innitSwiper, observeSwiperVisibility} from "./reviews";
 import {addBonusBtnListener} from "./bonus";
 import {toggleFAQ} from "./faq.ts";
 import {addModalListeners } from "./modal.ts";
@@ -33,6 +33,7 @@ import {addModalListeners } from "./modal.ts";
         }
 
         innitSwiper('.swiper');
+        observeSwiperVisibility('.swiper');
 
         // Добавляем слушатели событий
         addMenuListener();

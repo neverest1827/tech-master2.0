@@ -14,7 +14,7 @@ import {CreateBlogPostDto} from './dto/create-blog-post.dto';
 import {UpdateBlogPostDto} from './dto/update-blog-post.dto';
 import {BlogPost} from "./entities/blog-post.entity";
 
-@Controller('blog')
+@Controller('api/blog')
 export class BlogController {
     constructor(private readonly blogService: BlogService) {
     }
@@ -22,13 +22,6 @@ export class BlogController {
     @Post()
     create(@Body() createBlogPostDto: CreateBlogPostDto): Promise<BlogPost> {
         return this.blogService.create(createBlogPostDto);
-    }
-
-    @Get()
-    @Render('blog')
-    async findAll(): Promise<{ posts: BlogPost[] }> {
-        const posts: BlogPost[] = await this.blogService.findAll();
-        return {posts};
     }
 
     @Get(':slug')
