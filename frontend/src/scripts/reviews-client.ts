@@ -99,7 +99,7 @@ function renderPagination(currentPage: number, total: number): void {
  * @param page - Номер страницы для загрузки
  */
 export async function renderReviews(page: number): Promise<void> {
-    const res = await fetch(`/otzyvy/paginate?page=${page}&limit=${LIMIT}`);
+    const res = await fetch(`/api/reviews/paginate?page=${page}&limit=${LIMIT}`);
     const data = (await res.json()).data;
 
     const container = document.querySelector('.reviews__list');

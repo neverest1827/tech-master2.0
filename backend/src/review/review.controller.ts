@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  Render,
   ParseIntPipe,
   Query,
   DefaultValuePipe,
@@ -15,35 +14,18 @@ import {
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
-import {BlogPost} from "../blog/entities/blog-post.entity";
-import {BlogService} from "../blog/blog.service";
 import {AnyFilesInterceptor} from "@nestjs/platform-express";
 
-@Controller('otzyvy')
+@Controller('api/reviews')
 export class ReviewController {
   constructor(
       private readonly reviewService: ReviewService,
-      private readonly blogService: BlogService,
   ) {}
 
-  @Post('/otpravit-otzyv')
+  @Post()
   @UseInterceptors(AnyFilesInterceptor())
   create(@Body() createReviewDto: CreateReviewDto) {
     return this.reviewService.create(createReviewDto);
-  }
-
-  @Get()
-  @Render('reviews')
-  async getReviewsPage() {
-    const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
-
-    return {
-      env: process.env.NODE_ENV,
-      scriptName: 'reviews',
-      styleName: 'reviews',
-      title: 'Отзывы',
-      blogPosts,
-    }
   }
 
   @Get('paginate')
