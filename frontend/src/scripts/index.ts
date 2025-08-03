@@ -9,7 +9,11 @@ import {
 import { startCarousel } from "./home";
 import { animateNumbers } from "./trust";
 import { animateWorkSection } from "./work.ts";
-import {innitSwiper, observeSwiperVisibility} from "./reviews";
+import {
+    addOpenReviewFormBtnListener,
+    innitSwiper,
+    observeSwiperVisibility
+} from "./reviews";
 import {addBonusBtnListener} from "./bonus";
 import {toggleFAQ} from "./faq.ts";
 import {addModalListeners } from "./modal.ts";
@@ -41,6 +45,7 @@ import {addModalListeners } from "./modal.ts";
         addModalListeners();
         animateNumbers();
         animateWorkSection()
+        addOpenReviewFormBtnListener()
         addBonusBtnListener();
         toggleFAQ();
     });

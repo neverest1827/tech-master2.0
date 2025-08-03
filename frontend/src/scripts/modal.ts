@@ -7,7 +7,6 @@ const ratingBox = document.querySelector(".modal__form-rating") as Element;
 const hiddenInput = ratingBox.parentElement?.querySelector("input[type='hidden']") as Element;
 const stars: NodeListOf<SVGSVGElement> = ratingBox.querySelectorAll("svg");
 const openRequestFormButtons: NodeListOf<Element> = document.querySelectorAll("a[href='/otpravit-zayavku']");
-const openReviewFormBtn = document.querySelector("a[href='/otzyvy/otpravit-otzyv']") as Element;
 const cancelButtons: NodeListOf<Element> = document.querySelectorAll(".modal__btn-cancel");
 const previewLinks: NodeListOf<Element> = document.querySelectorAll('.review__link');
 const reviewBox = document.querySelector('.modal__review-card') as Element;
@@ -17,7 +16,6 @@ const classNames: string[] =
 export function addModalListeners() {
     addCloseModalListeners();
     addOpenRequestFormBtnListeners();
-    addOpenReviewFormBtnListener();
     addOpenFullReviewListeners();
     addRatingListeners();
     addCancelBtnListeners();
@@ -52,12 +50,6 @@ export function addOpenRequestFormBtnListeners() {
     });
 }
 
-export function addOpenReviewFormBtnListener() {
-    openReviewFormBtn.addEventListener("click", (e: Event) => {
-        handleModalOpenByTarget(e, openReviewFormBtn)
-    })
-}
-
 export function addOpenFullReviewListeners() {
     previewLinks.forEach((link) => {
         link.addEventListener("click", async (e) => {
@@ -88,7 +80,7 @@ function removePopup(): void {
  * @param event Событие клика
  * @param element Элемент, по которому произошёл клик
  */
-function handleModalOpenByTarget(event: Event, element: Element): void {
+export function handleModalOpenByTarget(event: Event, element: Element): void {
     event.preventDefault();
 
     const targetAction: string | null = element.getAttribute("data-target");

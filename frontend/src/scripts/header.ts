@@ -139,7 +139,7 @@ export function addBackLinkToServiceList(list: HTMLElement): void {
  * Устанавливает для элемента стиль, который блокирует кликабельность.
  */
 export function deactivateServiceLink(): void {
-    const serviceElement = document.querySelector<HTMLElement>('.services');
+    const serviceElement = document.querySelector<HTMLElement>('.deactivate');
     if (serviceElement) {
         serviceElement.style.pointerEvents = 'none';
     }

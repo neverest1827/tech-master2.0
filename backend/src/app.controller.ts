@@ -54,4 +54,18 @@ export class AppController {
         const posts: BlogPost[] = await this.blogService.findAll();
         return {posts};
     }
+
+    @Get('/uslugi')
+    @Render('services')
+    async getServicesPage() {
+        const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
+
+        return {
+            env: process.env.NODE_ENV,
+            scriptName: 'services',
+            styleName: 'services',
+            title: 'Услуги',
+            blogPosts,
+        }
+    }
 }
