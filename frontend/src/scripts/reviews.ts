@@ -2,8 +2,10 @@ import Swiper from 'swiper';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import {handleModalOpenByTarget} from "./modal.ts";
 
 let swiperInstance: Swiper;
+const openReviewFormBtn = document.querySelector("a[href='/otzyvy/otpravit-otzyv']") as Element;
 
 export function innitSwiper(element: string) {
     swiperInstance = new Swiper(element, {
@@ -60,4 +62,10 @@ export function observeSwiperVisibility(swiperSelector: string) {
     });
 
     observer.observe(swiperEl);
+}
+
+export function addOpenReviewFormBtnListener() {
+    openReviewFormBtn.addEventListener("click", (e: Event) => {
+        handleModalOpenByTarget(e, openReviewFormBtn)
+    })
 }
