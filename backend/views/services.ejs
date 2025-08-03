@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<%- include('templates/head'); -%>
+<body>
+<%- include('templates/header'); -%>
+<main>
+    <%- include('templates/services'); -%>
+    <%- include('templates/work'); -%>
+    <%- include('templates/modal'); -%>
+</main>
+<%- include('templates/footer'); -%>
+<% if (env === 'dev') { %>
+    <script type="module" src="http://localhost:5173/src/<%= `${scriptName}.ts` %>"></script>
+<% } else { %>
+    <script type="module" src="/static/assets/<%= `${sctiptName}.js` %>.js"></script>
+<% } %>
+</body>
+</html>
