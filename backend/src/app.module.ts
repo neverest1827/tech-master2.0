@@ -11,6 +11,8 @@ import { LoggerModule } from './logger/logger.module';
 import {ResponseInterceptor} from "./interceptors/response-interceptor";
 import { ReviewModule } from './review/review.module';
 import { FaqModule } from './faq/faq.module';
+import { OfferModule } from './offer/offer.module';
+import { MetaModule } from './meta/meta.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { FaqModule } from './faq/faq.module';
     LoggerModule,
     ReviewModule,
     FaqModule,
+    OfferModule,
+    MetaModule,
   ],
   controllers: [AppController],
   providers: [
