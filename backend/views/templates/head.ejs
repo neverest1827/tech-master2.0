@@ -1,7 +1,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title><%= meta.title %></title>
+    <!-- SEO -->
+    <meta name="description" content="<%= meta.description %>">
+    <meta name="keywords" content="<%= meta.keywords %>">
+
+    <!-- Canonical & Robots -->
+    <link rel="canonical" href="<%= meta.canonicalUrl %>">
+    <meta name="robots" content="<%= meta.robots %>">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="<%= meta.title %>">
+    <meta property="og:description" content="<%= meta.description %>">
+    <meta property="og:image" content="<%= meta.ogImage %>">
+    <meta property="og:url" content="<%= meta.ogUrl %>">
+    <meta property="og:type" content="<%= meta.ogType || 'website' %>">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="<%= meta.twitterCard %>">
+    <meta name="twitter:title" content="<%= meta.title %>">
+    <meta name="twitter:description" content="<%= meta.description %>">
+    <meta name="twitter:image" content="<%= meta.twitterImage %>">
+
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
 
     <% if (env === 'dev') { %>
         <!-- В Dev-режиме загружаем Vite напрямую -->
