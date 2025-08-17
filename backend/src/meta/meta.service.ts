@@ -10,7 +10,7 @@ export class MetaService {
         private readonly metaRepository: Repository<Meta>,
     ) {}
 
-    async getMetaById(pageName: string): Promise<Meta> {
+    async getMetaByName(pageName: string): Promise<Meta> {
         return this.metaRepository.findOneByOrFail({pageName});
     }
 }
