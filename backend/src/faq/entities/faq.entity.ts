@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BlogPost} from "../../blog/entities/blog-post.entity";
 
 @Entity('faq')
 export class Faq {
@@ -10,4 +11,8 @@ export class Faq {
 
     @Column({type: 'text'})
     answer: string;
+
+    @ManyToOne(() => BlogPost, (blogPost: BlogPost): Faq[] => blogPost.faqs)
+    @JoinColumn()
+    blogPost: BlogPost;
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<%- include('templates/head'); -%>
+<body>
+<%- include('templates/header'); -%>
+<main>
+    <section class="blog">
+        <div class="container">
+            <div class="blog__inner">
+                <h1 class="blog__title">
+                    Блог
+                </h1>
+                <ul class="blog__list">
+                    <% blogPosts.slice(0, limit).forEach((blogPost) => { %>
+                        <li class="blog__list-item">
+                            <a class="blog__list-link" href="<%= `/blog/${blogPost.slug}` %>">
+                                <img class="blog__list-img"
+                                     src="<%= blogPost.previewImageURL || '/public/img/no-image.jpg' %>"
+                                     alt="blog image"
+                                >
+                                <div class="blog__list-content">
+                                    <h3 class="blog__list-title">
+                                        <%= blogPost.meta.title %>
+                                    </h3>
+                                    <p class="blog__list-description">
+                                        <%= blogPost.meta.description %>
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                    <% }) %>
+                </ul>
+
+                <% if (total > limit) { %>
+                    <div class="blog__paginate-container">
+                        <button class="blog__paginate-btn"
+                                type="button"
+                                data-total="<%= total %>"
+                                data-page="2"
+                                data-limit="<%= limit %>"
+                        >
+                            Еще
+                        </button>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
+    <%- include('templates/modal'); -%>
+</main>
+<%- include('templates/footer'); -%>
+<% if (env === 'dev') { %>
+    <script type="module" src="http://localhost:5173/src/<%= `${scriptName}.ts` %>"></script>
+<% } else { %>
+    <script type="module" src="/static/assets/<%= `${sctiptName}.js` %>"></script>
+<% } %>
+</body>
+</html>

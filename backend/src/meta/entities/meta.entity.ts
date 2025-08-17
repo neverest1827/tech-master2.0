@@ -1,5 +1,6 @@
 import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Offer} from "../../offer/entities/offer.entity";
+import {BlogPost} from "../../blog/entities/blog-post.entity";
 
 @Entity('meta')
 export class Meta {
@@ -49,4 +50,7 @@ export class Meta {
 
     @OneToOne(() => Offer, (offer) => offer.meta)
     offer: Offer;
+
+    @OneToOne(() => BlogPost, (blogPost) => blogPost.meta)
+    blogPost: BlogPost;
 }

@@ -30,6 +30,7 @@ export class BlogService {
     async findAll(): Promise<BlogPost[]> {
         return this.blogRepository.find({
             order: {createdAt: 'DESC'},
+            relations: ['meta'],
         });
     }
 
@@ -59,6 +60,7 @@ export class BlogService {
             where: {
                 id: In(ids),
             },
+            relations: ['meta']
         });
     }
 
@@ -69,13 +71,24 @@ export class BlogService {
      * @returns {Promise<BlogPost>} Найденный блог-пост.
      */
     async findBySlug(slug: string): Promise<BlogPost> {
-        const blogPost: BlogPost | null = await this.blogRepository.findOne({where: {slug}});
+        const blogPost: BlogPost | null = await this.blogRepository.findOne({
+            where: {slug},
+            relations: ['meta', 'faqs']
+        });
 
         if (!blogPost) {
             throw new NotFoundException('Статья не найдена');
         }
 
         return blogPost;
+    }
+
+    async paginate(page: number, limit: number) {
+        return await this.blogRepository.find({
+            order: { createdAt: 'DESC' },
+            skip: (page - 1) * limit,
+            take: limit,
+        });
     }
 
     /**
