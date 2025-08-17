@@ -1188,17 +1188,17 @@
                                                                     <a class="dropdown__article-link" href="<%= `/blog/${blog.slug}` %>">
                                                                         <h4
                                                                                 class="dropdown__article-title"
-                                                                                title="<%= blog.title %>"
+                                                                                title="<%= blog.meta.title %>"
                                                                         >
-                                                                            <%= blog.title.length > MAX_TITLE_LENGTH ? blog.title.substring(0, 25).trim() + '…' : blog.title %>
+                                                                            <%= blog.meta.title.length > MAX_TITLE_LENGTH ? blog.meta.title.substring(0, 25).trim() + '…' : blog.meta.title %>
                                                                         </h4>
                                                                     </a>
                                                                 </li>
                                                                 <li class="dropdown__article-item">
                                                                     <p class="dropdown__article-description">
-                                                                        <%= blog.description.length > MAX_DESCRIPTION_LENGTH
-                                                                                ? blog.description.substring(0, 100).trim() + '…'
-                                                                                : blog.description
+                                                                        <%= blog.meta.description.length > MAX_DESCRIPTION_LENGTH
+                                                                                ? blog.meta.description.substring(0, 100).trim() + '…'
+                                                                                : blog.meta.description
                                                                         %>
                                                                     </p>
                                                                 </li>
