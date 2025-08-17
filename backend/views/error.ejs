@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<%- include('templates/head'); -%>
+<body>
+<%- include('templates/header'); -%>
+<main>
+    <section class="error">
+        <div class="container">
+            <div class="error__inner">
+                <h1 class="error__title">
+                    <%= meta.title %>
+                </h1>
+
+                <p class="error__subtitle">
+                    Код ошибки: <strong><%= statusCode %></strong>
+                </p>
+
+                <% if (message) { %>
+                    <p class="error__message"><%= message %></p>
+                <% } %>
+
+                <% if (path) { %>
+                    <p class="error__path">Запрошенный путь: <code><%= path %></code></p>
+                <% } %>
+
+                <% if (suggestions?.length) { %>
+                    <ul class="error__suggestions">
+                        <% suggestions.forEach(s => { %>
+                            <li class="error__suggestion">
+                                <a href="<%= s.href %>"><%= s.text %></a>
+                            </li>
+                        <% }) %>
+                    </ul>
+                <% } %>
+
+                <% if (env !== 'production' && stack) { %>
+                    <details class="error__stack">
+                        <summary>Stack trace</summary>
+                        <pre><%= stack %></pre>
+                    </details>
+                <% } %>
+            </div>
+        </div>
+    </section>
+    <%- include('templates/modal'); -%>
+</main>
+<%- include('templates/footer'); -%>
+<% if (env === 'dev') { %>
+    <script type="module" src="http://localhost:5173/src/<%= `${scriptName}.ts` %>"></script>
+<% } else { %>
+    <script type="module" src="/static/assets/<%= `${scriptName}.js` %>"></script>
+<% } %>
+</body>
+</html>
