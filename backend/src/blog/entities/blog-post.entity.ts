@@ -5,53 +5,35 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     BeforeUpdate,
-    BeforeInsert
+    BeforeInsert, OneToOne, JoinColumn, OneToMany
 } from 'typeorm';
-import slugify from "slugify";
+import {Meta} from "../../meta/entities/meta.entity";
+import {Faq} from "../../faq/entities/faq.entity";
 
 @Entity('blog_posts')
 export class BlogPost {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 255 })
-    title: string;
-
     @Column('text')
     content: string;
-
-    @Column({ length: 500 })
-    description: string;
 
     @Column({ nullable: true })
     previewImageURL: string;
 
-    @Column({ nullable: true })
-    ogImageURL: string;
-
-    @Column({ nullable: true })
-    metaTitle: string;
-
-    @Column({ nullable: true })
-    metaDescription: string;
-
-    @Column({ nullable: true })
-    metaKeywords: string;
-
     @Column({ length: 255, unique: true })
     slug: string;
+
+    @OneToOne(() => Meta, meta => meta.blogPost)
+    @JoinColumn()
+    meta: Meta;
+
+    @OneToMany(() => Faq, (faq) => faq.blogPost)
+    faqs: Faq[];
 
     @CreateDateColumn()
     createdAt: Date;
 
     @UpdateDateColumn()
     updatedAt: Date;
-
-    @BeforeInsert()
-    @BeforeUpdate()
-    generateSlug() {
-        if (this.title) {
-            this.slug = slugify(this.title, { lower: true, strict: true });
-        }
-    }
 }
