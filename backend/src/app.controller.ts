@@ -1,4 +1,4 @@
-import {Controller, Get, NotFoundException, Param, Render, Req} from '@nestjs/common';
+import {Controller, Get, Param, Render} from '@nestjs/common';
 import {AppService} from './app.service';
 import {BlogService} from "./blog/blog.service";
 import {BlogPost} from "./blog/entities/blog-post.entity";
@@ -28,7 +28,7 @@ export class AppController {
         const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
         const reviews: Review[] = await this.reviewService.findMany(18);
         const faqs: Faq[] = await this.faqService.findAll();
-        const meta: Meta = await this.metaService.getMetaById('index');
+        const meta: Meta = await this.metaService.getMetaByName('index');
 
         return {
             env: process.env.NODE_ENV,
@@ -45,7 +45,7 @@ export class AppController {
     @Render('reviews')
     async getReviewsPage() {
         const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
-        const meta: Meta = await this.metaService.getMetaById('reviews');
+        const meta: Meta = await this.metaService.getMetaByName('reviews');
 
         return {
             env: process.env.NODE_ENV,
@@ -58,16 +58,48 @@ export class AppController {
 
     @Get('/blog')
     @Render('blog')
-    async findAll(): Promise<{ posts: BlogPost[] }> {
-        const posts: BlogPost[] = await this.blogService.findAll();
-        return {posts};
+    async findAll() {
+        const blogPosts: BlogPost[] = await this.blogService.findAll();
+        const meta: Meta = await this.metaService.getMetaByName('blog');
+        const limit = 10;
+
+        return {
+            env: process.env.NODE_ENV,
+            scriptName: 'blog',
+            styleName: 'blog',
+            total: blogPosts.length,
+            limit,
+            meta,
+            blogPosts
+        };
+    }
+
+    @Get('/blog/*slugPath')
+    @Render('article')
+    async getArticlePage(@Param('slugPath') slugPath: string) {
+        const slugParts = slugPath.split('/').filter(Boolean);
+
+        const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
+        const reviews: Review[] = await this.reviewService.findMany(18);
+        const articleEntry: BlogPost = await this.blogService.findBySlug(slugParts.at(-1)!);
+
+        return {
+            env: process.env.NODE_ENV,
+            scriptName: 'article',
+            styleName: 'article',
+            meta: articleEntry.meta,
+            content: articleEntry.content,
+            faqs: articleEntry.faqs,
+            blogPosts,
+            reviews,
+        };
     }
 
     @Get('/uslugi')
     @Render('services')
     async getServicesPage() {
         const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
-        const meta: Meta = await this.metaService.getMetaById('services');
+        const meta: Meta = await this.metaService.getMetaByName('services');
 
         return {
             env: process.env.NODE_ENV,
@@ -80,14 +112,12 @@ export class AppController {
 
     @Get('/uslugi/*slugPath')
     @Render('offer')
-    async getServiceEntry(@Param('slugPath') slugPath: string) {
+    async getOfferPage(@Param('slugPath') slugPath: string) {
         const slugParts = slugPath.split('/').filter(Boolean);
 
         const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
         const reviews: Review[] = await this.reviewService.findMany(18);
         const offerEntry: Offer | null = await this.offerService.findBySlugPath(slugParts.at(-1));
-
-        console.log(offerEntry);
 
         return {
             env: process.env.NODE_ENV,
