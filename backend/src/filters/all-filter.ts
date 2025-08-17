@@ -1,10 +1,23 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
+import {
+    ExceptionFilter,
+    Catch,
+    ArgumentsHost,
+    HttpException,
+    HttpStatus,
+    Inject,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
-import { LoggerService } from "../logger/logger.service";
+import { LoggerService } from '../logger/logger.service';
+import { MetaService } from '../meta/meta.service';
+import {Meta} from "../meta/entities/meta.entity";
+import {BlogPost} from "../blog/entities/blog-post.entity";
+import {BlogService} from "../blog/blog.service";
+
+type ErrorMessage = string | string[];
 
 interface ErrorResponse {
     statusCode: number;
-    message: string | string[];
+    message: ErrorMessage;
     error?: string;
 }
 
@@ -12,66 +25,75 @@ interface ErrorResponse {
 export class AllExceptionsFilter implements ExceptionFilter {
     private readonly isDev: boolean;
 
-    constructor(private readonly logger: LoggerService) {
-        this.isDev = process.env.NODE_ENV !== 'prod';
+    constructor(
+        @Inject(MetaService)
+        private readonly metaService: MetaService,
+        private readonly blogService: BlogService,
+        private readonly logger: LoggerService,
+    ) {
+        this.isDev = (process.env.NODE_ENV || 'development') !== 'production';
     }
 
-    catch(exception: unknown, host: ArgumentsHost) {
+    async catch(exception: unknown, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
         const request = ctx.getRequest<Request>();
 
-        const status: number = exception instanceof HttpException
-            ? exception.getStatus()
-            : HttpStatus.INTERNAL_SERVER_ERROR;
+        const status =
+            exception instanceof HttpException
+                ? exception.getStatus()
+                : HttpStatus.INTERNAL_SERVER_ERROR;
 
-        let message: string | string[] = 'Internal server error';
-
+        // Нормализуем message в строку
+        let message: ErrorMessage = 'Internal server error';
         if (exception instanceof HttpException) {
-            const exceptionResponse = exception.getResponse();
-            if (typeof exceptionResponse === 'object' && exceptionResponse !== null) {
-                const res = exceptionResponse as ErrorResponse;
-                message = res.message;
+            const raw = exception.getResponse();
+            if (typeof raw === 'object' && raw !== null) {
+                const res = raw as ErrorResponse;
+                message = res.message ?? (res.error as string) ?? 'Error';
             } else {
-                message = exceptionResponse;
+                message = raw as string;
             }
         }
+        const messageText = Array.isArray(message) ? message.join(', ') : message;
 
-        const stack: string | undefined = exception instanceof Error ? exception.stack : '';
+        const stack = exception instanceof Error ? exception.stack : undefined;
 
-        // Формируем текст логирования
-        const logMessage = `[${request.method}] ${request.url} -> ${JSON.stringify(message)}`;
-
-        // В зависимости от кода статуса выбираем уровень логирования
+        // Логирование
+        const logMsg = `[${request.method}] ${request.url} -> ${messageText}`;
         if (status >= 500) {
-            this.logger.error(
-                `[${request.method}] ${request.url} -> ${JSON.stringify(message)}`,
-                stack,
-            );
+            this.logger.error(logMsg, stack);
         } else if (status >= 400) {
-            this.logger.warn(logMessage);
+            this.logger.warn(logMsg);
         } else {
-            this.logger.log(logMessage);
+            this.logger.log(logMsg);
         }
 
-
+        const meta: Meta = await this.metaService.getMetaByName(status.toString());
+        const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
 
         const errorData = {
             success: false,
             statusCode: status,
-            message,
+            message: meta.description,
             timestamp: new Date().toISOString(),
             path: request.url,
-            ...(this.isDev && { stack }),
+            env: process.env.NODE_ENV,
+            meta,
+            blogPosts,
+            // Стек только в dev
+            ...(this.isDev && stack ? { stack } : {}),
+            suggestions: [
+                { href: '/', text: 'На главную' },
+                { href: '/uslugi', text: 'К услугам' },
+                { href: '/blog', text: 'В блог' },
+            ],
+            scriptName: 'error',
+            styleName: 'error',
         };
 
         if (request.accepts('html')) {
-            // Если ожидается HTML (браузер)
-            if (status === HttpStatus.NOT_FOUND) {
-                response.status(status).render('404', errorData);
-            } else {
-                response.status(status).render('500', errorData);
-            }
+            response.status(status).render('error', errorData);
         } else {
             response.status(status).json(errorData);
         }

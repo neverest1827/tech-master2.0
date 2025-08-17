@@ -1,4 +1,5 @@
-import {Controller, Get, Param, Render} from '@nestjs/common';
+import {All, Controller, Get, NotFoundException, Param, Render, Req} from '@nestjs/common';
+import { Request } from 'express';
 import {AppService} from './app.service';
 import {BlogService} from "./blog/blog.service";
 import {BlogPost} from "./blog/entities/blog-post.entity";
@@ -128,5 +129,10 @@ export class AppController {
             blogPosts,
             reviews,
         };
+    }
+
+    @All('*')
+    async handleNotFound(@Req() req: Request) {
+        throw new NotFoundException();
     }
 }
