@@ -1,0 +1,128 @@
+@use "reset";
+@use "global";
+@use "vars" as *;
+
+@use "sections/header";
+@use "sections/footer";
+@use "sections/modal";
+
+.error {
+  height: 100%;
+  padding: 170px 0 100px;
+  background-color: $dark-bg-100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+
+  &__inner {
+    max-width: 640px;
+    width: 100%;
+    text-align: center;
+    padding: 40px 28px;
+    background-color: $dark-bg-200;
+    border: 1px solid rgba($dark-primary-200, .25);
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  &__title {
+    @extend %roboto-700;
+    font-size: 48px;
+    color: $dark-text-100;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  &__subtitle {
+    @extend %roboto-500;
+    font-size: 22px;
+    color: $dark-accent-100;
+    margin-bottom: 20px;
+  }
+
+  &__message {
+    @extend %roboto-400;
+    font-size: 18px;
+    line-height: 1.6;
+    color: $dark-text-200;
+    margin-bottom: 28px;
+  }
+
+  &__path {
+    font-size: 15px;
+    color: $dark-text-200;
+    margin-bottom: 30px;
+
+    code {
+      font-family: monospace;
+      background-color: $dark-bg-300;
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: $dark-text-100;
+    }
+  }
+
+  &__suggestions {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  &__suggestion a {
+    @extend %btn-link;
+    @extend %white-link;
+    font-size: 16px;
+    transition: all .3s;
+  }
+
+  &__stack {
+    margin-top: 32px;
+    text-align: left;
+
+    summary {
+      @extend %roboto-500;
+      cursor: pointer;
+      margin-bottom: 8px;
+      color: $dark-text-100;
+    }
+
+    pre {
+      background-color: $dark-bg-300;
+      color: $dark-text-200;
+      padding: 16px;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+}
+
+.footer {
+  background-color: $dark-bg-200;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .error {
+    padding: 100px 0;
+
+    &__title { font-size: 40px; }
+    &__subtitle { font-size: 20px; }
+    &__message { font-size: 16px; }
+  }
+}
+
+@media (max-width: 480px) {
+  .error {
+    padding: 80px 0;
+
+    &__title { font-size: 32px; }
+    &__subtitle { font-size: 18px; }
+    &__message { font-size: 15px; }
+    &__suggestions { flex-direction: column; gap: 10px; }
+    &__suggestion a { width: 100%; text-align: center; }
+  }
+}
