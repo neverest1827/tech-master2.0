@@ -11,12 +11,16 @@ export class OfferService {
         private readonly offerRepository: Repository<Offer>
     ) {}
 
-     findBySlugPath(slugPath: string | undefined): Promise<Offer | null> {
+     async findBySlugPath(slugPath: string | undefined): Promise<Offer> {
         if (!slugPath) throw new NotFoundException('Путь не был передан');
 
-        return this.offerRepository.findOne({
+        const offer: Offer | null = await this.offerRepository.findOne({
             where: { slug: slugPath },
             relations: ['meta'],
         });
+
+        if (!offer) throw new NotFoundException('Услуга не найдена');
+
+        return offer;
     }
 }
