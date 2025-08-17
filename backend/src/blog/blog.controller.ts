@@ -7,7 +7,7 @@ import {
     Param,
     Delete,
     ParseIntPipe,
-    Render,
+    Render, Query, DefaultValuePipe,
 } from '@nestjs/common';
 import {BlogService} from './blog.service';
 import {CreateBlogPostDto} from './dto/create-blog-post.dto';
@@ -24,11 +24,12 @@ export class BlogController {
         return this.blogService.create(createBlogPostDto);
     }
 
-    @Get(':slug')
-    @Render('blog-post')
-    async findBySlug(@Param('slug') slug: string): Promise<{ post: BlogPost }> {
-        const post: BlogPost = await this.blogService.findBySlug(slug);
-        return {post};
+    @Get('paginate')
+    async getPaginated(
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    ) {
+        return await this.blogService.paginate(page, limit);
     }
 
     @Patch(':id')
