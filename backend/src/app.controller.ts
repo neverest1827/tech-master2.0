@@ -131,6 +131,21 @@ export class AppController {
         };
     }
 
+    @Get('/kontakty')
+    @Render('contacts')
+    async getContactsPage(){
+        const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
+        const meta: Meta = await this.metaService.getMetaByName('contacts');
+
+        return {
+            env: process.env.NODE_ENV,
+            scriptName: 'contacts',
+            styleName: 'contacts',
+            meta,
+            blogPosts,
+        }
+    }
+
     @All('*')
     async handleNotFound(@Req() req: Request) {
         throw new NotFoundException();

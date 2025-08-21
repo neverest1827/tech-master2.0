@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<%- include('templates/head'); -%>
+<body>
+<%- include('templates/header'); -%>
+<main>
+    <section class="contacts">
+        <div class="container">
+            <div class="contacts__inner">
+                <header class="contacts__header">
+                    <h1 class="contacts__title">Контакты</h1>
+                    <p class="contacts__lead">Выездной мастер по Минску</p>
+                </header>
+
+                <section class="contacts__info">
+                    <div class="contacts__card">
+                        <h2 class="contacts__subtitle">Телефон</h2>
+                        <p class="contacts__text">
+                            <a href="tel:+375291234567" class="contacts__link">+375 (29) 123-45-67</a>
+                        </p>
+                        <p class="contacts__hint">Звонки принимаются круглосуточно</p>
+                    </div>
+
+                    <div class="contacts__card">
+                        <h2 class="contacts__subtitle">Мессенджеры</h2>
+                        <ul class="contacts__messengers">
+                            <li>
+                                <a class="contacts__messenger-link" href="https://t.me/your_username" target="_blank" rel="noopener">
+                                    <img src="/public/img/icons/telegram.svg" alt="" class="contacts__messenger-icon"> Telegram
+                                </a>
+                            </li>
+                            <li>
+                                <a class="contacts__messenger-link" href="viber://chat?number=%2B375291234567">
+                                    <img src="/public/img/icons/viber.svg" alt="" class="contacts__messenger-icon"> Viber
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="contacts__card">
+                        <h2 class="contacts__subtitle">Режим работы</h2>
+                        <p class="contacts__text">
+                            Работаем каждый день с 9:00 до 22:00. Выезд в день обращения.
+                        </p>
+                        <p class="contacts__badge contacts__badge--paid">За МКАД — платный выезд</p>
+                    </div>
+                </section>
+
+                <section class="service-area">
+                    <div class="service-area__head">
+                        <h2 class="service-area__title">Зона обслуживания</h2>
+                        <p class="service-area__legend">
+                            <span class="dot dot--inner"></span> МКАД (Минск)
+                            <span class="dot dot--outer"></span> Зона +15 км
+                        </p>
+                    </div>
+
+                    <!-- Карта -->
+                    <div id="service-map" class="service-area__map"
+                         data-center-lat="53.904541" data-center-lng="27.561523"
+                         data-mkad-radius-km="9" data-extra-radius-km="24">
+                        <!-- JS отрисует карту -->
+                    </div>
+
+                    <div class="service-area__note">
+                        Бесплатный выезд в пределах МКАД (в случае согласия на ремонт).
+                        Стоимость выезда за пределы МКАД оговаривается индивидуально.
+                    </div>
+                </section>
+
+                <section class="contacts__section article__section--cta">
+                    <div class="contacts__cta">
+                        <div class="contacts__cta-text">
+                            <h2 class="contacts__subtitle">
+                                Нужен мастер?
+                            </h2>
+                            <p class="contacts__text">
+                                Опишите проблему — подберём удобное время и ориентировочную стоимость
+                        </div>
+                        <div class="contacts__cta-actions">
+                            <a class="contacts__btn" data-target="send-request" href="/otpravit-zayavku">Вызвать мастера</a>
+                            <a class="contacts__btn red" href="tel:+375291916662">Позвонить</a>
+                        </div>
+                        <ul class="contacts__cta-list">
+                            <li class="contacts__cta-item">
+                                Экспресс-диагностика
+                            </li>
+                            <li class="contacts__cta-item">
+                                Качественный ремонт
+                            </li>
+                            <li class="contacts__cta-item">
+                                Честная смета до ремонта
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+    <%- include('templates/modal'); -%>
+</main>
+<%- include('templates/footer'); -%>
+<% if (env === 'dev') { %>
+    <script type="module" src="http://localhost:5173/src/<%= `${scriptName}.ts` %>"></script>
+<% } else { %>
+    <script type="module" src="/static/assets/<%= `${scriptName}.js` %>"></script>
+<% } %>
+</body>
+</html>
