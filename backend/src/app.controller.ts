@@ -11,6 +11,8 @@ import {OfferService} from "./offer/offer.service";
 import {Offer} from "./offer/entities/offer.entity";
 import {MetaService} from "./meta/meta.service";
 import {Meta} from "./meta/entities/meta.entity";
+import {Promo} from "./promo/entities/promo.entity";
+import {PromoService} from "./promo/promo.service";
 
 @Controller()
 export class AppController {
@@ -21,6 +23,7 @@ export class AppController {
         private readonly faqService: FaqService,
         private readonly offerService: OfferService,
         private readonly metaService: MetaService,
+        private readonly promoService: PromoService,
     ) {}
 
     @Get()
@@ -143,6 +146,25 @@ export class AppController {
             styleName: 'contacts',
             meta,
             blogPosts,
+        }
+    }
+
+    @Get('/aktsii')
+    @Render('promos')
+    async getPromosPage() {
+        const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
+        const meta: Meta = await this.metaService.getMetaByName('promos');
+        const faqs: Faq[] = await this.faqService.findAll();
+        const promos: Promo[] = await this.promoService.findAll();
+
+        return {
+            env: process.env.NODE_ENV,
+            scriptName: 'promos',
+            styleName: 'promos',
+            meta,
+            blogPosts,
+            faqs,
+            promos
         }
     }
 
