@@ -1,0 +1,210 @@
+@use "reset";
+@use "global";
+@use "vars" as *;
+
+@use "sections/header";
+@use "sections/footer";
+@use "sections/modal";
+@use "sections/faq";
+
+.promos {
+  padding: 120px 0 25px;
+  background-color: $dark-bg-100;
+
+  &__title {
+    @extend %roboto-700;
+    font-size: 44px;
+    color: $dark-text-100;
+    margin-bottom: 10px;
+  }
+
+  &__lead {
+    @extend %roboto-400;
+    font-size: 18px;
+    color: $dark-text-200;
+    margin-bottom: 30px;
+  }
+
+  /* List */
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  &__item {
+    background-color: $dark-bg-200;
+    border: 1px solid rgba($dark-primary-300, 0.6);
+    padding: 16px;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,.25);
+      border-color: $dark-bg-200;
+    }
+  }
+
+  &__top {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  &__badge {
+    @extend %roboto-700;
+    display: flex;
+    justify-content: center;
+    padding: 6px 10px;
+    width: 65px;
+    font-size: 16px;
+    color: $dark-accent-100;
+    background: linear-gradient(135deg, $dark-primary-100, $dark-primary-200);
+    border: 1px solid rgba($dark-primary-300, .35);
+  }
+
+  &__item-title {
+    color: $dark-text-100;
+    font-size: 20px;
+    @extend %roboto-700;
+  }
+
+  &__text {
+    color: $dark-text-200;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  &__btn {
+    @extend %btn-link;
+    @extend %white-link;
+    transition: all .3s;
+
+    &--red {
+      background-color: $dark-accent-100;
+      border-color: $dark-accent-100;
+
+      &:hover {
+        color: $dark-text-100;
+        background-color: $dark-accent-100-hover;
+        border-color: $dark-accent-100-hover;
+      }
+    }
+  }
+
+  /* Note / rules */
+  &__note {
+    margin-top: 18px;
+    color: $dark-text-200;
+    background-color: $dark-bg-200;
+    border: 1px solid rgba($dark-primary-200, .3);
+    padding: 16px;
+    margin-bottom: 50px;
+  }
+
+  &__subtitle {
+    color: $dark-text-100;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  &__rules {
+    padding-left: 20px;
+    li { margin-bottom: 8px; }
+  }
+
+  /* CTA */
+  &__cta {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, $dark-primary-100, $dark-primary-200);
+    border: 1px solid rgba($dark-primary-300, .35);
+  }
+
+  &__cta-text .article__subtitle {
+    margin-bottom: 8px;
+  }
+
+  &__cta-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  &__btn {
+    @extend %btn-link;
+    @extend %white-link;
+    transition: all .3s;
+
+    &:hover.red {
+      color: $dark-text-100;
+      background-color: $dark-accent-100-hover;
+    }
+  }
+
+  &__cta-list {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: -6px;
+  }
+
+  &__cta-item {
+    color: $dark-text-200;
+    padding: 6px 10px;
+    border: 1px dashed rgba($dark-text-200, .35);
+    background-color: rgba($dark-bg-100, .4);
+  }
+}
+
+.faq {
+  padding: 25px 0 100px;
+  background-color: $dark-bg-100;
+
+  &__title {
+    font-size: 44px;
+  }
+}
+.footer { background-color: $dark-bg-200; }
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .promos { &__title { font-size: 38px; } }
+}
+@media (max-width: 768px) {
+  .promos {
+    padding: 100px 0 25px;
+    &__title {
+      font-size: 32px;
+    }
+    &__cta {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    &__cta-actions {
+      justify-content: center;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .promos { &__title { font-size: 28px; } &__btn { width: 100%; justify-content: center; } }
+}
+@media (max-width: 480px) {
+  .promos { &__title { font-size: 26px; } &__subtitle { font-size: 20px; } }
+}
