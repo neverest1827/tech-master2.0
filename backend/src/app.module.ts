@@ -13,6 +13,7 @@ import { ReviewModule } from './review/review.module';
 import { FaqModule } from './faq/faq.module';
 import { OfferModule } from './offer/offer.module';
 import { MetaModule } from './meta/meta.module';
+import { PromoModule } from './promo/promo.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { MetaModule } from './meta/meta.module';
     FaqModule,
     OfferModule,
     MetaModule,
+    PromoModule,
   ],
   controllers: [AppController],
   providers: [
