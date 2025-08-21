@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<%- include('templates/head'); -%>
+<body>
+<%- include('templates/header'); -%>
+<main>
+    <section class="promos">
+        <div class="container">
+            <h1 class="promos__title">Акции и скидки</h1>
+            <p class="promos__lead">
+                Экономьте на ремонте и обслуживании: актуальные предложения обновляем регулярно.
+            </p>
+
+            <ul class="promos__list">
+                <% promos.forEach(promo => { %>
+                    <li class="promos__item">
+                        <div class="promos__top">
+                            <span class="promos__badge"><%= promo.badge %></span>
+                            <h3 class="promos__item-title"><%= promo.title %></h3>
+                        </div>
+                        <p class="promos__text"><%= promo.text %></p>
+                    </li>
+                <% }) %>
+            </ul>
+
+            <aside class="promos__note">
+                <h2 class="promos__subtitle">Условия</h2>
+                <ul class="promos__rules">
+                    <li>Скидка распространяется на стоимость работ (запчасти — отдельно).</li>
+                    <li>Акции не суммируются между собой — действует максимальная скидка.</li>
+                    <li>Действительно при предварительной записи.</li>
+                </ul>
+            </aside>
+
+            <div class="promos__cta">
+                <div class="promos__cta-text">
+                    <h2 class="promos__subtitle">
+                        Нужна срочная помощь?
+                    </h2>
+                    <p class="promos__text">
+                        Подскажем, какая акция выгоднее под вашу задачу, и назовём цену до начала работ.
+                </div>
+                <div class="promos__cta-actions">
+                    <a class="promos__btn" data-target="send-request" href="/otpravit-zayavku">Вызвать мастера</a>
+                    <a class="promos__btn red" href="tel:+375291916662">Позвонить</a>
+                </div>
+                <ul class="promos__cta-list">
+                    <li class="promos__cta-item">
+                        Экспресс-диагностика
+                    </li>
+                    <li class="promos__cta-item">
+                        Качественный ремонт
+                    </li>
+                    <li class="promos__cta-item">
+                        Честная смета до ремонта
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <%- include('templates/faq'); -%>
+    <%- include('templates/modal'); -%>
+</main>
+<%- include('templates/footer'); -%>
+<% if (env === 'dev') { %>
+    <script type="module" src="http://localhost:5173/src/<%= `${scriptName}.ts` %>"></script>
+<% } else { %>
+    <script type="module" src="/static/assets/<%= `${scriptName}.js` %>"></script>
+<% } %>
+</body>
+</html>
