@@ -1,0 +1,17 @@
+<nav aria-label="breadcrumb" class="breadcrumb">
+    <ul class="breadcrumb__list">
+        <% breadcrumbs.forEach((it, i) => { const isLast = i === breadcrumbs.length - 1; %>
+        <li class="breadcrumb__item">
+            <% if (!isLast) { %>
+                <a class="breadcrumb__link" href="<%= it.href %>">
+                    <%= it.label %>
+                </a>
+            <% } else { %>
+                <a class="breadcrumb__link breadcrumb__link--disabled" aria-current="page" href="<%= it.href %>">
+                    <%= it.label %>
+                </a>
+            <% } %>
+        </li>
+        <% }) %>
+    </ul>
+</nav>
