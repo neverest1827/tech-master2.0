@@ -14,6 +14,7 @@ import { FaqModule } from './faq/faq.module';
 import { OfferModule } from './offer/offer.module';
 import { MetaModule } from './meta/meta.module';
 import { PromoModule } from './promo/promo.module';
+import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PromoModule } from './promo/promo.module';
     OfferModule,
     MetaModule,
     PromoModule,
+    BreadcrumbModule,
   ],
   controllers: [AppController],
   providers: [

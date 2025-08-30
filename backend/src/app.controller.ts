@@ -13,6 +13,7 @@ import {MetaService} from "./meta/meta.service";
 import {Meta} from "./meta/entities/meta.entity";
 import {Promo} from "./promo/entities/promo.entity";
 import {PromoService} from "./promo/promo.service";
+import {BreadcrumbService} from "./breadcrumb/breadcrumb.service";
 
 @Controller()
 export class AppController {
@@ -24,6 +25,7 @@ export class AppController {
         private readonly offerService: OfferService,
         private readonly metaService: MetaService,
         private readonly promoService: PromoService,
+        private readonly breadcrumbService: BreadcrumbService,
     ) {}
 
     @Get()
@@ -117,20 +119,23 @@ export class AppController {
     @Get('/uslugi/*slugPath')
     @Render('offer')
     async getOfferPage(@Param('slugPath') slugPath: string) {
-        const slugParts = slugPath.split('/').filter(Boolean);
+        const slugParts = slugPath.split(',').filter(Boolean);
 
         const blogPosts: BlogPost[] = await this.blogService.findMany([1,2]);
         const reviews: Review[] = await this.reviewService.findMany(18);
-        const offerEntry: Offer | null = await this.offerService.findBySlugPath(slugParts.at(-1));
+        const offerEntry: Offer = await this.offerService.findBySlugPath(slugParts.at(-1));
+        const breadcrumbs = await this.breadcrumbService.buildBreadcrumbs(slugPath.replaceAll(',', '/'));
 
         return {
             env: process.env.NODE_ENV,
             scriptName: 'offer',
             styleName: 'offer',
-            meta: offerEntry?.meta,
-            content: offerEntry?.content || '',
+            meta: offerEntry.meta,
+            content: offerEntry.content,
+            faqs: offerEntry.faqs,
             blogPosts,
             reviews,
+            breadcrumbs,
         };
     }
 

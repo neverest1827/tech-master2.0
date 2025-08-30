@@ -16,7 +16,7 @@ export class OfferService {
 
         const offer: Offer | null = await this.offerRepository.findOne({
             where: { slug: slugPath },
-            relations: ['meta'],
+            relations: ['meta', 'faqs'],
         });
 
         if (!offer) throw new NotFoundException('Услуга не найдена');
