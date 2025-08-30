@@ -4,8 +4,17 @@
 <body>
 <%- include('templates/header'); -%>
 <main>
-    <%- content %>
+    <section class="offer offer--service">
+        <div class="container">
+            <div class="offer__inner">
+                <%- include('templates/breadcrumbs'); -%>
+                <%- content %>
+            </div>
+        </div>
+    </section>
+
     <%- include('templates/reviews'); -%>
+    <%- include('templates/faq'); -%>
     <%- include('templates/modal'); -%>
 </main>
 <%- include('templates/footer'); -%>
