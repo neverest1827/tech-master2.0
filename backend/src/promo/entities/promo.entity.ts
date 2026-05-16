@@ -1,16 +1,16 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('promo')
 export class Promo {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    title: string;
+  @Column()
+  title: string;
 
-    @Column()
-    badge: string;
+  @Column()
+  badge: string;
 
-    @Column()
-    text: string;
+  @Column()
+  text: string;
 }

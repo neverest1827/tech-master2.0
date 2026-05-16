@@ -9,18 +9,16 @@ import {
   ParseIntPipe,
   Query,
   DefaultValuePipe,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
-import {AnyFilesInterceptor} from "@nestjs/platform-express";
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('api/reviews')
 export class ReviewController {
-  constructor(
-      private readonly reviewService: ReviewService,
-  ) {}
+  constructor(private readonly reviewService: ReviewService) {}
 
   @Post()
   @UseInterceptors(AnyFilesInterceptor())
@@ -30,8 +28,8 @@ export class ReviewController {
 
   @Get('paginate')
   async getPaginated(
-      @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-      @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
   ) {
     return this.reviewService.paginate(page, limit);
   }
@@ -42,7 +40,10 @@ export class ReviewController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateReviewDto: UpdateReviewDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateReviewDto: UpdateReviewDto,
+  ) {
     return this.reviewService.update(id, updateReviewDto);
   }
 

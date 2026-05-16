@@ -1,29 +1,36 @@
-import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+import {
+  Injectable,
+  NestInterceptor,
+  ExecutionContext,
+  CallHandler,
+} from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 interface ApiResponse<T> {
-    success: boolean;
-    data?: T;
+  success: boolean;
+  data?: T;
 }
 
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor {
-    intercept(context: ExecutionContext, next: CallHandler): Observable<ApiResponse<T>> {
-        const request = context.switchToHttp().getRequest();
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler,
+  ): Observable<ApiResponse<T>> {
+    if (context.getType() !== 'http') return next.handle();
 
-        // Проверяем, если это запрос на рендеринг (например, метод GET с типом 'text/html')
-        if (request.headers['accept'] && request.headers['accept'].includes('text/html')) {
-            return next.handle();
-        }
+    const request = context.switchToHttp().getRequest();
+    const acceptsHtml = request?.headers?.accept?.includes('text/html');
+    if (acceptsHtml && request.method === 'GET') return next.handle();
 
-        return next.handle().pipe(
-            map((data) => {
-                return {
-                    success: true,
-                    data: data || null,
-                };
-            }),
-        );
-    }
+    return next.handle().pipe(
+      map((data) => {
+        return {
+          success: true,
+          data: data || null,
+        };
+      }),
+    );
+  }
 }
