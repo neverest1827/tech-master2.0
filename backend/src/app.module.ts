@@ -1,20 +1,24 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule } from '@nestjs/config';
 import { BlogModule } from './blog/blog.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppDataSource } from './data-source';
-import {APP_FILTER, APP_INTERCEPTOR} from "@nestjs/core";
-import {AllExceptionsFilter} from "./filters/all-filter";
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { AllExceptionsFilter } from './filters/all-filter';
 import { LoggerModule } from './logger/logger.module';
-import {ResponseInterceptor} from "./interceptors/response-interceptor";
+import { ResponseInterceptor } from './interceptors/response-interceptor';
 import { ReviewModule } from './review/review.module';
 import { FaqModule } from './faq/faq.module';
 import { OfferModule } from './offer/offer.module';
 import { MetaModule } from './meta/meta.module';
 import { PromoModule } from './promo/promo.module';
 import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
+import { RequestModule } from './request/request.module';
+import { BotModule } from './bot/bot.module';
+import { TelegrafModule } from 'nestjs-telegraf';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -23,6 +27,10 @@ import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
       envFilePath: '.env',
     }),
     TypeOrmModule.forRoot(AppDataSource.options),
+    TelegrafModule.forRoot({
+      token: process.env.BOT_TOKEN!,
+      launchOptions: false,
+    }),
     BlogModule,
     LoggerModule,
     ReviewModule,
@@ -31,6 +39,9 @@ import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
     MetaModule,
     PromoModule,
     BreadcrumbModule,
+    RequestModule,
+    BotModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [
