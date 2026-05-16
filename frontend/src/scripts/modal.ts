@@ -225,11 +225,14 @@ function addSendFormListener(): void {
 async function handleSendForm(e: Event, form: HTMLFormElement) {
     e.preventDefault();
     const formData = new FormData(form);
-    const actionUrl = form.getAttribute('action');
-
-    console.log(actionUrl);
+    const actionUrl: string = form.getAttribute('action')!;
 
     if (!actionUrl) return;
+
+    let isValid = true;
+    if (actionUrl === '/api/request') isValid = await validateNumber(formData);
+
+    if (!isValid) return;
 
     const result = await sendForm(actionUrl, formData);
     console.log(result);
@@ -247,7 +250,7 @@ async function sendForm(actionUrl: string, formData: FormData): Promise<any> {
     try {
         const response = await fetch(actionUrl, {
             method: 'POST',
-            body: formData
+            body: formData,
         });
 
         if (!response.ok) throw new Error(`Ошибка: ${response.statusText}`);
@@ -271,7 +274,7 @@ function showError(message: string = 'Что-то пошло не так'): void
 
 function showStatusMessage(result: any, form: HTMLFormElement, actionUrl: string): void {
     if (result.success) {
-        const text: string = actionUrl === '/otpravit-zayavku' ? 'Мы свяжемся с вами в ближайшее время.': 'Спасибо за отзыв.'
+        const text: string = actionUrl === '/api/request' ? 'Мы свяжемся с вами в ближайшее время.': 'Спасибо за отзыв.'
 
         Swal.fire({
             icon: 'success',
@@ -284,6 +287,26 @@ function showStatusMessage(result: any, form: HTMLFormElement, actionUrl: string
     } else {
         showError(result.message);
     }
+}
+
+async function validateNumber(formData: FormData) {
+    const rawTel = String(formData.get('tel') || '').trim();
+    const normalized = rawTel.replace(/[^\d+]/g, '').replace(/^(\d)/, '+$1');
+
+    return await showNumberVerification(normalized)
+}
+
+async function showNumberVerification(tel: string){
+    const { isConfirmed } = await Swal.fire({
+        icon: 'question',
+        title: 'Проверка номера',
+        text: `Вы ввели ${tel}`,
+        showCancelButton: true,
+        confirmButtonText: 'Всё верно',
+        cancelButtonText: 'Исправить',
+    });
+
+    return isConfirmed;
 }
 
 /**
