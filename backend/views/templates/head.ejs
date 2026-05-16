@@ -34,6 +34,7 @@
         <script type="module" src="http://localhost:5173/@vite/client"></script>
     <% } else { %>
         <!-- В продакшене загружаем сгенерированные файлы -->
-        <link rel="stylesheet" href="/static/assets/<%= `${styleName}.min.css` %>">
+        <link rel="stylesheet" href="/public/assets/header.min.css">
+        <link rel="stylesheet" href="/public/assets/<%= `${styleName}.min.css` %>">
     <% } %>
 </head>
