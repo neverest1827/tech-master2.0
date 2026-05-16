@@ -1,11 +1,11 @@
-import {IsNotEmpty, IsString} from "class-validator";
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateFaqDto {
-    @IsString()
-    @IsNotEmpty()
-    question: string;
+  @IsString()
+  @IsNotEmpty()
+  question: string;
 
-    @IsString()
-    @IsNotEmpty()
-    answer: string;
+  @IsString()
+  @IsNotEmpty()
+  answer: string;
 }

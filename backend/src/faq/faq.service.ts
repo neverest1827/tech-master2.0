@@ -1,16 +1,16 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateFaqDto } from './dto/create-faq.dto';
 import { UpdateFaqDto } from './dto/update-faq.dto';
-import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
-import {Faq} from "./entities/faq.entity";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Faq } from './entities/faq.entity';
 
 @Injectable()
 export class FaqService {
   constructor(
-      @InjectRepository(Faq)
-      private readonly faqRepository: Repository<Faq>,
-  ){}
+    @InjectRepository(Faq)
+    private readonly faqRepository: Repository<Faq>,
+  ) {}
 
   /**
    * Создает новый элемент FAQ.
@@ -38,7 +38,7 @@ export class FaqService {
    * @throws {NotFoundException} Если запись не найдена.
    */
   async findOne(id: number): Promise<Faq> {
-    const faq: Faq | null = await this.faqRepository.findOneBy( { id } );
+    const faq: Faq | null = await this.faqRepository.findOneBy({ id });
 
     if (!faq) throw new NotFoundException(`Faq ${id} не найден`);
 
@@ -53,7 +53,7 @@ export class FaqService {
    * @throws {NotFoundException} Если запись не найдена.
    */
   async update(id: number, updateFaqDto: UpdateFaqDto): Promise<Faq> {
-    const faq: Faq = await this.findOne(id)
+    const faq: Faq = await this.findOne(id);
     const updated: Faq = Object.assign(faq, updateFaqDto);
     return this.faqRepository.save(updated);
   }
@@ -65,7 +65,7 @@ export class FaqService {
    * @throws {NotFoundException} Если запись не найдена.
    */
   async remove(id: number): Promise<void> {
-    const faq: Faq = await this.findOne(id)
+    const faq: Faq = await this.findOne(id);
     await this.faqRepository.remove(faq);
   }
 }
