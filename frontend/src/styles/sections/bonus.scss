@@ -18,9 +18,14 @@
   }
 
   &__wrapper {
+    @extend %glass-card;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 20px;
+    width: fit-content;
+    max-width: 100%;
+    padding: 24px 28px;
     margin-bottom: 20px;
   }
 
@@ -32,6 +37,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    overflow-wrap: anywhere;
   }
 
   &__status {
@@ -58,7 +64,7 @@
 
   &__link-btn {
     @extend %btn-link;
-    border-color: $dark-accent-100;
+    @extend %btn-link-accent-outline;
     margin-right: 20px;
   }
 
@@ -90,6 +96,10 @@
 
     &__code {
       font-size: 24px;
+    }
+
+    &__wrapper {
+      padding: 20px;
     }
   }
 }

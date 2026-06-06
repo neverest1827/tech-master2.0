@@ -1,13 +1,9 @@
 import {
-  All,
   Controller,
   Get,
-  NotFoundException,
   Param,
   Render,
-  Req,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { AppService } from './app.service';
 import { BlogService } from './blog/blog.service';
 import { BlogPost } from './blog/entities/blog-post.entity';
@@ -156,6 +152,28 @@ export class AppController {
   @Get('/kontakty')
   @Render('contacts')
   async getContactsPage() {
+    return this.getContactsPageData();
+  }
+
+  @Get('/otpravit-zayavku')
+  @Render('contacts')
+  async getRequestPage() {
+    const pageData = await this.getContactsPageData();
+
+    return {
+      ...pageData,
+      meta: {
+        ...pageData.meta,
+        title: 'Отправить заявку на ремонт компьютерной техники',
+        description:
+          'Оставьте заявку на выезд мастера по ремонту компьютерной техники в Минске.',
+        canonicalUrl: '/otpravit-zayavku',
+        ogUrl: '/otpravit-zayavku',
+      },
+    };
+  }
+
+  private async getContactsPageData() {
     const blogPosts: BlogPost[] = await this.blogService.findMany([1, 2]);
     const meta: Meta = await this.metaService.getMetaByName('contacts');
 
@@ -185,10 +203,5 @@ export class AppController {
       faqs,
       promos,
     };
-  }
-
-  @All('*')
-  async handleNotFound(@Req() req: Request) {
-    throw new NotFoundException();
   }
 }

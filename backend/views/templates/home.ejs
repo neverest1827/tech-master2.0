@@ -6,48 +6,81 @@
                     <h1 class="home__info-title">
                         Ремонт компьютерной техники в Минске
                     </h1>
-                    <p class="home__info-text">
-                        Время работы: 9:00 - 22:00
-                    </p>
-                    <p class="home__info-text">
-                        Ежедневно!
-                    </p>
-                    <p class="home__info-text">
-                        Прием звонков круглосуточно!
+                    <p class="home__info-description">
+                        Выезд и диагностика на месте. Честная цена до ремонта.
+                        Гарантия на все работы и запчасти.
                     </p>
                     <div class="home__info-links">
-                        <a class="home__info-link red" href="">
+                        <a class="home__info-link red" href="tel:+375291916662">
                             +375 (29) 191 66 62
                         </a>
-                        <a class="home__info-link" href="">
-                            Детальнее
+                        <a class="home__info-link" data-target="send-request" href="/otpravit-zayavku">
+                            Оставить заявку
                         </a>
                     </div>
+                    <ul class="home__benefits">
+                        <li class="home__benefit">
+                            <svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#delivery"></use></svg>
+                            <span>Выезд<br>мастера</span>
+                        </li>
+                        <li class="home__benefit">
+                            <svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#search"></use></svg>
+                            <span>Диагностика<br>на месте</span>
+                        </li>
+                        <li class="home__benefit">
+                            <svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#tag"></use></svg>
+                            <span>Цена<br>до ремонта</span>
+                        </li>
+                        <li class="home__benefit">
+                            <svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#shield"></use></svg>
+                            <span>Гарантия<br>на работы</span>
+                        </li>
+                    </ul>
+                    <p class="home__schedule">
+                        <svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#clock"></use></svg>
+                        Время работы: 9:00 - 22:00, без выходных
+                    </p>
                 </div>
             </div>
-            <div class="home__carousel-box">
-                <div class="home__carousel" id="home__carousel-left">
-                    <div class="home__carousel-item">Samsung</div>
-                    <div class="home__carousel-item">Apple</div>
-                    <div class="home__carousel-item">Dell</div>
-                    <div class="home__carousel-item">Samsung1</div>
-                    <div class="home__carousel-item">Apple1</div>
-                    <div class="home__carousel-item">Dell1</div>
-                    <div class="home__carousel-item">Samsung2</div>
-                    <div class="home__carousel-item">Apple2</div>
-                    <div class="home__carousel-item">Dell2</div>
-                </div>
-                <div class="home__carousel" id="home__carousel-right">
-                    <div class="home__carousel-item">HP</div>
-                    <div class="home__carousel-item">Lenovo</div>
-                    <div class="home__carousel-item">Asus</div>
-                    <div class="home__carousel-item">HP1</div>
-                    <div class="home__carousel-item">Lenovo1</div>
-                    <div class="home__carousel-item">Asus1</div>
-                    <div class="home__carousel-item">HP2</div>
-                    <div class="home__carousel-item">Lenovo2</div>
-                    <div class="home__carousel-item">Asus2</div>
-                </div>
+
+            <div class="home__islands">
+                <article class="home__island">
+                    <header class="home__island-header">
+                        <span class="home__island-header-icon">
+                            <svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#tools"></use></svg>
+                        </span>
+                        <h2 class="home__island-title">Что ремонтируем</h2>
+                    </header>
+                    <ul class="home__island-list">
+                        <li><a href="/uslugi/remont-noutbukov"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#laptop"></use></svg><span>Ноутбуки</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-kompyuterov"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#monitor"></use></svg><span>Компьютеры</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-kompyuterov"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#tower"></use></svg><span>Системные блоки</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-noutbukov/remont-noutbukov-po-brendam/remont-noutbukov-apple-mac"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#apple"></use></svg><span>MacBook</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-monoblokov"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#desktop"></use></svg><span>Моноблоки</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-kompyuterov"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#gamepad"></use></svg><span>Игровые ПК</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/vosstanovlenie-dannyh"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#database"></use></svg><span>Восстановление данных</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#plus"></use></svg><span>Другие услуги<small>и многое другое</small></span><span class="home__island-arrow">›</span></a></li>
+                    </ul>
+                </article>
+
+                <article class="home__island home__island--reverse">
+                    <header class="home__island-header">
+                        <span class="home__island-header-icon">
+                            <svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#alert"></use></svg>
+                        </span>
+                        <h2 class="home__island-title">Частые проблемы</h2>
+                    </header>
+                    <ul class="home__island-list">
+                        <li><a href="/uslugi/remont-noutbukov/diagnostika-neispravnostey"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#power"></use></svg><span>Ноутбук не включается</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-kompyuterov/nastroyka-i-optimizatsiya-windows"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#speed"></use></svg><span>Компьютер тормозит</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-noutbukov/chistka-i-obsluzhivanie-noutbukov"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#temperature"></use></svg><span>Сильно греется</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-noutbukov/chistka-i-obsluzhivanie-noutbukov"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#fan"></use></svg><span>Шумит вентилятор</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-noutbukov/remont-posle-zalitiya-zhidkostyu"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#drop"></use></svg><span>Залили жидкостью</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-monitorov"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#no-image"></use></svg><span>Нет изображения</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/uslugi/remont-kompyuterov/nastroyka-i-optimizatsiya-windows"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#sad"></use></svg><span>Синий экран Windows</span><span class="home__island-arrow">›</span></a></li>
+                        <li><a href="/kontakty"><svg aria-hidden="true"><use href="/public/img/icons/home-services.svg#plus"></use></svg><span>Другие проблемы<small>поможем разобраться</small></span><span class="home__island-arrow">›</span></a></li>
+                    </ul>
+                </article>
             </div>
         </div>
     </div>

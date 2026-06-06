@@ -12,3 +12,24 @@
 @use "sections/faq";
 @use "sections/footer";
 @use "sections/modal";
+
+html {
+  scroll-behavior: smooth;
+}
+
+.home,
+.trust,
+.repair,
+.work,
+.advantages,
+.reviews,
+.bonus,
+.faq {
+  scroll-margin-top: 74px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

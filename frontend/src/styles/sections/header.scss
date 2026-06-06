@@ -28,16 +28,6 @@
 
   &__btn {
     @extend %btn-link;
-    transition: all .3s;
-
-    &:hover {
-      color: $dark-text-100-hover;
-    }
-
-    &:hover.red {
-      color: $dark-text-100;
-      background-color: $dark-accent-100-hover;
-    }
   }
 }
 

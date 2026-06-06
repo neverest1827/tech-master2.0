@@ -31,6 +31,7 @@ export class ReviewService {
    */
   async findMany(count: number): Promise<Review[]> {
     return await this.reviewRepository.find({
+      where: { isApproved: true },
       take: count,
       order: { createdAt: 'DESC' },
     });
@@ -38,6 +39,7 @@ export class ReviewService {
 
   async paginate(page: number, limit: number) {
     const [data, total] = await this.reviewRepository.findAndCount({
+      where: { isApproved: true },
       order: { createdAt: 'DESC' },
       skip: (page - 1) * limit,
       take: limit,
@@ -53,6 +55,20 @@ export class ReviewService {
       })),
       total,
     };
+  }
+
+  async findAllForAdmin(): Promise<Review[]> {
+    const reviews = await this.reviewRepository.find({
+      order: {
+        isApproved: 'ASC',
+        createdAt: 'DESC',
+      },
+    });
+
+    return reviews.map((review) => {
+      review.isApproved = this.normalizeApprovedValue(review.isApproved);
+      return review;
+    });
   }
 
   /**
@@ -87,6 +103,19 @@ export class ReviewService {
     return await this.reviewRepository.save(updated);
   }
 
+  async setApproved(id: number, isApproved: boolean): Promise<Review> {
+    await this.reviewRepository.update({ id }, { isApproved });
+
+    return await this.findOne(id);
+  }
+
+  async updateText(id: number, text: string): Promise<Review> {
+    const review: Review = await this.findOne(id);
+    review.text = text;
+
+    return await this.reviewRepository.save(review);
+  }
+
   /**
    * Удаляет отзыв по ID.
    *
@@ -95,5 +124,25 @@ export class ReviewService {
   async remove(id: number) {
     const review: Review = await this.findOne(id);
     await this.reviewRepository.remove(review);
+  }
+
+  private normalizeApprovedValue(value: unknown): boolean {
+    if (typeof value === 'boolean') {
+      return value;
+    }
+
+    if (typeof value === 'number') {
+      return value === 1;
+    }
+
+    if (typeof value === 'string') {
+      return value === '1' || value.toLowerCase() === 'true';
+    }
+
+    if (Buffer.isBuffer(value)) {
+      return value.length > 0 && value[0] === 1;
+    }
+
+    return false;
   }
 }

@@ -70,7 +70,7 @@
   }
 
   &__info-item{
-    border: 1px solid $dark-primary-300;
+    @extend %glass-card;
     display: flex;
     justify-content: space-between;
   }
@@ -81,7 +81,6 @@
   }
 
   &__info-laptop {
-    background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
     flex-direction: column;
 
     & .repair__info-img {
@@ -94,7 +93,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(to left, $dark-primary-100, $dark-primary-200);
+    @extend %glass-card-reverse;
 
     & .repair__info-img {
       width: 60%;
@@ -105,7 +104,7 @@
 
   &__info-pc{
     flex-direction: column;
-    background: linear-gradient(to left, $dark-primary-100, $dark-primary-200);
+    @extend %glass-card-reverse;
 
     & .repair__info-img {
       width: 100%;
@@ -117,7 +116,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
 
     & .repair__info-img {
       width: 60%;

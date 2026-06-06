@@ -1,194 +1,490 @@
 @use "../vars" as *;
 
-.home{
+.home {
   background-color: $dark-bg-100;
+  background-image: url("../img/bg/home-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  > .container {
+    max-width: 1500px;
+    padding-right: 28px;
+    padding-left: 28px;
+  }
 
   &__inner {
-    display: flex;
-    justify-content: space-between;
-    min-height: 600px;
+    display: grid;
+    grid-template-columns: minmax(480px, .9fr) minmax(700px, 1.1fr);
+    align-items: center;
+    gap: 56px;
+    min-height: 700px;
     height: 100vh;
-    overflow: hidden;
+    padding: 88px 0 24px;
   }
 
-  &__info-container{
+  &__info-container {
     display: flex;
-    justify-content: center;
     align-items: center;
   }
 
-  &__info{
-    color: $dark-text-100;
-    max-width: 570px;
+  &__info {
     width: 100%;
+    max-width: 620px;
+    color: $dark-text-100;
   }
 
-  &__info-title{
+  &__info-title {
     @extend %roboto-700;
-    font-size: 56px;
+    max-width: 620px;
     margin-bottom: 24px;
+    font-size: 60px;
+    line-height: 1.08;
   }
 
-  &__info-text{
-    font-size: 18px;
+  &__info-description {
+    max-width: 560px;
     color: $dark-text-200;
-    margin-bottom: 5px ;
+    font-size: 18px;
+    line-height: 1.65;
   }
 
-  &__info-links{
-    margin-top: 24px;
+  &__info-links {
     display: flex;
     gap: 16px;
+    margin-top: 28px;
   }
 
-  &__info-link{
+  &__info-link {
     @extend %btn-link;
-    transition: all .3s;
-
-    &:hover {
-      color: $dark-text-100-hover;
-    }
-
-    &:hover.red {
-      color: $dark-text-100;
-      background-color: $dark-accent-100-hover;
-    }
   }
 
-  &__carousel-box{
-    display: flex;
-    max-width: 656px;
-    gap: 16px;
+  &__benefits {
+    @extend %glass-card;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 30px;
+    padding: 24px 14px;
+    list-style: none;
   }
 
-  &__carousel {
+  &__benefit {
+    position: relative;
     display: flex;
     flex-direction: column;
-    transition: transform 1.5s;
-  }
-
-  &__carousel-item{
-    display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 82px;
+    padding: 10px 18px;
     color: $dark-text-100;
-    font-size: 60px;
-    width: 320px;
-    height: 400px;
-    box-sizing: border-box;
-    margin-bottom: 16px;
-    flex-shrink: 0;
+    text-align: center;
+    line-height: 1.35;
+
+    & + & {
+      &::before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        bottom: 8px;
+        left: 0;
+        width: 1px;
+        background: rgba(180, 194, 220, 0.14);
+      }
+    }
+
+    svg {
+      width: 34px;
+      height: 34px;
+      color: $dark-accent-100;
+    }
+  }
+
+  &__schedule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    color: $dark-text-200;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      color: $dark-accent-100;
+    }
+  }
+
+  &__islands {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    min-width: 0;
+  }
+
+  &__island {
+    @extend %glass-card;
+    min-width: 0;
+    padding: 24px 26px 18px;
+    border-radius: 6px;
+
+    &--reverse {
+      @extend %glass-card-reverse;
+    }
+  }
+
+  &__island-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 62px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(180, 194, 220, 0.12);
+  }
+
+  &__island-header-icon {
+    position: relative;
+    display: grid;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid rgba(180, 194, 220, 0.16);
+    background: rgba(26, 31, 43, 0.28);
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -16px;
+      left: 0;
+      width: 44px;
+      height: 1px;
+      background: $dark-accent-100;
+    }
+
+    svg {
+      width: 27px;
+      height: 27px;
+      color: $dark-accent-100;
+    }
+  }
+
+  &__island-title {
+    @extend %roboto-500;
+    min-width: 0;
+    color: $dark-text-100;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  &__island-list {
+    list-style: none;
+
+    li + li {
+      border-top: 1px solid rgba(180, 194, 220, 0.1);
+    }
+
+    a {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr) 16px;
+      align-items: center;
+      gap: 12px;
+      min-height: 66px;
+      color: $dark-text-100;
+      text-decoration: none;
+      transition: color .25s, background-color .25s, transform .25s;
+
+      > svg {
+        width: 27px;
+        height: 27px;
+        color: $dark-text-200;
+        transition: color .25s;
+      }
+
+      small {
+        display: block;
+        margin-top: 2px;
+        color: $dark-text-200;
+        font-size: 12px;
+      }
+
+      &:hover {
+        color: $dark-accent-100;
+        transform: translateX(3px);
+
+        > svg {
+          color: $dark-accent-100;
+        }
+      }
+    }
+  }
+
+  &__island-arrow {
+    color: $dark-text-200;
+    font-size: 26px;
+    line-height: 1;
+    text-align: right;
   }
 }
 
-#home__carousel-left > div {
-  background: linear-gradient(to right, $dark-primary-100, $dark-primary-200);
-}
-#home__carousel-right > div {
-  background: linear-gradient(to left, $dark-primary-100, $dark-primary-200);
+@media (min-width: 1800px) {
+  .home {
+    > .container {
+      max-width: 1740px;
+      padding-right: 40px;
+      padding-left: 40px;
+    }
+
+    &__inner {
+      grid-template-columns: minmax(560px, .88fr) minmax(820px, 1.12fr);
+      gap: 72px;
+    }
+
+    &__info {
+      max-width: 680px;
+    }
+
+    &__info-title {
+      max-width: 680px;
+      font-size: 68px;
+    }
+
+    &__info-description {
+      max-width: 650px;
+      font-size: 20px;
+    }
+
+    &__info-links {
+      margin-top: 32px;
+    }
+
+    &__info-link {
+      min-height: 48px;
+      padding-right: 28px;
+      padding-left: 28px;
+      font-size: 17px;
+    }
+
+    &__benefits {
+      margin-top: 34px;
+      padding: 28px 18px;
+    }
+
+    &__benefit {
+      font-size: 17px;
+
+      svg {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    &__schedule {
+      margin-top: 24px;
+      font-size: 17px;
+    }
+
+    &__island {
+      padding: 28px 30px 20px;
+    }
+
+    &__island-header {
+      min-height: 68px;
+    }
+
+    &__island-title {
+      font-size: 24px;
+    }
+
+    &__island-list a {
+      grid-template-columns: 36px minmax(0, 1fr) 18px;
+      gap: 14px;
+      min-height: 76px;
+      font-size: 17px;
+
+      > svg {
+        width: 31px;
+        height: 31px;
+      }
+
+      small {
+        font-size: 13px;
+      }
+    }
+  }
 }
 
-@media (max-width: 1200px) {
-  .home{
-    &__info-title{
-      width: 500px;
+@media (max-width: 1672px) {
+  .home {
+    background-image: url("../img/bg/home-bg-desk-m.png");
+
+    > .container {
+      max-width: 1320px;
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+
+    &__inner {
+      grid-template-columns: minmax(420px, .9fr) minmax(640px, 1.1fr);
+      gap: 36px;
+    }
+
+    &__info-title {
+      font-size: 54px;
+    }
+
+    &__island-list a {
+      min-height: 60px;
+    }
+  }
+}
+
+@media (max-width: 1448px) {
+  .home {
+    background-image: url("../img/bg/home-bg-desk-s.png");
+
+    &__inner {
+      grid-template-columns: minmax(390px, .9fr) minmax(560px, 1.1fr);
+      gap: 28px;
+    }
+
+    &__info-title {
       font-size: 48px;
     }
 
-    &__carousel-item {
-      font-size: 42px;
-      width: 300px;
+    &__island {
+      padding-right: 18px;
+      padding-left: 18px;
+    }
+
+    &__island-title {
+      font-size: 18px;
+    }
+
+    &__island-list a {
+      gap: 9px;
+      font-size: 14px;
     }
   }
 }
 
 @media (max-width: 1100px) {
-  .home{
-    &__info-title{
-      width: 450px;
-      font-size: 42px;
+  .home {
+    background-image: url("../img/bg/home-bg-mobile-m.png");
+    background-position: center top;
+
+    &__inner {
+      grid-template-columns: 1fr;
+      height: auto;
+      min-height: 100vh;
+      padding: 130px 35px 70px;
     }
 
-    &__carousel-item {
-      font-size: 36px;
-      width: 250px;
-    }
-  }
-}
-
-@media (max-width: 1024px) {
-  .home{
-    &__info-container{
-      padding-left: 50px;
+    > .container {
+      padding-right: 15px;
+      padding-left: 15px;
     }
 
-    &__info-title{
-      width: 550px;
+    &__info {
+      max-width: 700px;
+    }
+
+    &__info-title {
+      max-width: 650px;
       font-size: 56px;
     }
 
-    &__carousel-box {
-      display: none;
+    &__islands {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &__island-list a {
+      font-size: 16px;
     }
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 760px) {
   .home {
-    &__info-container {
+    &__inner {
+      padding-right: 0;
       padding-left: 0;
     }
-  }
-}
 
-@media (max-width: 550px) {
-  .home{
-    &__info-title{
-      width: 500px;
+    &__info-title {
       font-size: 48px;
     }
-  }
-}
 
-@media (max-width: 450px) {
-  .home{
-    &__info-title{
-      width: 450px;
-      font-size: 42px;
+    &__benefits {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px 0;
+    }
+
+    &__benefit:nth-child(3) {
+      &::before {
+        display: none;
+      }
+    }
+
+    &__islands {
+      grid-template-columns: 1fr;
     }
   }
 }
 
-@media (max-width: 400px) {
-  .home{
-    &__info-title{
-      width: 400px;
-      font-size: 36px;
+@media (max-width: 500px) {
+  .home {
+    background-image: url("../img/bg/home-bg-mobile-s.png");
+
+    &__inner {
+      padding-top: 108px;
+      gap: 30px;
     }
 
-    &__info-text {
+    &__info-title {
+      font-size: 40px;
+    }
+
+    &__info-description {
       font-size: 16px;
     }
 
+    &__info-links {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
     &__info-link {
-      padding: 5px 15px;
+      width: 100%;
+    }
+
+    &__benefit {
+      min-height: 74px;
+      padding-right: 12px;
+      padding-left: 12px;
+      font-size: 14px;
+    }
+
+    &__schedule {
+      align-items: flex-start;
+      font-size: 14px;
+    }
+
+    &__island {
+      padding: 18px 16px 12px;
     }
   }
 }
 
-@media (max-width: 360px) {
-  .home{
-    &__info-title{
-      width: 350px;
-      font-size: 32px;
+@media (max-width: 380px) {
+  .home {
+    &__info-title {
+      font-size: 34px;
     }
 
-    &__info-link {
-      padding: 5px 10px;
+    &__island-list a {
+      grid-template-columns: 28px minmax(0, 1fr) 14px;
+      gap: 8px;
+      font-size: 14px;
     }
   }
 }
-
-
-
-

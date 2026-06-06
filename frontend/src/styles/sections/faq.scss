@@ -2,7 +2,7 @@
 
 .faq {
   padding: 100px 0;
-  background-color: $dark-bg-200;
+  background-color: $dark-bg-100;
 
   &__title{
     @extend %roboto-700;
@@ -21,10 +21,12 @@
   }
 
   &__list-item{
-    border-top: 1px solid $dark-primary-200;
+    @extend %glass-card;
+    padding: 0 24px;
+    margin-bottom: 14px;
 
     &:last-child {
-      border-bottom: 1px solid $dark-primary-200;;
+      margin-bottom: 0;
     }
   }
 
@@ -74,7 +76,7 @@
     display: inline-block;
     @extend %white-link;
     @extend %btn-link;
-    border-color: $dark-accent-100;
+    @extend %btn-link-accent-outline;
   }
 }
 
