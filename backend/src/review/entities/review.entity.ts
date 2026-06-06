@@ -19,6 +19,9 @@ export class Review {
   @Column({ type: 'int', unsigned: true })
   stars: number;
 
+  @Column({ type: 'boolean', default: false })
+  isApproved: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 }

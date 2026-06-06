@@ -26,6 +26,12 @@ export class AdminController {
     private readonly reviewService: ReviewService,
   ) {}
 
+  @Get()
+  @Render('admin')
+  getAdminPage() {
+    return {};
+  }
+
   @Get('offers')
   @Render('admin-offers')
   async getOffersPage() {
@@ -56,6 +62,45 @@ export class AdminController {
   ) {
     await this.offerService.update(id, updateOfferDto);
     return res.redirect(`/admin/offers/${id}?saved=1`);
+  }
+
+  @Get('reviews')
+  @Render('admin-reviews')
+  async getReviewsPage(@Query('saved') saved?: string) {
+    const reviews: Review[] = await this.reviewService.findAllForAdmin();
+
+    return {
+      reviews,
+      saved: saved === '1',
+    };
+  }
+
+  @Post('reviews/:id/approve')
+  async approveReview(
+    @Param('id', ParseIntPipe) id: number,
+    @Res() res: Response,
+  ) {
+    await this.reviewService.setApproved(id, true);
+    return res.redirect('/admin/reviews?saved=1');
+  }
+
+  @Post('reviews/:id/unapprove')
+  async unapproveReview(
+    @Param('id', ParseIntPipe) id: number,
+    @Res() res: Response,
+  ) {
+    await this.reviewService.setApproved(id, false);
+    return res.redirect('/admin/reviews?saved=1');
+  }
+
+  @Post('reviews/:id/text')
+  async updateReviewText(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('text') text: string,
+    @Res() res: Response,
+  ) {
+    await this.reviewService.updateText(id, text);
+    return res.redirect('/admin/reviews?saved=1');
   }
 
   @Get('offers/:id/preview')
