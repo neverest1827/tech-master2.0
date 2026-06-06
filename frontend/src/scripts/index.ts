@@ -6,7 +6,7 @@ import {
     addDropdownServiceList,
     createBurgerMenu
 } from "./header";
-import { startCarousel } from "./home";
+import { startSyncedCarousels } from "./home";
 import { animateNumbers } from "./trust";
 import { animateWorkSection } from "./work.ts";
 import {
@@ -32,8 +32,26 @@ import {addModalListeners } from "./modal.ts";
         } else {
             addDropdownServiceList(serviceList);
             deactivateServiceLink();
-            startCarousel('home__carousel-left', false, 9, 2.5, 16, 4000)
-            startCarousel('home__carousel-right', true, 9, 2.5, 16, 4000)
+            startSyncedCarousels(
+                [
+                    {
+                        elementId: 'home__carousel-left',
+                        reverse: false,
+                        countItems: 9,
+                        countVisibleItems: 2.5,
+                        gap: 16,
+                    },
+                    {
+                        elementId: 'home__carousel-right',
+                        reverse: true,
+                        countItems: 9,
+                        countVisibleItems: 2.5,
+                        gap: 16,
+                    },
+                ],
+                4000,
+                '.home'
+            )
         }
 
         innitSwiper('.swiper');

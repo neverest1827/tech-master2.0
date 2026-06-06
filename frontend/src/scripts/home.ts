@@ -24,6 +24,57 @@ export function startCarousel(
     setupObserver(track, duration, () => moveTrack(track, step, reverse));
 }
 
+export function startSyncedCarousels(
+    carouselOptions: Array<{
+        elementId: string;
+        reverse: boolean;
+        countItems: number;
+        countVisibleItems: number;
+        gap: number;
+    }>,
+    duration: number,
+    observerTargetSelector: string
+) {
+    const carousels = carouselOptions
+        .map((options) => {
+            const track = document.getElementById(options.elementId);
+
+            if (!track) {
+                return null;
+            }
+
+            const items = track.children;
+            const itemHeight = Math.floor(window.innerHeight / options.countVisibleItems);
+            const step = itemHeight + options.gap;
+
+            initializeCarousel(
+                items,
+                itemHeight,
+                options.gap,
+                options.countItems,
+                options.countVisibleItems,
+                options.reverse
+            );
+
+            return {
+                track,
+                step,
+                reverse: options.reverse,
+            };
+        })
+        .filter((carousel): carousel is { track: HTMLElement; step: number; reverse: boolean } => carousel !== null);
+
+    const observerTarget = document.querySelector<HTMLElement>(observerTargetSelector);
+
+    if (!observerTarget || carousels.length === 0) {
+        return;
+    }
+
+    setupObserver(observerTarget, duration, () => {
+        carousels.forEach(({ track, step, reverse }) => moveTrack(track, step, reverse));
+    });
+}
+
 /**
  * Устанавливает размеры элементов карусели и определяет начальное положение каждого элемента.
  * @param items - Коллекция элементов внутри контейнера карусели.
