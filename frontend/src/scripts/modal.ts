@@ -12,6 +12,7 @@ const previewLinks: NodeListOf<Element> = document.querySelectorAll('.review__li
 const reviewBox = document.querySelector('.modal__review-card') as Element;
 const classNames: string[] =
     ['dropdown--visible', 'modal__form--visible', 'modal__review-card--visible', 'nav__dropdown-btn--active'];
+const BELARUS_PHONE_REGEX = /^\+375(?:17|25|29|33|44)\d{7}$/;
 
 export function addModalListeners() {
     addCloseModalListeners();
@@ -19,6 +20,7 @@ export function addModalListeners() {
     addOpenFullReviewListeners();
     addRatingListeners();
     addCancelBtnListeners();
+    addPhoneValidationListeners();
     addSendFormListener();
 }
 
@@ -86,7 +88,14 @@ export function handleModalOpenByTarget(event: Event, element: Element): void {
     const targetAction: string | null = element.getAttribute("data-target");
 
     if (targetAction) {
-        const targetElement = document.querySelector(`[data-self="${targetAction}"]`) as HTMLElement;
+        openModalByTarget(targetAction);
+    }
+}
+
+export function openModalByTarget(targetAction: string): void {
+    const targetElement = document.querySelector(`[data-self="${targetAction}"]`) as HTMLElement | null;
+
+    if (targetElement) {
         showModalWithTargetElement(targetElement);
     }
 }
@@ -229,13 +238,18 @@ async function handleSendForm(e: Event, form: HTMLFormElement) {
 
     if (!actionUrl) return;
 
+    if (actionUrl === '/api/request') {
+        formData.set('pageUrl', window.location.href);
+    }
+
     let isValid = true;
     if (actionUrl === '/api/request') isValid = await validateNumber(formData);
 
     if (!isValid) return;
 
     const result = await sendForm(actionUrl, formData);
-    console.log(result);
+    if (!result) return;
+
     showStatusMessage(result, form, actionUrl);
     removePopup()
 }
@@ -291,9 +305,75 @@ function showStatusMessage(result: any, form: HTMLFormElement, actionUrl: string
 
 async function validateNumber(formData: FormData) {
     const rawTel = String(formData.get('tel') || '').trim();
-    const normalized = rawTel.replace(/[^\d+]/g, '').replace(/^(\d)/, '+$1');
+    const normalized = normalizeBelarusPhone(rawTel);
+
+    if (!isValidBelarusPhone(normalized)) {
+        const requestForm = document.querySelector<HTMLFormElement>('.modal__form[data-self="send-request"]');
+        const input = requestForm?.querySelector<HTMLInputElement>('input[name="tel"]');
+
+        setPhoneValidationState(input ?? null, false);
+
+        return false;
+    }
+
+    formData.set('tel', normalized);
 
     return await showNumberVerification(normalized)
+}
+
+function addPhoneValidationListeners(): void {
+    const requestForm = document.querySelector<HTMLFormElement>('.modal__form[data-self="send-request"]');
+    const input = requestForm?.querySelector<HTMLInputElement>('input[name="tel"]');
+
+    if (!input) {
+        return;
+    }
+
+    input.addEventListener('input', () => {
+        if (!input.value.trim()) {
+            setPhoneValidationState(input, true, false);
+            return;
+        }
+
+        setPhoneValidationState(input, isValidBelarusPhone(normalizeBelarusPhone(input.value)), false);
+    });
+
+    input.addEventListener('blur', () => {
+        if (!input.value.trim()) {
+            setPhoneValidationState(input, true);
+            return;
+        }
+
+        setPhoneValidationState(input, isValidBelarusPhone(normalizeBelarusPhone(input.value)));
+    });
+}
+
+function normalizeBelarusPhone(value: string): string {
+    const phone = value.replace(/[^\d+]/g, '');
+
+    return phone.startsWith('375') ? `+${phone}` : phone;
+}
+
+function isValidBelarusPhone(value: string): boolean {
+    return BELARUS_PHONE_REGEX.test(value);
+}
+
+function setPhoneValidationState(
+    input: HTMLInputElement | null,
+    isValid: boolean,
+    showError: boolean = true
+): void {
+    if (!input) {
+        return;
+    }
+
+    const form = input.closest('.modal__form');
+    const error = form?.querySelector<HTMLElement>('[data-error-for="tel"]');
+    const shouldShowError = !isValid && showError;
+
+    input.classList.toggle('modal__form-input--invalid', shouldShowError);
+    input.setAttribute('aria-invalid', shouldShowError ? 'true' : 'false');
+    error?.classList.toggle('modal__form-error--visible', shouldShowError);
 }
 
 async function showNumberVerification(tel: string){

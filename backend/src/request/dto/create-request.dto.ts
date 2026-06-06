@@ -1,10 +1,13 @@
 import { Transform } from 'class-transformer';
-import { IsString, Matches, IsOptional } from 'class-validator';
+import { IsOptional, IsString, Matches } from 'class-validator';
 
-// Приводим к "цифры + плюс": убираем пробелы, дефисы и скобки.
-const normalizePhone = (v: any) => String(v ?? '').replace(/[^\d+]/g, '');
+const normalizePhone = (value: unknown) => {
+  const phone = String(value ?? '').replace(/[^\d+]/g, '');
 
-const PHONE_REGEX = /^\+?375(?:17|25|29|33|44)\d{7}/;
+  return phone.startsWith('375') ? `+${phone}` : phone;
+};
+
+const PHONE_REGEX = /^\+375(?:17|25|29|33|44)\d{7}$/;
 
 export class CreateRequestDto {
   @IsOptional()
@@ -14,11 +17,15 @@ export class CreateRequestDto {
   @Transform(({ value }) => normalizePhone(value))
   @Matches(PHONE_REGEX, {
     message:
-      'Телефон должен быть номером BY (+375...) без лишних символов',
+      'Телефон должен быть номером Беларуси в формате +375 (17/25/29/33/44) XXX-XX-XX',
   })
   tel: string;
 
   @IsOptional()
   @IsString()
   text?: string;
+
+  @IsOptional()
+  @IsString()
+  pageUrl?: string;
 }

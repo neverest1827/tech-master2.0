@@ -6,7 +6,7 @@ import {
     createBurgerMenu,
     deactivateServiceLink
 } from "./header.ts";
-import {addModalListeners} from "./modal.ts";
+import {addModalListeners, openModalByTarget} from "./modal.ts";
 import 'leaflet/dist/leaflet.css';
 import {initServiceMap} from "./leaflet.ts";
 
@@ -31,6 +31,10 @@ import {initServiceMap} from "./leaflet.ts";
         addNavLinkListeners();
         addModalListeners();
         initServiceMap();
+
+        if (window.location.pathname === '/otpravit-zayavku') {
+            openModalByTarget('send-request');
+        }
     });
 })();
 
