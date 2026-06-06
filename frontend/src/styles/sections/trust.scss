@@ -34,8 +34,9 @@
   }
 
   &__info-item{
+    @extend %glass-card;
     border-left: 2px solid $dark-accent-100;
-    padding-left: 32px;
+    padding: 28px 28px 28px 32px;
     max-width: 280px;
     width: 100%;
     margin-bottom: 20px;
@@ -108,7 +109,7 @@
 @media (max-width: 600px) {
   .trust {
     &__info-item {
-      padding-left: 15px;
+      padding: 22px 18px;
       max-width: 250px;
     }
 
@@ -139,7 +140,7 @@
 
     &__info-item {
       max-width: 250px;
-      padding-left: 20px;
+      padding: 22px 20px;
     }
   }
 }

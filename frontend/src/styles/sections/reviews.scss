@@ -35,8 +35,8 @@
   }
 
   &__link-btn {
-    border-color: $dark-accent-100;
     @extend %btn-link;
+    @extend %btn-link-accent-outline;
   }
 
   &__link-arrow{
@@ -55,7 +55,7 @@
 
   &-slide {
     & .review__card{
-      border: 1px solid $dark-primary-200;
+      @extend %glass-card;
       padding: 32px;
       height: 180px;
 
@@ -65,6 +65,7 @@
     }
 
     &:nth-child(even) .review__card {
+      @extend %glass-card-reverse;
       height: 200px;
     }
   }
