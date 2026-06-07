@@ -4,7 +4,15 @@
 <body>
 <%- include('templates/header'); -%>
 <main>
-    <%- content %>
+    <div class="article-page">
+        <% if (typeof previewImageURL !== 'undefined' && previewImageURL) {
+            const cover = `<figure class="article__cover"><img class="article__cover-img" src="${previewImageURL}" alt=""></figure>`;
+        %>
+            <%- content.replace('</header>', `</header>${cover}`) %>
+        <% } else { %>
+            <%- content %>
+        <% } %>
+    </div>
     <%- include('templates/faq'); -%>
     <%- include('templates/modal'); -%>
 </main>
