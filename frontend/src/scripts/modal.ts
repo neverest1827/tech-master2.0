@@ -11,7 +11,13 @@ const cancelButtons: NodeListOf<Element> = document.querySelectorAll(".modal__bt
 const previewLinks: NodeListOf<Element> = document.querySelectorAll('.review__link');
 const reviewBox = document.querySelector('.modal__review-card') as Element;
 const classNames: string[] =
-    ['dropdown--visible', 'modal__form--visible', 'modal__review-card--visible', 'nav__dropdown-btn--active'];
+    [
+        'dropdown--visible',
+        'modal__form--visible',
+        'modal__review-card--visible',
+        'nav__dropdown-btn--active',
+        'header--menu-open'
+    ];
 const BELARUS_PHONE_REGEX = /^\+375(?:17|25|29|33|44)\d{7}$/;
 
 export function addModalListeners() {
@@ -107,7 +113,11 @@ export function openModalByTarget(targetAction: string): void {
 function showModalWithTargetElement(targetElement: Element) {
     removePopup();
 
-    targetElement.classList.add(`${targetElement.className}--visible`);
+    const visibleClass = targetElement.classList.contains('modal__form')
+        ? 'modal__form--visible'
+        : 'modal__review-card--visible';
+
+    targetElement.classList.add(visibleClass);
 
     const dropdown = document.querySelector('.dropdown--visible') as HTMLElement;
     if (dropdown) {
