@@ -5,6 +5,7 @@
 @use "sections/header";
 @use "sections/footer";
 @use "sections/modal";
+@use "sections/breadcrumbs";
 
 .reviews {
   background-color: $dark-bg-100;
