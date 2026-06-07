@@ -1,10 +1,10 @@
 @use "../vars" as *;
 
-.repair{
+.repair {
   background-color: $dark-bg-100;
   padding: 100px 0;
 
-  &__title{
+  &__title {
     text-align: center;
     margin: 0 auto 50px;
     @extend %roboto-700;
@@ -13,8 +13,12 @@
     max-width: 750px;
   }
 
-  &__info-wrapper{
+  &__info-wrapper {
     padding: 24px;
+  }
+
+  &__info-icon {
+    display: none;
   }
 
   &__info-pc &__info-wrapper,
@@ -37,7 +41,7 @@
     margin-bottom: 15px;
   }
 
-  &__info-link{
+  &__info-link {
     display: inline-block;
     @extend %roboto-500;
     @extend %red-arrow;
@@ -46,7 +50,7 @@
     color: $dark-text-100;
   }
 
-  &__info-box{
+  &__info-box {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(5, 1fr);
@@ -57,19 +61,19 @@
     grid-area: 3 / 2 / 6 / 3;
   }
 
-  &__info-laptop{
+  &__info-laptop {
     grid-area: 1 / 1 / 4 / 2;
   }
 
-  &__info-monoblock{
+  &__info-monoblock {
     grid-area: 1 / 2 / 3 / 3;
   }
 
-  &__info-monitor{
+  &__info-monitor {
     grid-area: 4 / 1 / 6 / 2;
   }
 
-  &__info-item{
+  &__info-item {
     @extend %glass-card;
     display: flex;
     justify-content: space-between;
@@ -89,7 +93,7 @@
     }
   }
 
-  &__info-monoblock{
+  &__info-monoblock {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -102,7 +106,7 @@
     }
   }
 
-  &__info-pc{
+  &__info-pc {
     flex-direction: column;
     @extend %glass-card-reverse;
 
@@ -112,7 +116,7 @@
     }
   }
 
-  &__info-monitor{
+  &__info-monitor {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -126,131 +130,162 @@
 }
 
 @media (max-width: 1023px) {
-  .repair{
-    &__info-box{
-      grid-template-columns: 1fr;
-      grid-template-rows: repeat(4, 1fr);
+  .repair {
+    padding: 72px 0;
+
+    &__title {
+      max-width: 650px;
+      margin-bottom: 36px;
+      font-size: 40px;
+      line-height: 1.15;
     }
 
-    &__info-pc {
-      grid-area: 3 / 1 / 4 / 2;
+    &__info-box {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: none;
+      gap: 16px;
     }
 
-    &__info-laptop{
-      grid-area: 1 / 1 / 2 / 2;
+    &__info-pc,
+    &__info-laptop,
+    &__info-monoblock,
+    &__info-monitor {
+      grid-area: auto;
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      align-items: start;
+      gap: 20px;
+      min-height: 210px;
+      padding: 24px;
     }
 
-    &__info-monoblock{
-      grid-area: 2 / 1 / 3 / 2;
+    &__info-icon {
+      display: block;
+      width: 64px;
+      height: 64px;
+      padding: 10px;
+      border: 1px solid rgba($dark-accent-100, .35);
+      border-radius: 6px;
+      background-color: rgba($dark-bg-100, .35);
     }
 
-    &__info-monitor{
-      grid-area: 4 / 1 / 5 / 2;
+    &__info-img {
+      display: none;
     }
 
-    &__info-laptop {
-      flex-direction: row;
-
-      & .repair__info-img {
-        width: 50%;
-        object-fit: cover;
-      }
+    &__info-box &__info-wrapper,
+    &__info-pc &__info-wrapper,
+    &__info-laptop &__info-wrapper {
+      width: auto;
+      height: auto;
+      padding: 0;
     }
 
-    &__info-pc{
-      flex-direction: row;
-
-      & .repair__info-img {
-        width: 50%;
-      }
+    &__info-box &__info-title,
+    &__info-pc &__info-title,
+    &__info-laptop &__info-title {
+      margin-bottom: 10px;
+      font-size: 28px;
+      line-height: 1.1;
     }
 
-    &__info-monoblock .repair__info-img {
-      width: 50%;
+    &__info-text {
+      display: -webkit-box;
+      margin-bottom: 14px;
+      overflow: hidden;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
     }
 
-    &__info-monitor .repair__info-img {
-      width: 50%;
-    }
-
-    &__info-wrapper {
-      width: 50%;
-      height: 100%;
-      padding: 48px;
-    }
-
-    &__info-title {
-      font-size: 48px;
+    &__info-link {
+      margin-top: auto;
     }
   }
 }
 
 @media (max-width: 849px) {
-  .repair{
-    padding: 70px 0;
-
+  .repair {
     &__title {
-      font-size: 42px;
-      margin-bottom: 30px;
+      font-size: 36px;
+    }
+
+    &__info-pc,
+    &__info-laptop,
+    &__info-monoblock,
+    &__info-monitor {
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 16px;
+      min-height: 200px;
+      padding: 20px;
+    }
+
+    &__info-icon {
+      width: 52px;
+      height: 52px;
+      padding: 8px;
     }
   }
 }
 
 @media (max-width: 767px) {
-  .repair{
-    padding: 50px 0;
+  .repair {
+    padding: 56px 0;
 
     &__title {
-      font-size: 36px;
-      margin-bottom: 20px;
+      margin-bottom: 28px;
+      font-size: 34px;
       max-width: 500px;
     }
 
-    &__info-box .repair__info-wrapper {
-      padding: 20px;
+    &__info-box {
+      grid-template-columns: 1fr;
     }
-  }
-}
 
-@media (max-width: 767px) {
-  .repair{
-    &__info-box .repair__info-title {
-      font-size: 36px;
+    &__info-pc,
+    &__info-laptop,
+    &__info-monoblock,
+    &__info-monitor {
+      min-height: 0;
+    }
+
+    &__info-text {
+      -webkit-line-clamp: 2;
     }
   }
 }
 
 @media (max-width: 479px) {
-  .repair{
+  .repair {
+    padding: 48px 0;
+
     &__title {
       font-size: 32px;
     }
 
-    &__info-box .repair__info-laptop,
-    &__info-box .repair__info-pc,
-    &__info-box .repair__info-monoblock,
-    &__info-box .repair__info-monitor {
-      flex-direction: column;
-      justify-content: start;
+    &__info-pc,
+    &__info-laptop,
+    &__info-monoblock,
+    &__info-monitor {
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 14px;
+      padding: 18px;
     }
 
-    &__info-box .repair__info-wrapper {
-      width: 100%;
-      height: fit-content;
+    &__info-icon {
+      width: 44px;
+      height: 44px;
+      padding: 7px;
     }
 
-    &__info-box .repair__info-img {
-      width: 100%;
-      height: 250px;
+    &__info-box &__info-title,
+    &__info-pc &__info-title,
+    &__info-laptop &__info-title {
+      font-size: 24px;
     }
 
-    &__info-laptop > .repair__info-img,
-    &__info-pc > .repair__info-img,{
-      order: -1;
-    }
-
-    &__info-box .repair__info-title {
-      font-size: 32px;
+    &__info-text {
+      font-size: 15px;
     }
   }
 }
