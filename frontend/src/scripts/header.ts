@@ -1,5 +1,18 @@
 import {handleModal} from "./modal.ts";
 
+const TABLET_MEDIA_QUERY = '(max-width: 1024px)';
+let responsiveHeaderInitialized = false;
+
+function bindNavLink(element: HTMLAnchorElement): void {
+    if (element.dataset.navListener === 'true') return;
+
+    element.addEventListener('click', (event: MouseEvent) => {
+        event.preventDefault();
+        changeNavList(element);
+    });
+    element.dataset.navListener = 'true';
+}
+
 /**
  * Функция добавляет обработчики событий для всех ссылок с атрибутом data-target.
  * При клике на ссылку происходит изменение списка навигации.
@@ -7,12 +20,7 @@ import {handleModal} from "./modal.ts";
 export function addNavLinkListeners() {
     const navLinks: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('a[data-target]');
 
-    navLinks.forEach((element: HTMLAnchorElement) => {
-        element.addEventListener('click', (event: MouseEvent) => {
-            event.preventDefault();
-            changeNavList(element);
-        });
-    });
+    navLinks.forEach(bindNavLink);
 }
 
 /**
@@ -64,10 +72,13 @@ function addList(target: string): void {
  * При клике на кнопку меню происходит переключение видимости меню и модального окна.
  */
 export function addMenuListener(){
+    initializeResponsiveHeader();
+
     const menuBtn = document.querySelector<HTMLButtonElement>('.nav__dropdown-btn');
     const navBar = document.querySelector<HTMLDivElement>('.dropdown');
 
     if (!menuBtn || !navBar) return;
+    if (menuBtn.dataset.menuListener === 'true') return;
 
     menuBtn.addEventListener("click", (event: Event) => {
         event.preventDefault();
@@ -82,6 +93,7 @@ export function addMenuListener(){
 
         handleModal();
     });
+    menuBtn.dataset.menuListener = 'true';
 }
 
 /**
@@ -93,6 +105,9 @@ export function addMenuListener(){
 export function toggleMenu(menuBtn: HTMLElement, navBar: HTMLElement): void {
     menuBtn.classList.toggle("nav__dropdown-btn--active");
     navBar.classList.toggle("dropdown--visible");
+
+    const header = menuBtn.closest<HTMLElement>('.header');
+    header?.classList.toggle('header--menu-open', navBar.classList.contains('dropdown--visible'));
 }
 
 // /**
@@ -124,14 +139,19 @@ export function addDropdownServiceList(list: HTMLElement): void {
  * @param list - HTML-элемент списка, в который нужно вставить ссылку
  */
 export function addBackLinkToServiceList(list: HTMLElement): void {
+    if (list.querySelector('[data-responsive-back-link]')) return;
+
     const backLink = `
-<li class="dropdown__list-item">
+<li class="dropdown__list-item" data-responsive-back-link>
     <a class="dropdown__list-link red-link" data-target="main" href="">
         Вернуться назад
     </a>
 </li>
 `;
     list.insertAdjacentHTML('afterbegin', backLink);
+
+    const link = list.querySelector<HTMLAnchorElement>('[data-responsive-back-link] a[data-target]');
+    if (link) bindNavLink(link);
 }
 
 /**
@@ -152,6 +172,11 @@ export function deactivateServiceLink(): void {
 export function createBurgerMenu(): void {
     const btn = document.querySelector<HTMLButtonElement>('.nav__dropdown-btn');
     if (!btn) return;
+    if (btn.querySelector('.burger-menu')) return;
+
+    if (!btn.dataset.desktopLabel) {
+        btn.dataset.desktopLabel = btn.textContent?.trim() || 'Больше';
+    }
 
     const burgerMenu = document.createElement('div');
     burgerMenu.classList.add('burger-menu');
@@ -162,6 +187,70 @@ export function createBurgerMenu(): void {
 
     btn.innerHTML = '';
     btn.appendChild(burgerMenu);
+    btn.setAttribute('aria-label', 'Открыть меню');
+}
+
+function restoreDesktopMenu(): void {
+    const btn = document.querySelector<HTMLButtonElement>('.nav__dropdown-btn');
+    if (!btn || !btn.querySelector('.burger-menu')) return;
+
+    btn.textContent = btn.dataset.desktopLabel || 'Больше';
+    btn.removeAttribute('aria-label');
+}
+
+function resetDropdownLists(): void {
+    const lists = document.querySelectorAll<HTMLElement>('.dropdown__list[data-self]');
+
+    lists.forEach((list) => {
+        const name = list.dataset.self;
+        if (name) {
+            list.classList.remove(`dropdown__${name}-list--visible`);
+        }
+    });
+
+    document
+        .querySelector<HTMLElement>('[data-self="main"]')
+        ?.classList.add('dropdown__main-list--visible');
+}
+
+function syncResponsiveHeader(isTablet: boolean): void {
+    const menuBtn = document.querySelector<HTMLButtonElement>('.nav__dropdown-btn');
+    const navBar = document.querySelector<HTMLElement>('.dropdown');
+    const serviceList = document.querySelector<HTMLElement>('.dropdown__services-list');
+    const serviceLink = document.querySelector<HTMLElement>('.deactivate');
+
+    if (!serviceList) return;
+
+    menuBtn?.classList.remove('nav__dropdown-btn--active');
+    navBar?.classList.remove('dropdown--visible');
+    menuBtn?.closest('.header')?.classList.remove('header--menu-open');
+    resetDropdownLists();
+
+    if (isTablet) {
+        createBurgerMenu();
+        addBackLinkToServiceList(serviceList);
+        serviceLink?.style.removeProperty('pointer-events');
+        return;
+    }
+
+    restoreDesktopMenu();
+    serviceList.querySelector('[data-responsive-back-link]')?.remove();
+    addDropdownServiceList(serviceList);
+
+    if (serviceLink) {
+        serviceLink.style.pointerEvents = 'none';
+    }
+}
+
+function initializeResponsiveHeader(): void {
+    if (responsiveHeaderInitialized) return;
+
+    const mediaQuery = window.matchMedia(TABLET_MEDIA_QUERY);
+    const sync = () => syncResponsiveHeader(mediaQuery.matches);
+
+    sync();
+    mediaQuery.addEventListener('change', sync);
+    responsiveHeaderInitialized = true;
 }
 
 /**
