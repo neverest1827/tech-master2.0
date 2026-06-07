@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Метаданные | Админка</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f5; color: #18181b; }
+        .layout { max-width: 1180px; margin: 0 auto; padding: 32px 16px 48px; }
+        .top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
+        h1 { margin: 0; }
+        .nav { display: flex; flex-wrap: wrap; gap: 12px; }
+        a { color: #dc2626; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .card { overflow: hidden; border: 1px solid #e4e4e7; border-radius: 8px; background: #fff; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 13px 15px; border-bottom: 1px solid #e4e4e7; text-align: left; vertical-align: top; }
+        th { background: #fafafa; }
+        tr:last-child td { border-bottom: none; }
+        .page-name { max-width: 260px; word-break: break-word; }
+        .title { max-width: 420px; font-weight: 700; }
+        .muted { color: #71717a; font-size: 13px; }
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 999px; background: #e4e4e7; color: #3f3f46; font-size: 12px; font-weight: 700; }
+        .badge--page { background: #dbeafe; color: #1e40af; }
+        .badge--offer { background: #fef3c7; color: #92400e; }
+        .badge--article { background: #dcfce7; color: #166534; }
+        .badge--error { background: #fee2e2; color: #991b1b; }
+        @media (max-width: 760px) {
+            .top { align-items: flex-start; flex-direction: column; }
+            .card { overflow-x: auto; }
+            table { min-width: 860px; }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div class="top">
+        <h1>Метаданные страниц</h1>
+        <div class="nav">
+            <a href="/admin">Админка</a>
+            <a href="/admin/offers">Услуги</a>
+            <a href="/admin/blog">Блог</a>
+            <a href="/admin/faqs">FAQ</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Тип</th>
+                <th>Page name</th>
+                <th>Title</th>
+                <th>Canonical</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% items.forEach((meta) => { %>
+                <% const isError = /^\d{3}$/.test(meta.pageName); %>
+                <% const type = meta.offer ? 'Услуга' : meta.blogPost ? 'Статья' : isError ? 'Ошибка' : 'Страница'; %>
+                <% const typeClass = meta.offer ? 'offer' : meta.blogPost ? 'article' : isError ? 'error' : 'page'; %>
+                <tr>
+                    <td><%= meta.id %></td>
+                    <td><span class="badge badge--<%= typeClass %>"><%= type %></span></td>
+                    <td class="page-name"><code><%= meta.pageName %></code></td>
+                    <td class="title"><%= meta.title %></td>
+                    <td class="muted"><%= meta.canonicalUrl || 'Не указан' %></td>
+                    <td><a href="/admin/meta/<%= meta.id %>">Редактировать</a></td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
