@@ -1139,8 +1139,6 @@
                                         </div>
                                         <div class="dropdown__blog">
                                             <% if (blogPosts.length) { %>
-                                            <% const MAX_TITLE_LENGTH = 25%>
-                                            <% const MAX_DESCRIPTION_LENGTH = 100%>
                                                 <h3 class="dropdown__blog-title">Новые статьи</h3>
                                                 <ul class="dropdown__blog-list">
                                                     <% blogPosts.forEach(blog => { %>
@@ -1160,16 +1158,13 @@
                                                                                 class="dropdown__article-title"
                                                                                 title="<%= blog.meta.title %>"
                                                                         >
-                                                                            <%= blog.meta.title.length > MAX_TITLE_LENGTH ? blog.meta.title.substring(0, 25).trim() + '…' : blog.meta.title %>
+                                                                            <%= blog.meta.title %>
                                                                         </h4>
                                                                     </a>
                                                                 </li>
                                                                 <li class="dropdown__article-item">
                                                                     <p class="dropdown__article-description">
-                                                                        <%= blog.meta.description.length > MAX_DESCRIPTION_LENGTH
-                                                                                ? blog.meta.description.substring(0, 100).trim() + '…'
-                                                                                : blog.meta.description
-                                                                        %>
+                                                                        <%= blog.meta.description %>
                                                                     </p>
                                                                 </li>
                                                                 <li class="dropdown__article-item">
@@ -1194,8 +1189,16 @@
                 </nav>
             </div>
             <div class="header__buttons">
-                <a class="header__btn" data-target="send-request" href="/otpravit-zayavku">Отправить заявку</a>
-                <a class="header__btn red" href="tel:+375291916662">Позвонить</a>
+                <a class="header__btn header__btn-request" data-target="send-request" href="/otpravit-zayavku">
+                    <span class="header__btn-label">Отправить заявку</span>
+                    <span class="header__btn-label-short">Заявка</span>
+                </a>
+                <a class="header__btn header__btn-phone red" href="tel:+375291916662" aria-label="Позвонить">
+                    <svg class="header__btn-phone-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7.3 3.5 9.6 8a1.5 1.5 0 0 1-.35 1.75l-1.1.95a15.5 15.5 0 0 0 5.15 5.15l.95-1.1A1.5 1.5 0 0 1 16 14.4l4.5 2.3a1.5 1.5 0 0 1 .78 1.65l-.3 1.45A2.75 2.75 0 0 1 18.3 22C9.3 22 2 14.7 2 5.7A2.75 2.75 0 0 1 4.2 3l1.45-.3a1.5 1.5 0 0 1 1.65.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="header__btn-phone-text">Позвонить</span>
+                </a>
             </div>
         </div>
     </div>

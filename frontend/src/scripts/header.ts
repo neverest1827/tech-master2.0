@@ -1,6 +1,6 @@
 import {handleModal} from "./modal.ts";
 
-const TABLET_MEDIA_QUERY = '(max-width: 1024px)';
+const TABLET_MEDIA_QUERY = '(max-width: 1230px)';
 let responsiveHeaderInitialized = false;
 
 function bindNavLink(element: HTMLAnchorElement): void {
@@ -106,6 +106,11 @@ export function toggleMenu(menuBtn: HTMLElement, navBar: HTMLElement): void {
     menuBtn.classList.toggle("nav__dropdown-btn--active");
     navBar.classList.toggle("dropdown--visible");
 
+    menuBtn.setAttribute(
+        'aria-expanded',
+        navBar.classList.contains('dropdown--visible') ? 'true' : 'false'
+    );
+
     const header = menuBtn.closest<HTMLElement>('.header');
     header?.classList.toggle('header--menu-open', navBar.classList.contains('dropdown--visible'));
 }
@@ -188,6 +193,7 @@ export function createBurgerMenu(): void {
     btn.innerHTML = '';
     btn.appendChild(burgerMenu);
     btn.setAttribute('aria-label', 'Открыть меню');
+    btn.setAttribute('aria-expanded', 'false');
 }
 
 function restoreDesktopMenu(): void {
@@ -196,6 +202,7 @@ function restoreDesktopMenu(): void {
 
     btn.textContent = btn.dataset.desktopLabel || 'Больше';
     btn.removeAttribute('aria-label');
+    btn.removeAttribute('aria-expanded');
 }
 
 function resetDropdownLists(): void {
@@ -222,6 +229,7 @@ function syncResponsiveHeader(isTablet: boolean): void {
     if (!serviceList) return;
 
     menuBtn?.classList.remove('nav__dropdown-btn--active');
+    menuBtn?.setAttribute('aria-expanded', 'false');
     navBar?.classList.remove('dropdown--visible');
     menuBtn?.closest('.header')?.classList.remove('header--menu-open');
     resetDropdownLists();
