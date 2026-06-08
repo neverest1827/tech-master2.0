@@ -10,6 +10,7 @@ const entryPoints = [
   "offer",
   "promos",
   "reviews",
+  "privacy",
   "error",
 ];
 

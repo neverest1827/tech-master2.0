@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= isNew ? 'Создание статьи' : 'Редактирование статьи' %> | Админка</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f5; color: #18181b; }
+        .layout { display: grid; grid-template-columns: minmax(420px, 600px) minmax(0, 1fr); min-height: 100vh; }
+        .panel { padding: 24px; background: #fff; border-right: 1px solid #e4e4e7; }
+        .preview { min-width: 0; background: #e4e4e7; }
+        .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; }
+        h1 { margin: 0; font-size: 28px; }
+        .back { color: #dc2626; text-decoration: none; }
+        .back:hover { text-decoration: underline; }
+        .notice { margin-bottom: 16px; padding: 12px 14px; border: 1px solid #bbf7d0; border-radius: 8px; background: #f0fdf4; color: #166534; }
+        .field { display: grid; gap: 7px; margin-bottom: 16px; }
+        label { font-weight: 700; }
+        input, textarea { width: 100%; padding: 11px 13px; border: 1px solid #d4d4d8; border-radius: 8px; background: #fff; color: #18181b; font: inherit; }
+        textarea { min-height: 90px; resize: vertical; line-height: 1.5; }
+        textarea.code { min-height: 420px; font: 13px/1.5 Consolas, monospace; }
+        input:focus, textarea:focus { outline: none; border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220, 38, 38, .12); }
+        .hint { margin: 0; color: #71717a; font-size: 12px; line-height: 1.4; }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+        button, .button { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 10px 16px; border: 1px solid #dc2626; border-radius: 8px; font: inherit; font-weight: 700; cursor: pointer; text-decoration: none; }
+        button { background: #dc2626; color: #fff; }
+        button:hover { background: #b91c1c; }
+        .button { background: #fff; color: #dc2626; }
+        iframe { width: 100%; height: 100vh; border: 0; background: #fff; }
+        .preview-empty { display: grid; place-items: center; height: 100vh; padding: 30px; color: #71717a; text-align: center; }
+        @media (max-width: 1100px) {
+            .layout { grid-template-columns: 1fr; }
+            .panel { border-right: 0; border-bottom: 1px solid #e4e4e7; }
+            iframe, .preview-empty { height: 70vh; }
+        }
+        @media (max-width: 600px) {
+            .panel { padding: 18px; }
+            .top { align-items: flex-start; flex-direction: column; }
+            .actions > * { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div class="panel">
+        <div class="top">
+            <h1><%= isNew ? 'Создание статьи' : 'Редактирование статьи' %></h1>
+            <a class="back" href="/admin/blog">К списку</a>
+        </div>
+
+        <% if (saved) { %>
+            <div class="notice">Изменения сохранены.</div>
+        <% } %>
+
+        <form method="post" action="<%= isNew ? '/admin/blog' : `/admin/blog/${post.id}` %>">
+            <div class="field">
+                <label for="title">Заголовок</label>
+                <input id="title" name="title" type="text" maxlength="255" value="<%= post?.meta?.title || '' %>" required>
+            </div>
+            <div class="field">
+                <label for="slug">Slug</label>
+                <input id="slug" name="slug" type="text" maxlength="255" value="<%= post?.slug || '' %>" placeholder="Сформируется из заголовка">
+                <p class="hint">Используйте латиницу и дефисы. При сохранении значение нормализуется.</p>
+            </div>
+            <div class="field">
+                <label for="description">Описание</label>
+                <textarea id="description" name="description" maxlength="500" required><%= post?.meta?.description || '' %></textarea>
+                <p class="hint">Показывается в списке статей и используется как SEO description.</p>
+            </div>
+            <div class="field">
+                <label for="previewImageURL">Изображение</label>
+                <input id="previewImageURL" name="previewImageURL" type="text" value="<%= post?.previewImageURL || '' %>" placeholder="/public/img/blog/article.png">
+            </div>
+            <div class="field">
+                <label for="keywords">SEO keywords</label>
+                <input id="keywords" name="keywords" type="text" value="<%= post?.meta?.keywords || '' %>">
+            </div>
+            <div class="field">
+                <label for="content">HTML статьи</label>
+                <textarea class="code" id="content" name="content" required><%- post?.content || '' %></textarea>
+            </div>
+            <div class="actions">
+                <button type="submit"><%= isNew ? 'Создать статью' : 'Сохранить изменения' %></button>
+                <% if (!isNew) { %>
+                    <a class="button" href="/admin/blog/<%= post.id %>/preview" target="_blank">Открыть preview</a>
+                <% } %>
+                <a class="button" href="/admin/blog">Отмена</a>
+            </div>
+        </form>
+    </div>
+    <div class="preview">
+        <% if (!isNew) { %>
+            <iframe src="/admin/blog/<%= post.id %>/preview" title="Предпросмотр статьи"></iframe>
+        <% } else { %>
+            <div class="preview-empty">Предпросмотр станет доступен после первого сохранения статьи.</div>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>

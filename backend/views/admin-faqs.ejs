@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | Админка</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f5;
+            color: #18181b;
+        }
+        .layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 16px 48px;
+        }
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        h1 { margin: 0; }
+        .nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        a {
+            color: #dc2626;
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 9px 14px;
+            border-radius: 8px;
+            background: #dc2626;
+            color: #fff;
+            font-weight: 700;
+        }
+        .button:hover {
+            background: #b91c1c;
+            text-decoration: none;
+        }
+        .notice {
+            margin-bottom: 16px;
+            padding: 12px 14px;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            background: #f0fdf4;
+            color: #166534;
+        }
+        .card {
+            overflow: hidden;
+            border: 1px solid #e4e4e7;
+            border-radius: 8px;
+            background: #fff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e4e4e7;
+            text-align: left;
+            vertical-align: top;
+        }
+        th { background: #fafafa; }
+        tr:last-child td { border-bottom: none; }
+        .question {
+            max-width: 360px;
+            font-weight: 700;
+        }
+        .answer {
+            max-width: 380px;
+            color: #52525b;
+            line-height: 1.45;
+            white-space: pre-wrap;
+        }
+        .scope {
+            min-width: 190px;
+            color: #52525b;
+            line-height: 1.45;
+        }
+        .badge {
+            display: inline-block;
+            margin-bottom: 6px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #e4e4e7;
+            color: #3f3f46;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .badge--general {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .service-list {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 13px;
+        }
+        .muted { color: #71717a; }
+        @media (max-width: 760px) {
+            .top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .card {
+                overflow-x: auto;
+            }
+            table {
+                min-width: 720px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div class="top">
+        <h1>FAQ</h1>
+        <div class="nav">
+            <a href="/admin">Админка</a>
+            <a href="/admin/offers">Услуги</a>
+            <a href="/admin/reviews">Отзывы</a>
+            <a class="button" href="/admin/faqs/new">Создать FAQ</a>
+        </div>
+    </div>
+
+    <% if (created) { %>
+        <div class="notice">FAQ создан.</div>
+    <% } %>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Вопрос</th>
+                <th>Ответ</th>
+                <th>Публикация</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (!faqs.length) { %>
+                <tr>
+                    <td colspan="5" class="muted">FAQ пока нет.</td>
+                </tr>
+            <% } %>
+            <% faqs.forEach((faq) => { %>
+                <tr>
+                    <td><%= faq.id %></td>
+                    <td class="question"><%= faq.question %></td>
+                    <td class="answer"><%= faq.answer %></td>
+                    <td class="scope">
+                        <% if (!faq.offer?.length) { %>
+                            <span class="badge badge--general">Общий FAQ</span>
+                        <% } else { %>
+                            <span class="badge">Для услуг: <%= faq.offer.length %></span>
+                            <ul class="service-list">
+                                <% faq.offer.forEach((offer) => { %>
+                                    <li><%= offer.meta?.title || offer.slug %></li>
+                                <% }) %>
+                            </ul>
+                        <% } %>
+                    </td>
+                    <td><a href="/admin/faqs/<%= faq.id %>">Редактировать</a></td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

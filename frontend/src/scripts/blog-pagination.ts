@@ -7,7 +7,7 @@
 function renderBlogItem(blogPost: { slug :string, previewImageURL: string, title: string, description: string }): string {
     return `
         <li class="blog__list-item">
-            <a class="blog__list-link" href="<%= /blog/${blogPost.slug}">
+            <a class="blog__list-link" href="/blog/${blogPost.slug}">
                 <img class="blog__list-img"
                     src="${blogPost.previewImageURL || '/public/img/no-image.jpg'}"
                     alt="blog image"
@@ -49,10 +49,13 @@ async function getBlogPosts(page: number, limit: number) {
 }
 
 function paginateHandler(page: number, limit: number) {
-    const paginateBtn = document.querySelector('.blog__paginate-btn') as HTMLElement;
+    const paginateBtn = document.querySelector('.blog__paginate-btn') as HTMLElement | null;
+
+    if (!paginateBtn) return;
+
     const total: number = parseInt(paginateBtn.getAttribute('data-total')!);
 
-    if (page * limit > total) {
+    if (page * limit >= total) {
         paginateBtn.parentElement!.style.display = 'none';
     } else {
         paginateBtn.setAttribute('data-page', `${ ++page }`)

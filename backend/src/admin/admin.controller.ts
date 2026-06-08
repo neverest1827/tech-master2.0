@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -17,6 +18,10 @@ import { UpdateOfferDto } from '../offer/dto/update-offer.dto';
 import { Offer } from '../offer/entities/offer.entity';
 import { BlogPost } from '../blog/entities/blog-post.entity';
 import { Review } from '../review/entities/review.entity';
+import { FaqService } from '../faq/faq.service';
+import { AdminBlogPostInput } from '../blog/blog.service';
+import { MetaService } from '../meta/meta.service';
+import { UpdateMetaDto } from '../meta/dto/update-meta.dto';
 
 @Controller('admin')
 export class AdminController {
@@ -24,6 +29,8 @@ export class AdminController {
     private readonly offerService: OfferService,
     private readonly blogService: BlogService,
     private readonly reviewService: ReviewService,
+    private readonly faqService: FaqService,
+    private readonly metaService: MetaService,
   ) {}
 
   @Get()
@@ -103,6 +110,190 @@ export class AdminController {
     return res.redirect('/admin/reviews?saved=1');
   }
 
+  @Get('faqs')
+  @Render('admin-faqs')
+  async getFaqsPage(@Query('created') created?: string) {
+    const faqs = await this.faqService.findAllForAdmin();
+
+    return {
+      faqs,
+      created: created === '1',
+    };
+  }
+
+  @Get('faqs/new')
+  @Render('admin-faq')
+  async getNewFaqPage() {
+    const offers = await this.offerService.findAll();
+
+    return {
+      faq: null,
+      offers,
+      isNew: true,
+      saved: false,
+    };
+  }
+
+  @Post('faqs')
+  async createFaq(
+    @Body('question') question: string,
+    @Body('answer') answer: string,
+    @Body('scope') scope: string,
+    @Body('offerIds') offerIds: string | string[] | undefined,
+    @Res() res: Response,
+  ) {
+    const faq = await this.faqService.createForAdmin(
+      question,
+      answer,
+      this.parseOfferIds(scope, offerIds),
+    );
+    return res.redirect(`/admin/faqs/${faq.id}?saved=1`);
+  }
+
+  @Get('faqs/:id')
+  @Render('admin-faq')
+  async getFaqEditor(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('saved') saved?: string,
+  ) {
+    const [faq, offers] = await Promise.all([
+      this.faqService.findOne(id),
+      this.offerService.findAll(),
+    ]);
+
+    return {
+      faq,
+      offers,
+      isNew: false,
+      saved: saved === '1',
+    };
+  }
+
+  @Post('faqs/:id')
+  async updateFaq(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('question') question: string,
+    @Body('answer') answer: string,
+    @Body('scope') scope: string,
+    @Body('offerIds') offerIds: string | string[] | undefined,
+    @Res() res: Response,
+  ) {
+    await this.faqService.updateForAdmin(
+      id,
+      question,
+      answer,
+      this.parseOfferIds(scope, offerIds),
+    );
+    return res.redirect(`/admin/faqs/${id}?saved=1`);
+  }
+
+  @Get('blog')
+  @Render('admin-blog')
+  async getBlogPage(@Query('created') created?: string) {
+    const posts = await this.blogService.findAll();
+
+    return {
+      posts,
+      created: created === '1',
+    };
+  }
+
+  @Get('blog/new')
+  @Render('admin-blog-post')
+  getNewBlogPostPage() {
+    return {
+      post: null,
+      isNew: true,
+      saved: false,
+    };
+  }
+
+  @Post('blog')
+  async createBlogPost(
+    @Body() input: AdminBlogPostInput,
+    @Res() res: Response,
+  ) {
+    const post = await this.blogService.createForAdmin(input);
+    return res.redirect(`/admin/blog/${post.id}?saved=1`);
+  }
+
+  @Get('blog/:id')
+  @Render('admin-blog-post')
+  async getBlogPostEditor(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('saved') saved?: string,
+  ) {
+    const post = await this.blogService.findOne(id);
+
+    return {
+      post,
+      isNew: false,
+      saved: saved === '1',
+    };
+  }
+
+  @Post('blog/:id')
+  async updateBlogPost(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() input: AdminBlogPostInput,
+    @Res() res: Response,
+  ) {
+    await this.blogService.updateForAdmin(id, input);
+    return res.redirect(`/admin/blog/${id}?saved=1`);
+  }
+
+  @Get('blog/:id/preview')
+  @Render('article')
+  async getBlogPostPreview(@Param('id', ParseIntPipe) id: number) {
+    const post = await this.blogService.findOne(id);
+    const blogPosts = await this.blogService.findMany([1, 2]);
+    const reviews = await this.reviewService.findMany(18);
+
+    return {
+      env: process.env.NODE_ENV,
+      scriptName: 'article',
+      styleName: 'article',
+      meta: post.meta,
+      content: post.content,
+      previewImageURL: post.previewImageURL,
+      faqs: post.faqs || [],
+      blogPosts,
+      reviews,
+    };
+  }
+
+  @Get('meta')
+  @Render('admin-meta')
+  async getMetaPage() {
+    const items = await this.metaService.findAllForAdmin();
+
+    return { items };
+  }
+
+  @Get('meta/:id')
+  @Render('admin-meta-item')
+  async getMetaEditor(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('saved') saved?: string,
+  ) {
+    const meta = await this.metaService.findOne(id);
+
+    return {
+      meta,
+      saved: saved === '1',
+    };
+  }
+
+  @Post('meta/:id')
+  async updateMeta(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() input: UpdateMetaDto,
+    @Res() res: Response,
+  ) {
+    await this.metaService.update(id, input);
+    return res.redirect(`/admin/meta/${id}?saved=1`);
+  }
+
   @Get('offers/:id/preview')
   @Render('offer')
   async getOfferPreview(@Param('id', ParseIntPipe) id: number) {
@@ -121,5 +312,29 @@ export class AdminController {
       reviews,
       breadcrumbs: [],
     };
+  }
+
+  private parseOfferIds(
+    scope: string,
+    offerIds: string | string[] | undefined,
+  ): number[] {
+    if (scope !== 'offers') {
+      return [];
+    }
+
+    const values = Array.isArray(offerIds) ? offerIds : [offerIds];
+
+    const ids = values
+      .filter((value): value is string => Boolean(value))
+      .map((value) => Number(value))
+      .filter((value) => Number.isInteger(value) && value > 0);
+
+    if (!ids.length) {
+      throw new BadRequestException(
+        'Выберите хотя бы одну услугу или укажите общий FAQ',
+      );
+    }
+
+    return ids;
   }
 }

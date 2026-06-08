@@ -1,85 +1,182 @@
 @use "../vars" as *;
 
 .modal {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  visibility: hidden;
+  opacity: 0;
   pointer-events: none;
-  transition: all 0.3s;
+  z-index: 100;
+  transition: opacity .3s, visibility .3s;
 
   &--visible {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    visibility: visible;
     opacity: 1;
-    z-index: 9;
     pointer-events: auto;
   }
 
-  &__overlay{
+  &__overlay {
     position: absolute;
     inset: 0;
     z-index: -1;
-
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      backdrop-filter: blur(4px);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-  }
-
-  &--visible .modal__overlay::before {
-    opacity: 1;
+    background:
+      radial-gradient(circle at 50% 35%, rgba(86, 100, 123, .18), transparent 38%),
+      rgba(9, 12, 18, .78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   &__inner {
-    margin: 0 auto;
-    width: 700px;
+    width: min(100%, 660px);
+    max-height: calc(100vh - 48px);
     display: flex;
     align-items: center;
     justify-content: center;
-    inset: 0;
   }
 
   &__form,
   &__review-card {
+    @extend %glass-card;
+    position: relative;
     display: none;
-    max-width: 700px;
     width: 100%;
-    background-color: $dark-bg-200;
-    padding: 30px 50px;
-    border-radius: 15px;
-    border: 1px solid $dark-primary-300;
+    max-height: calc(100vh - 48px);
+    padding: 38px 42px;
+    overflow-y: auto;
+    border-color: rgba($dark-primary-300, .18);
+    border-radius: 8px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .08),
+      0 34px 90px rgba(0, 0, 0, .52),
+      0 0 0 1px rgba($dark-accent-100, .04);
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 42px;
+      left: 42px;
+      height: 1px;
+      content: "";
+      background: linear-gradient(90deg, transparent, rgba($dark-accent-100, .7), transparent);
+    }
   }
 
   &__form--visible,
   &__review-card--visible {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
+    animation: modal-enter .35s ease both;
+  }
+
+  &__close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid rgba($dark-text-200, .16);
+    border-radius: 50%;
+    background: rgba($dark-bg-100, .34);
+    color: rgba($dark-text-200, .72);
+    font-size: 25px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color .25s, border-color .25s, background .25s, transform .25s;
+
+    &:hover {
+      border-color: rgba($dark-accent-100, .52);
+      background: rgba($dark-accent-100, .08);
+      color: $dark-text-100;
+      transform: rotate(90deg);
+    }
+  }
+
+  &__form-header {
+    padding-right: 42px;
+    margin-bottom: 4px;
+  }
+
+  &__form-eyebrow {
+    display: block;
+    margin-bottom: 9px;
+    color: $dark-accent-100;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
   }
 
   &__form-title {
+    @extend %roboto-700;
     color: $dark-text-100;
     margin-bottom: 10px;
+    font-size: 38px;
+    line-height: 1.08;
+  }
+
+  &__form-lead {
+    max-width: 510px;
+    color: rgba($dark-text-200, .72);
+    font-size: 15px;
+    line-height: 1.55;
   }
 
   &__form-label {
-    color: $dark-text-100;
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    color: $dark-text-100;
+  }
+
+  &__form-caption {
+    color: rgba($dark-text-200, .82);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  &__form-input,
+  &__form-textarea {
+    width: 100%;
+    border: 1px solid rgba($dark-primary-300, .16);
+    border-radius: 4px;
+    background:
+      linear-gradient(145deg, rgba($dark-bg-100, .62), rgba($dark-primary-100, .2));
+    color: $dark-text-100;
+    font: inherit;
+    outline: none;
+    transition: border-color .25s, box-shadow .25s, background .25s;
+
+    &::placeholder {
+      color: rgba($dark-text-200, .38);
+    }
+
+    &:hover {
+      border-color: rgba($dark-primary-300, .28);
+    }
+
+    &:focus {
+      border-color: rgba($dark-accent-100, .72);
+      background: rgba($dark-bg-100, .72);
+      box-shadow:
+        0 0 0 3px rgba($dark-accent-100, .08),
+        inset 0 1px 0 rgba(255, 255, 255, .035);
+    }
   }
 
   &__form-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid transparent;
-    transition: border-color .3s, box-shadow .3s;
+    min-height: 48px;
+    padding: 12px 14px;
 
     &--invalid {
       border-color: rgba(255, 77, 77, .95);
@@ -90,11 +187,9 @@
   }
 
   &__form-textarea {
-    width: 100%;
+    min-height: 112px;
+    padding: 13px 14px;
     resize: none;
-    height: 100px;
-    padding: 10px;
-    margin-bottom: 10px;
   }
 
   &__form-error {
@@ -111,7 +206,8 @@
 
   &__form-btns {
     display: flex;
-    gap: 15px;
+    gap: 12px;
+    margin-top: 4px;
   }
 
   &__review-wrapper{
@@ -121,39 +217,36 @@
 
   &__btn {
     @extend %btn-link;
-    @extend %btn-link-accent-outline;
+    min-height: 46px;
     cursor: pointer;
   }
 
   &__btn-submit {
-    @extend %white-link;
+    flex: 1 1 auto;
+    border-color: rgba(255, 118, 118, .6);
+    background: linear-gradient(145deg, rgba(255, 77, 77, .96), rgba(207, 52, 52, .88));
+    color: $dark-text-100;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .18),
+      0 16px 34px rgba(255, 77, 77, .18),
+      0 20px 46px rgba(0, 0, 0, .24);
+
+    &:hover {
+      border-color: rgba(255, 178, 178, .76);
+      background: linear-gradient(145deg, rgba(255, 93, 93, 1), rgba(207, 52, 52, .96));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .22),
+        0 18px 42px rgba(255, 77, 77, .28),
+        0 24px 52px rgba(0, 0, 0, .32);
+    }
   }
 
   &__btn-cancel {
-    border-color: rgba(255, 118, 118, 0.6);
-    background:
-            linear-gradient(
-                            145deg,
-                            rgba(255, 77, 77, 0.96) 0%,
-                            rgba(207, 52, 52, 0.88) 100%
-            );
-    box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.18),
-            0 16px 34px rgba(255, 77, 77, 0.2),
-            0 20px 46px rgba(0, 0, 0, 0.28);
-
-    &:hover {
-      border-color: rgba(255, 178, 178, 0.76);
-      background:
-              linear-gradient(
-                              145deg,
-                              rgba(255, 93, 93, 1) 0%,
-                              rgba(207, 52, 52, 0.96) 100%
-              );
-      box-shadow:
-              inset 0 1px 0 rgba(255, 255, 255, 0.22),
-              0 18px 42px rgba(255, 77, 77, 0.28),
-              0 24px 52px rgba(0, 0, 0, 0.32);
+    &--quiet {
+      flex: 0 0 auto;
+      border-color: rgba($dark-text-200, .26);
+      background: rgba($dark-bg-100, .22);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
     }
   }
 
@@ -175,29 +268,29 @@
   }
 
   &__form-checkbox {
-    align-self: flex-start;
     flex-shrink: 0;
     appearance: none;
-    width: 18px;
-    height: 18px;
-    border: 2px solid #ccc;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba($dark-text-200, .42);
     border-radius: 4px;
-    background-color: transparent;
+    background: rgba($dark-bg-100, .38);
     position: relative;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
+    transition: background-color .25s, border-color .25s, box-shadow .25s;
   }
 
   &__form-checkbox:checked {
-    background-color: #e53935;
-    border-color: #e53935;
+    background-color: $dark-accent-100;
+    border-color: $dark-accent-100;
+    box-shadow: 0 0 0 3px rgba($dark-accent-100, .1);
   }
 
   &__form-checkbox:checked::after {
     content: '';
     position: absolute;
-    top: 2px;
-    left: 5px;
+    top: 3px;
+    left: 6px;
     width: 4px;
     height: 9px;
     border: solid #fff;
@@ -206,7 +299,9 @@
   }
 
   &__form-link {
-    color: $dark-text-100-hover;
+    color: $dark-text-100;
+    text-decoration-color: rgba($dark-accent-100, .7);
+    text-underline-offset: 3px;
     transition: color .3s;
 
     &:hover {
@@ -217,42 +312,50 @@
   &__rating-box {
     flex-wrap: wrap;
   }
+
+  &__form-consent {
+    flex-direction: row;
+    align-items: center;
+    gap: 11px;
+    color: rgba($dark-text-200, .68);
+    font-size: 13px;
+    line-height: 1.5;
+  }
 }
 
-@media (max-width: 1200px) {
-  .modal {
-    &__form,
-    &__review-card {
-
-    }
-
-    &__form-title {
-      font-size: 42px;
-      margin-bottom: 0;
-    }
-
-    &__form-textarea {
-      height: 100px;
-    }
+@keyframes modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(.985);
   }
 
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @media (max-width: 767px) {
   .modal {
+    padding: 14px;
+
+    &__inner {
+      max-height: calc(100vh - 28px);
+    }
+
     &__form,
     &__review-card {
-      padding: 20px 25px;
-      max-width: 450px;
+      max-height: calc(100vh - 28px);
+      padding: 30px 24px 24px;
+
+      &::after {
+        right: 24px;
+        left: 24px;
+      }
     }
 
     &__form-title {
       font-size: 32px;
-      margin-bottom: 0;
-    }
-
-    &__form-textarea {
-      height: 100px;
     }
   }
 }
@@ -261,38 +364,41 @@
   .modal {
     &__form,
     &__review-card {
-      max-width: 300px;
-      padding: 20px 10px;
+      padding: 28px 18px 20px;
     }
 
     &__form-title {
-      font-size: 24px;
+      font-size: 29px;
     }
 
-    &__form-input,
-    &__form-textarea {
-      padding: 5px;
+    &__form-lead {
+      font-size: 14px;
     }
 
-    &__form-textarea {
-      height: 80px;
+    &__close {
+      top: 12px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
     }
 
     &__form-btns {
-      justify-content: center;
+      flex-direction: column;
     }
 
     &__btn {
-      padding: 6px 10px;
+      width: 100%;
     }
   }
 }
 
 .swal2-popup {
-  border-radius: 15px;
-  background-color: $dark-bg-200;
-  border: 1px solid $dark-primary-300;
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba($dark-primary-100, .98), rgba($dark-bg-100, .98));
+  border: 1px solid rgba($dark-primary-300, .18);
   color: $dark-text-100;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, .5);
 }
 
 .swal2-confirm {

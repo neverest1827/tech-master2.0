@@ -1,23 +1,33 @@
 <section class="modal">
     <div class="modal__overlay"></div>
     <div class="modal__inner">
-        <form class="modal__form" data-self="send-request" action="/api/request">
-            <h4 class="title modal__form-title">
-                Отправить заявку
-            </h4>
+        <form class="modal__form modal__form--request" data-self="send-request" action="/api/request">
+            <button class="modal__close modal__btn-cancel" type="button" aria-label="Закрыть форму">×</button>
+            <header class="modal__form-header">
+                <span class="modal__form-eyebrow">Бесплатная консультация</span>
+                <h4 class="title modal__form-title">
+                    Отправить заявку
+                </h4>
+                <p class="modal__form-lead">
+                    Опишите проблему — уточним детали, стоимость и удобное время выезда.
+                </p>
+            </header>
             <label class="modal__form-label">
-                <input class="modal__form-input" name="name" type="text" placeholder="Имя">
+                <span class="modal__form-caption">Ваше имя</span>
+                <input class="modal__form-input" name="name" type="text" placeholder="Как к вам обращаться" autocomplete="name">
             </label>
             <label class="modal__form-label">
-                <input class="modal__form-input" name="tel" type="tel" placeholder="+375 (__) ___-__-__" required>
+                <span class="modal__form-caption">Номер телефона</span>
+                <input class="modal__form-input" name="tel" type="tel" placeholder="+375 (__) ___-__-__" autocomplete="tel" required>
             </label>
             <span class="modal__form-error" data-error-for="tel">
                 Введите номер в формате +375 (29) 123-45-67
             </span>
             <label class="modal__form-label">
-                <textarea class="modal__form-textarea" name="text" placeholder="Опишите проблему"></textarea>
+                <span class="modal__form-caption">Что случилось</span>
+                <textarea class="modal__form-textarea" name="text" placeholder="Например: ноутбук не включается"></textarea>
             </label>
-            <label class="modal__form-label">
+            <label class="modal__form-label modal__form-consent">
                 <input class="modal__form-checkbox" type="checkbox" required>
                 <span class="modal__form-text">
                     Я согласен(а) с вашей
@@ -28,7 +38,7 @@
             </label>
             <div class="modal__form-btns">
                 <button class="modal__btn modal__btn-submit" type="submit">Отправить заявку</button>
-                <button class="modal__btn modal__btn-cancel" type="button">Отмена</button>
+                <button class="modal__btn modal__btn-cancel modal__btn-cancel--quiet" type="button">Отмена</button>
             </div>
         </form>
         <form class="modal__form" data-self="send-review" action="/api/reviews">

@@ -6,25 +6,28 @@
 
   &__title {
     @extend %roboto-700;
+    max-width: 720px;
     font-size: 48px;
+    line-height: 1.15;
     color: $dark-text-100;
-    margin-bottom: 50px;
+    margin-bottom: 48px;
   }
 
-  &__list{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
   }
 
   &__list-item {
     @extend %glass-card;
-    max-width: 280px;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 360px;
     padding: 28px;
     opacity: 0;
     transform: translateY(20px);
-    margin-bottom: 20px;
     transition: opacity .5s ease-out, transform .5s ease-out;
 
     &--visible {
@@ -33,95 +36,141 @@
     }
   }
 
-  &__list-img{
+  &__list-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
     margin-bottom: 20px;
   }
 
-  &__list-title{
+  &__list-title {
     @extend %roboto-700;
     font-size: 20px;
+    line-height: 1.25;
     color: $dark-text-100;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
-  &__list-description{
+  &__list-description {
+    width: 100%;
+    line-height: 1.5;
     color: $dark-text-200;
     margin-bottom: 20px;
   }
 
-  &__list-link{
+  &__list-link {
     color: $dark-text-100;
   }
 
-  &__list-btn{
+  &__list-btn {
     @extend %roboto-700;
     @extend %btn-link;
     @extend %btn-link-accent-outline;
     @extend %white-link;
     display: inline-block;
+    width: fit-content;
+    max-width: 100%;
+    margin-top: auto;
   }
 }
 
 @media (max-width: 1279px) {
-  .work{
+  .work {
+    padding: 80px 0;
+
     &__title {
+      margin: 0 auto 40px;
       text-align: center;
     }
 
     &__list {
-      justify-content: center;
-      gap: 50px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    &__list-item{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-width: 40%;
-    }
-
-    &__list-description {
-      text-align: center;
-      width: 400px;
+    &__list-item {
+      min-height: 310px;
     }
   }
 }
 
 @media (max-width: 1023px) {
   .work {
-    &__list-description {
-      width: 300px;
+    &__title {
+      font-size: 40px;
+    }
+
+    &__list-item {
+      padding: 24px;
     }
   }
 }
 
 @media (max-width: 767px) {
   .work {
-    padding: 50px 0;
+    padding: 60px 0;
 
     &__title {
       font-size: 36px;
+      margin-bottom: 30px;
     }
 
-    &__list{
-      gap: 20px;
+    &__list {
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
 
-    &__list-item{
-      min-width: 300px;
+    &__list-item {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      grid-template-rows: auto 1fr auto;
+      column-gap: 20px;
+      min-height: 0;
     }
 
-    &__title {
-      font-size: 32px;
-      margin-bottom: 20px;
+    &__list-img {
+      grid-row: 1 / 4;
+      margin-bottom: 0;
+    }
+
+    &__list-title {
+      margin-bottom: 10px;
+    }
+
+    &__list-description {
+      margin-bottom: 16px;
+    }
+
+    &__list-btn {
+      grid-column: 2;
     }
   }
 }
 
 @media (max-width: 479px) {
   .work {
+    padding: 48px 0;
+
     &__title {
       font-size: 32px;
+    }
+
+    &__list-item {
+      grid-template-columns: 48px minmax(0, 1fr);
+      column-gap: 14px;
+      padding: 20px 18px;
+    }
+
+    &__list-img {
+      width: 48px;
+      height: 48px;
+    }
+
+    &__list-title {
+      font-size: 18px;
+    }
+
+    &__list-description {
+      font-size: 15px;
     }
   }
 }

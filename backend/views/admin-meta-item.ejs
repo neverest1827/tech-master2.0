@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование метаданных | Админка</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f5; color: #18181b; }
+        .layout { max-width: 900px; margin: 0 auto; padding: 32px 16px 48px; }
+        .top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
+        h1 { margin: 0; }
+        .back { color: #dc2626; text-decoration: none; }
+        .back:hover { text-decoration: underline; }
+        .notice { margin-bottom: 16px; padding: 12px 14px; border: 1px solid #bbf7d0; border-radius: 8px; background: #f0fdf4; color: #166534; }
+        .card { padding: 24px; border: 1px solid #e4e4e7; border-radius: 8px; background: #fff; }
+        .identity { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 24px; padding: 14px; border-radius: 8px; background: #fafafa; }
+        .identity p { margin: 0; color: #52525b; word-break: break-word; }
+        .section { margin: 0 0 26px; padding: 0; border: 0; }
+        .section legend { margin-bottom: 16px; padding: 0; font-size: 18px; font-weight: 700; }
+        .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+        .field { display: grid; gap: 7px; margin-bottom: 16px; }
+        .field--full { grid-column: 1 / -1; }
+        label { font-weight: 700; }
+        input, textarea, select { width: 100%; padding: 11px 13px; border: 1px solid #d4d4d8; border-radius: 8px; background: #fff; color: #18181b; font: inherit; }
+        textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220, 38, 38, .12); }
+        .hint { margin: 0; color: #71717a; font-size: 12px; line-height: 1.4; }
+        .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+        button, .secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 10px 16px; border: 1px solid #dc2626; border-radius: 8px; font: inherit; font-weight: 700; cursor: pointer; text-decoration: none; }
+        button { background: #dc2626; color: #fff; }
+        button:hover { background: #b91c1c; }
+        .secondary { background: #fff; color: #dc2626; }
+        @media (max-width: 680px) {
+            .top { align-items: flex-start; flex-direction: column; }
+            .card { padding: 18px; }
+            .identity, .grid { grid-template-columns: 1fr; }
+            .actions > * { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <div class="top">
+        <h1>Метаданные страницы</h1>
+        <a class="back" href="/admin/meta">К списку</a>
+    </div>
+
+    <% if (saved) { %>
+        <div class="notice">Метаданные сохранены.</div>
+    <% } %>
+
+    <div class="card">
+        <div class="identity">
+            <p><strong>ID:</strong> <%= meta.id %></p>
+            <p><strong>Page name:</strong> <code><%= meta.pageName %></code></p>
+            <% if (meta.offer) { %><p><strong>Услуга:</strong> <%= meta.offer.slug %></p><% } %>
+            <% if (meta.blogPost) { %><p><strong>Статья:</strong> <%= meta.blogPost.slug %></p><% } %>
+        </div>
+
+        <form method="post" action="/admin/meta/<%= meta.id %>">
+            <fieldset class="section">
+                <legend>Основные SEO-данные</legend>
+                <div class="grid">
+                    <div class="field field--full">
+                        <label for="title">Title</label>
+                        <input id="title" name="title" type="text" value="<%= meta.title || '' %>" required>
+                    </div>
+                    <div class="field field--full">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description"><%= meta.description || '' %></textarea>
+                    </div>
+                    <div class="field field--full">
+                        <label for="keywords">Keywords</label>
+                        <input id="keywords" name="keywords" type="text" value="<%= meta.keywords || '' %>">
+                    </div>
+                    <div class="field">
+                        <label for="canonicalUrl">Canonical URL</label>
+                        <input id="canonicalUrl" name="canonicalUrl" type="text" value="<%= meta.canonicalUrl || '' %>">
+                    </div>
+                    <div class="field">
+                        <label for="robots">Robots</label>
+                        <select id="robots" name="robots">
+                            <% ['index, follow', 'index, nofollow', 'noindex, follow', 'noindex, nofollow'].forEach((value) => { %>
+                                <option value="<%= value %>" <%= meta.robots === value ? 'selected' : '' %>><%= value %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="section">
+                <legend>Open Graph</legend>
+                <div class="grid">
+                    <div class="field field--full">
+                        <label for="ogImage">OG image</label>
+                        <input id="ogImage" name="ogImage" type="text" value="<%= meta.ogImage || '' %>">
+                    </div>
+                    <div class="field">
+                        <label for="ogUrl">OG URL</label>
+                        <input id="ogUrl" name="ogUrl" type="text" value="<%= meta.ogUrl || '' %>">
+                    </div>
+                    <div class="field">
+                        <label for="ogType">OG type</label>
+                        <input id="ogType" name="ogType" type="text" value="<%= meta.ogType || '' %>" placeholder="website или article">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="section">
+                <legend>Twitter</legend>
+                <div class="grid">
+                    <div class="field">
+                        <label for="twitterCard">Twitter card</label>
+                        <input id="twitterCard" name="twitterCard" type="text" value="<%= meta.twitterCard || '' %>" placeholder="summary_large_image">
+                    </div>
+                    <div class="field">
+                        <label for="twitterImage">Twitter image</label>
+                        <input id="twitterImage" name="twitterImage" type="text" value="<%= meta.twitterImage || '' %>">
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="actions">
+                <button type="submit">Сохранить метаданные</button>
+                <a class="secondary" href="/admin/meta">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

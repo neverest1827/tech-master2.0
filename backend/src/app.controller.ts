@@ -63,6 +63,10 @@ export class AppController {
       styleName: 'reviews',
       meta,
       blogPosts,
+      breadcrumbs: [
+        { label: 'Главная', href: '/' },
+        { label: 'Отзывы', href: '/otzyvy' },
+      ],
     };
   }
 
@@ -81,6 +85,10 @@ export class AppController {
       limit,
       meta,
       blogPosts,
+      breadcrumbs: [
+        { label: 'Главная', href: '/' },
+        { label: 'Блог', href: '/blog' },
+      ],
     };
   }
 
@@ -101,6 +109,7 @@ export class AppController {
       styleName: 'article',
       meta: articleEntry.meta,
       content: articleEntry.content,
+      previewImageURL: articleEntry.previewImageURL,
       faqs: articleEntry.faqs,
       blogPosts,
       reviews,
@@ -152,7 +161,15 @@ export class AppController {
   @Get('/kontakty')
   @Render('contacts')
   async getContactsPage() {
-    return this.getContactsPageData();
+    const pageData = await this.getContactsPageData();
+
+    return {
+      ...pageData,
+      breadcrumbs: [
+        { label: 'Главная', href: '/' },
+        { label: 'Контакты', href: '/kontakty' },
+      ],
+    };
   }
 
   @Get('/otpravit-zayavku')
@@ -170,6 +187,10 @@ export class AppController {
         canonicalUrl: '/otpravit-zayavku',
         ogUrl: '/otpravit-zayavku',
       },
+      breadcrumbs: [
+        { label: 'Главная', href: '/' },
+        { label: 'Отправить заявку', href: '/otpravit-zayavku' },
+      ],
     };
   }
 
@@ -202,6 +223,76 @@ export class AppController {
       blogPosts,
       faqs,
       promos,
+      breadcrumbs: [
+        { label: 'Главная', href: '/' },
+        { label: 'Акции', href: '/aktsii' },
+      ],
+    };
+  }
+
+  @Get('/politika-konfidentsialnosti')
+  @Render('privacy')
+  async getPrivacyPage() {
+    const blogPosts: BlogPost[] = await this.blogService.findMany([1, 2]);
+
+    return {
+      env: process.env.NODE_ENV,
+      scriptName: 'privacy',
+      styleName: 'privacy',
+      blogPosts,
+      meta: {
+        title: 'Политика конфиденциальности | ТехМастер',
+        description:
+          'Политика обработки и защиты персональных данных пользователей сайта ТехМастер.',
+        keywords: 'политика конфиденциальности, персональные данные, ТехМастер',
+        canonicalUrl: '/politika-konfidentsialnosti',
+        robots: 'index, follow',
+        ogImage: '',
+        ogUrl: '/politika-konfidentsialnosti',
+        ogType: 'website',
+        twitterCard: 'summary',
+        twitterImage: '',
+      },
+      breadcrumbs: [
+        { label: 'Главная', href: '/' },
+        {
+          label: 'Политика конфиденциальности',
+          href: '/politika-konfidentsialnosti',
+        },
+      ],
+    };
+  }
+
+  @Get('/politika-ispolzovaniya-faylov-cookie')
+  @Render('cookie-policy')
+  async getCookiePolicyPage() {
+    const blogPosts: BlogPost[] = await this.blogService.findMany([1, 2]);
+
+    return {
+      env: process.env.NODE_ENV,
+      scriptName: 'privacy',
+      styleName: 'privacy',
+      blogPosts,
+      meta: {
+        title: 'Политика использования файлов cookie | ТехМастер',
+        description:
+          'Информация об использовании файлов cookie на сайте ТехМастер и управлении ими в браузере.',
+        keywords: 'cookie, файлы cookie, политика cookie, ТехМастер',
+        canonicalUrl: '/politika-ispolzovaniya-faylov-cookie',
+        robots: 'index, follow',
+        ogImage: '',
+        ogUrl: '/politika-ispolzovaniya-faylov-cookie',
+        ogType: 'website',
+        twitterCard: 'summary',
+        twitterImage: '',
+      },
+      breadcrumbs: [
+        { label: 'Главная', href: '/' },
+        {
+          label: 'Политика использования файлов cookie',
+          href: '/politika-ispolzovaniya-faylov-cookie',
+        },
+      ],
     };
   }
 }
